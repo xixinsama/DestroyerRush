@@ -2,6 +2,7 @@ extends Node2D
 
 # 首先把所有子节点搬过来
 @onready var stats_component: StatsComponent = $StatsComponent
+@onready var player_manage_component: PlayerManageComponent = $PlayerManageComponent
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var move_component: MoveComponent = $MoveComponent
 @onready var move_input_component: MoveInputComponent = $MoveInputComponent
@@ -9,9 +10,10 @@ extends Node2D
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var graze_area: Area2D = $GrazeArea
 @onready var edge_ball: EdgeBall = $EdgeBall
-@onready var player_manage_component: PlayerManageComponent = $PlayerManageComponent
 @onready var spawn_points: Node2D = $SpawnPoints
-@onready var spawner_component: SpawnerComponent = $SpawnerComponent
+@onready var bullet_spawner_component: SpawnerComponent = $BulletSpawnerComponent
+@onready var destroy_effect_spawner_component_2: SpawnerComponent = $DestroyEffectSpawnerComponent2
+
 
 # 翻滚计时器
 var roll_timer: Timer = null
@@ -48,9 +50,9 @@ func _ready():
 
 func fire_bullet1() -> void:
 	var l1: Marker2D = spawn_points.get_node("left_1")
-	spawner_component.spawn(l1.global_position)
+	bullet_spawner_component.spawn(l1.global_position)
 	var r1: Marker2D = spawn_points.get_node("right_1")
-	spawner_component.spawn(r1.global_position)
+	bullet_spawner_component.spawn(r1.global_position)
 
 func _process(_delta):
 	# 改变移动动画
