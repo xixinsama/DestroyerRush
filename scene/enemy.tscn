@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://6ciocx7syw28" path="res://scene/bullet_1.tscn" id="6_k14tr"]
 [ext_resource type="Script" path="res://compenent/stats_component.gd" id="7_ofyng"]
 [ext_resource type="Script" path="res://compenent/player_manage_component.gd" id="8_7dihk"]
-[ext_resource type="PackedScene" uid="uid://dlx7hoxvyuy7v" path="res://scene/explosion-effect.tscn" id="9_nh6lm"]
+[ext_resource type="PackedScene" uid="uid://81wuve4douh5" path="res://scene/explosion-effect.tscn" id="9_nh6lm"]
 [ext_resource type="PackedScene" uid="uid://7xpxleg3bbeu" path="res://UI/enemy_health_bar.tscn" id="9_qstbb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1mpt6"]

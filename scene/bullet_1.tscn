@@ -60,7 +60,6 @@ shape = SubResource("RectangleShape2D_tmtq6")
 [node name="MoveComponent" type="Node" parent="." index="2" node_paths=PackedStringArray("actor")]
 script = ExtResource("4_mj4r7")
 actor = NodePath("..")
-flag_cha = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 libraries = {

@@ -9,7 +9,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6ln3"]
 size = Vector2(2079.88, 93)
 
-[node name="main" type="Node2D"]
+[node name="level0" type="Node2D"]
 script = ExtResource("1_jhbmh")
 
 [node name="status" type="Node" parent="."]

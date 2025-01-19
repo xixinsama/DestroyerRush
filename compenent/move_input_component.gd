@@ -16,7 +16,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_tree().quit()
 	# 控制方向
 	var input_axis_horizonal = Input.get_axis("ui_left", "ui_right")
-	var input_axis_vertical = Input.get_axis("ui_up", "ui_down")
+	var input_axis_vertical = Input.get_axis("ui_up", "ui_down") #"")
 	var direction: Vector2 = Vector2(input_axis_horizonal, input_axis_vertical).normalized()
 	#if direction == Vector2() and move_component.velocity != Vector2():
 	#	move_component.velocity = Vector2()

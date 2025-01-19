@@ -1,8 +1,4 @@
-
-
-
-[gd_scene load_steps=17 format=3 uid="uid://n51yxye8n0j6"]
-
+[gd_scene load_steps=27 format=3 uid="uid://n51yxye8n0j6"]
 
 [ext_resource type="Script" path="res://compenent/stats_component.gd" id="1_c2tg5"]
 [ext_resource type="Script" path="res://script/player.gd" id="1_kcnqc"]
@@ -15,7 +11,7 @@
 [ext_resource type="Script" path="res://compenent/player_manage_component.gd" id="8_rsuy1"]
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="10_5y2br"]
 [ext_resource type="PackedScene" uid="uid://dsjs323qc63ng" path="res://scene/player_bullet.tscn" id="11_jj21o"]
-[ext_resource type="PackedScene" uid="uid://dlx7hoxvyuy7v" path="res://scene/explosion-effect.tscn" id="12_a0kcg"]
+[ext_resource type="PackedScene" uid="uid://81wuve4douh5" path="res://scene/explosion-effect.tscn" id="12_a0kcg"]
 [ext_resource type="PackedScene" uid="uid://b821dikdcn1ee" path="res://UI/player_energy_panel.tscn" id="12_vsasp"]
 [ext_resource type="Texture2D" uid="uid://cafe7oti8500i" path="res://asset/SpaceShooterAssetPack_Miscellaneous.png" id="13_6to12"]
 

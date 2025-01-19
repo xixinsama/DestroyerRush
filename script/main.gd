@@ -9,8 +9,23 @@ extends Node2D
 @onready var enemy: Node2D = $Path2D/PathFollow2D/enemy # 通过改变敌人纹理来选关
 @onready var killzone: HurtboxComponent = $killzone
 
+var flag: int = 0
+
 func _ready() -> void:
 	player.tree_exited.connect(func():
-		await get_tree().create_timer(1.0).timeout
-		get_tree().change_scene_to_file("res://scene/game_over.tscn")
+		if enemy == null: # 不要动
+			return
+		else:
+			await get_tree().create_timer(1.0).timeout
+			get_tree().change_scene_to_file("res://scene/game_over.tscn")
 		)
+	enemy.tree_exited.connect(func():
+		if player == null:
+			return
+		else:
+			await get_tree().create_timer(1.0).timeout
+			get_tree().change_scene_to_file("res://scene/game_over.tscn") # 该这里
+		)
+
+# 有多少关，最后一关连接到game_over
+# 告诉player这是第几关，让其能力更新

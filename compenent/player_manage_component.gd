@@ -1,6 +1,7 @@
 class_name PlayerManageComponent
 extends Node
 
+
 @export var actor: Node2D
 @export var statscomponent: StatsComponent
 @export var hurtboxcomponent: HurtboxComponent
@@ -22,4 +23,10 @@ func _on_edge_ball_energy_up(energy_point: float) -> void:
 func _on_stats_component_no_health() -> void:
 	# create an effect (from the spawner component) and free the actor
 	destroy_effect_spawner_component.spawn(actor.global_position, get_tree().current_scene, flag_num)
+	#if flag_num == 0: #player组
 	actor.queue_free()
+	#if flag_num == 1: #enemy组
+		#actor.visible = false
+		#nextlevel.emit()
+		#await get_tree().create_timer(2.0).timeout
+		#actor.visible = true
