@@ -43,7 +43,7 @@ destroy_effect_spawner_component = NodePath("../DestroyEffectSpawnerComponent2")
 texture = SubResource("AtlasTexture_a4fqk")
 hframes = 3
 vframes = 5
-frame = 1
+frame = 13
 
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("3_mc8tl")

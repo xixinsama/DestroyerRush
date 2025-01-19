@@ -17,10 +17,12 @@ script = null
 
 [node name="bullet_3" parent="." instance=ExtResource("2_wfixj")]
 position = Vector2(184, 423)
+scale = Vector2(8, 8)
 script = null
 
 [node name="bullet_4" parent="." instance=ExtResource("2_wfixj")]
-position = Vector2(233, 422)
+position = Vector2(287, 426)
+scale = Vector2(8, 8)
 script = null
 
 [node name="enemy" parent="." instance=ExtResource("3_fpwfm")]
