@@ -1,4 +1,8 @@
-[gd_scene load_steps=26 format=3 uid="uid://n51yxye8n0j6"]
+
+
+
+[gd_scene load_steps=17 format=3 uid="uid://n51yxye8n0j6"]
+
 
 [ext_resource type="Script" path="res://compenent/stats_component.gd" id="1_c2tg5"]
 [ext_resource type="Script" path="res://script/player.gd" id="1_kcnqc"]
@@ -11,6 +15,7 @@
 [ext_resource type="Script" path="res://compenent/player_manage_component.gd" id="8_rsuy1"]
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="10_5y2br"]
 [ext_resource type="PackedScene" uid="uid://dsjs323qc63ng" path="res://scene/player_bullet.tscn" id="11_jj21o"]
+[ext_resource type="PackedScene" uid="uid://dlx7hoxvyuy7v" path="res://scene/explosion-effect.tscn" id="12_a0kcg"]
 [ext_resource type="PackedScene" uid="uid://b821dikdcn1ee" path="res://UI/player_energy_panel.tscn" id="12_vsasp"]
 [ext_resource type="Texture2D" uid="uid://cafe7oti8500i" path="res://asset/SpaceShooterAssetPack_Miscellaneous.png" id="13_6to12"]
 
@@ -106,6 +111,13 @@ script = ExtResource("1_kcnqc")
 script = ExtResource("1_c2tg5")
 roll_speed = 8
 
+[node name="PlayerManageComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "statscomponent", "hurtboxcomponent", "destroy_effect_spawner_component")]
+script = ExtResource("8_rsuy1")
+actor = NodePath("..")
+statscomponent = NodePath("../StatsComponent")
+hurtboxcomponent = NodePath("../HurtboxComponent")
+destroy_effect_spawner_component = NodePath("../DestroyEffectSpawnerComponent2")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_a4fqk")
 hframes = 3
@@ -144,11 +156,6 @@ script = ExtResource("8_af7rk")
 outer = NodePath("../GrazeArea")
 inner = NodePath("../HurtboxComponent")
 
-[node name="PlayerManageComponent" type="Node" parent="." node_paths=PackedStringArray("hurtboxcomponent", "statscomponent")]
-script = ExtResource("8_rsuy1")
-hurtboxcomponent = NodePath("../HurtboxComponent")
-statscomponent = NodePath("../StatsComponent")
-
 [node name="SpawnPoints" type="Node2D" parent="."]
 
 [node name="left_1" type="Marker2D" parent="SpawnPoints"]
@@ -166,9 +173,13 @@ position = Vector2(-2.5, -2)
 [node name="right_2" type="Marker2D" parent="SpawnPoints"]
 position = Vector2(2.5, -2)
 
-[node name="SpawnerComponent" type="Node2D" parent="."]
+[node name="BulletSpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("10_5y2br")
 scene = ExtResource("11_jj21o")
+
+[node name="DestroyEffectSpawnerComponent2" type="Node2D" parent="."]
+script = ExtResource("10_5y2br")
+scene = ExtResource("12_a0kcg")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

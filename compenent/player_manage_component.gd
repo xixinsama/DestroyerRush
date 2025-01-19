@@ -1,10 +1,14 @@
 class_name PlayerManageComponent
 extends Node
 
-@export var hurtboxcomponent: HurtboxComponent
+@export var actor: Node2D
 @export var statscomponent: StatsComponent
+@export var hurtboxcomponent: HurtboxComponent
+@export var destroy_effect_spawner_component: SpawnerComponent
+@export var flag_num: int = 0
 
 func _ready() -> void:
+	statscomponent.no_health.connect(_on_stats_component_no_health)
 	# 自身碰撞盒发出信号，连接匿名函数，扣除血量
 	hurtboxcomponent.hurt.connect(func(hitbox: HitboxComponent):
 		statscomponent.health -= hitbox.damage
@@ -13,3 +17,9 @@ func _ready() -> void:
 # 当擦弹成功，增加能量
 func _on_edge_ball_energy_up(energy_point: float) -> void:
 	statscomponent.energy += energy_point
+
+# 血量为0时，播放爆炸效果，消失
+func _on_stats_component_no_health() -> void:
+	# create an effect (from the spawner component) and free the actor
+	destroy_effect_spawner_component.spawn(actor.global_position, get_tree().current_scene, flag_num)
+	actor.queue_free()
