@@ -12,7 +12,7 @@ position = Vector2(266, 625)
 script = null
 
 [node name="bullet_2" parent="." instance=ExtResource("1_gtif7")]
-position = Vector2(382, 628)
+position = Vector2(296, 625)
 script = null
 
 [node name="bullet_3" parent="." instance=ExtResource("2_wfixj")]
@@ -29,4 +29,3 @@ script = null
 position = Vector2(554, 457)
 
 [node name="player" parent="." instance=ExtResource("4_kj7pd")]
-position = Vector2(-74.6865, -63)

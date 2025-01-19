@@ -13,7 +13,7 @@ func _ready():
 	# 击中消失（信号解绑）
 	hitbox_component.hit_hurtbox.connect(queue_free.unbind(1))
 
-func initialize() -> void:
+func initialize(_flag: int) -> void:
 	add_velocity()
 
 func add_velocity(inertia: Vector2 = Vector2()) -> void:
