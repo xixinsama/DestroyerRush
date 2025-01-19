@@ -2,6 +2,7 @@
 class_name StatsComponent
 extends Node
 
+
 @export var health_max: int = 1
 @export var health: int = 1: ## 最大血量，最小值为0
 	# 当此值修改时调用下面的函数
@@ -13,8 +14,8 @@ extends Node
 		
 		print("hp:", health)
 		
-		# 当HP等于0时，发送信号
-		if health == 0: no_health.emit()
+		# 当HP小于等于0时，发送信号
+		if health <= 0: no_health.emit()
 
 # HP的信号
 signal health_changed(HP: int)

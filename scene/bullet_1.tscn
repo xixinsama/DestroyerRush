@@ -1,12 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://6ciocx7syw28"]
+[gd_scene load_steps=8 format=3 uid="uid://6ciocx7syw28"]
 
 [ext_resource type="PackedScene" uid="uid://o8jih1iks4x5" path="res://scene/bullet.tscn" id="1_o6nhv"]
-[ext_resource type="Texture2D" uid="uid://c55yufw8vmr3w" path="res://asset/SpaceShooterAssetPack_Projectiles.png" id="2_pnych"]
 [ext_resource type="Material" uid="uid://c1jxovuqyakmr" path="res://shader/outline_shader_material.tres" id="2_yyclp"]
 [ext_resource type="Script" path="res://compenent/move_component.gd" id="4_mj4r7"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_kv6mv"]
-radius = 4.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tmtq6"]
+size = Vector2(6, 6)
 
 [sub_resource type="Animation" id="Animation_86tys"]
 length = 0.001
@@ -45,20 +44,23 @@ _data = {
 }
 
 [node name="bullet_1" instance=ExtResource("1_o6nhv")]
-scale = Vector2(2, 2)
+scale = Vector2(8, 8)
 
 [node name="Sprite2D" parent="." index="0"]
 material = ExtResource("2_yyclp")
-texture = ExtResource("2_pnych")
-region_rect = Rect2(15, 7, 10, 10)
+frame = 27
+
+[node name="HitboxComponent" parent="." index="1"]
+position = Vector2(-0.625, -0.125)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
-shape = SubResource("CircleShape2D_kv6mv")
+position = Vector2(0.625, 0.125)
+shape = SubResource("RectangleShape2D_tmtq6")
 
 [node name="MoveComponent" type="Node" parent="." index="2" node_paths=PackedStringArray("actor")]
 script = ExtResource("4_mj4r7")
 actor = NodePath("..")
-flag_cha = 4
+flag_cha = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 libraries = {
