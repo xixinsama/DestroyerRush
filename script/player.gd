@@ -13,7 +13,7 @@ extends Node2D
 @onready var spawn_points: Node2D = $SpawnPoints
 @onready var bullet_spawner_component: SpawnerComponent = $BulletSpawnerComponent
 @onready var destroy_effect_spawner_component_2: SpawnerComponent = $DestroyEffectSpawnerComponent2
-
+@onready var frame_animated_sprite_2d: AnimatedSprite2D = $FrameAnimatedSprite2D
 
 # 翻滚计时器
 var roll_timer: Timer = null
@@ -74,10 +74,13 @@ func _process(_delta):
 func animate_the_ship() -> void:
 	if move_component.velocity.x < 0:
 		sprite_2d.frame_coords = Vector2(0, play_looklike)
+		frame_animated_sprite_2d.play("left")
 	elif move_component.velocity.x > 0:
 		sprite_2d.frame_coords = Vector2(2, play_looklike)
+		frame_animated_sprite_2d.play("right")
 	else:
 		sprite_2d.frame_coords = Vector2(1, play_looklike)
+		frame_animated_sprite_2d.play("centre")
 
 ## 试图实现双击翻滚
 #func double_click_roll() -> void:
