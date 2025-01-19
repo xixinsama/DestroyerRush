@@ -22,7 +22,7 @@ signal health_changed(HP: int)
 signal no_health()
 
 @export var energy_max: int = 10 ## 最大能量容量
-@export var energy: float = 0.0: ## 最小值为0.0
+@export var energy: int = 0.0: ## 最小值为0.0
 	# 当此值修改时调用下面的函数
 	set(value):
 		energy = value

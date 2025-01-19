@@ -6,5 +6,5 @@ extends Node2D
 func _ready() -> void:
 	hitbox_component.hit_hurtbox.connect(queue_free.unbind(1))
 
-func initialize(flag: int) -> void:
+func initialize(_flag: int) -> void:
 	pass

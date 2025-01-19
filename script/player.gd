@@ -93,6 +93,9 @@ func start_trail() -> void:
 	var trail = preload("res://scene/trail.tscn").instantiate()
 	get_parent().add_child(trail)
 	get_parent().move_child(trail, get_index())
+	var animate_trail = preload("res://scene/animate_trail.tscn").instantiate()
+	get_parent().add_child(animate_trail)
+	get_parent().move_child(animate_trail, get_index())
 	
 	var properties = [
 		"hframes",
@@ -102,10 +105,21 @@ func start_trail() -> void:
 		"global_position",
 		"filp_h"
 	]
+	var anime_properties = [
+		"sprite_frames",
+		"animation",
+		"frame",
+		"speed_scale",
+		"global_position"
+	]
 	
 	for name_prop in properties:
 		trail.set(name_prop, sprite_2d.get(name_prop))
 	trail.set("scale", self.scale) # player的根节点放大了，所以这里也要放大
+	for name_prop1 in anime_properties:
+		animate_trail.set(name_prop1, frame_animated_sprite_2d.get(name_prop1))
+	animate_trail.set("scale", self.scale) # player的根节点放大了，所以这里也要放大
+
 
 # 在翻滚时留下残影，并取消玩家碰撞检测
 func _on_move_input_component_roll_start() -> void:
