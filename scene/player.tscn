@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://n51yxye8n0j6"]
+[gd_scene load_steps=26 format=3 uid="uid://n51yxye8n0j6"]
 
 [ext_resource type="Script" path="res://compenent/stats_component.gd" id="1_c2tg5"]
 [ext_resource type="Script" path="res://script/player.gd" id="1_kcnqc"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="10_5y2br"]
 [ext_resource type="PackedScene" uid="uid://dsjs323qc63ng" path="res://scene/player_bullet.tscn" id="11_jj21o"]
 [ext_resource type="PackedScene" uid="uid://b821dikdcn1ee" path="res://UI/player_energy_panel.tscn" id="12_vsasp"]
+[ext_resource type="Texture2D" uid="uid://cafe7oti8500i" path="res://asset/SpaceShooterAssetPack_Miscellaneous.png" id="13_6to12"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a4fqk"]
 atlas = ExtResource("2_vs1xv")
@@ -22,6 +23,80 @@ radius = 2.63688
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8yr2a"]
 radius = 4.29571
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y50sh"]
+atlas = ExtResource("13_6to12")
+region = Rect2(40, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1usll"]
+atlas = ExtResource("13_6to12")
+region = Rect2(48, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ui8jt"]
+atlas = ExtResource("13_6to12")
+region = Rect2(56, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cvky"]
+atlas = ExtResource("13_6to12")
+region = Rect2(64, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkseq"]
+atlas = ExtResource("13_6to12")
+region = Rect2(64, 24, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kiu32"]
+atlas = ExtResource("13_6to12")
+region = Rect2(40, 24, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0qgy"]
+atlas = ExtResource("13_6to12")
+region = Rect2(56, 24, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txocn"]
+atlas = ExtResource("13_6to12")
+region = Rect2(48, 24, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wmbf0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y50sh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1usll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ui8jt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5cvky")
+}],
+"loop": true,
+"name": &"centre",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkseq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kiu32")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m0qgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_txocn")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
 
 [node name="player" type="Node2D"]
 scale = Vector2(8, 8)
@@ -107,6 +182,13 @@ offset_right = 204.0
 offset_bottom = -8.0
 grow_vertical = 0
 player_stats = NodePath("../../StatsComponent")
+
+[node name="FrameAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 8.25)
+sprite_frames = SubResource("SpriteFrames_wmbf0")
+animation = &"centre"
+autoplay = "centre"
+frame_progress = 0.493258
 
 [connection signal="roll_finish" from="MoveInputComponent" to="." method="_on_move_input_component_roll_finish"]
 [connection signal="roll_start" from="MoveInputComponent" to="." method="_on_move_input_component_roll_start"]
