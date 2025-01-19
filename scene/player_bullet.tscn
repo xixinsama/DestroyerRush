@@ -68,7 +68,6 @@ shape = SubResource("RectangleShape2D_5bixv")
 script = ExtResource("3_kt7ov")
 actor = NodePath("..")
 velocity = Vector2(0, -250)
-flag_cha = 2
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(0.05, 0.05)

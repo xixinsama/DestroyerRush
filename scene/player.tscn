@@ -40,7 +40,6 @@ frame = 1
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("3_mc8tl")
 actor = NodePath("..")
-flag_cha = 2
 
 [node name="MoveInputComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "move_component")]
 script = ExtResource("4_jaqh3")
