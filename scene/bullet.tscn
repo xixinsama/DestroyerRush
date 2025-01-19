@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://o8jih1iks4x5"]
+
+[ext_resource type="Script" path="res://script/bullet.gd" id="1_q3cks"]
+[ext_resource type="Script" path="res://compenent/hitbox_component.gd" id="2_yc08d"]
+
+[node name="bullet" type="Node2D"]
+scale = Vector2(8, 8)
+script = ExtResource("1_q3cks")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+region_enabled = true
+region_rect = Rect2(16, 0, 8, 8)
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+collision_layer = 32
+script = ExtResource("2_yc08d")

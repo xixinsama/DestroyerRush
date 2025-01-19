@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyu4fmfoxt2vx"]
+
+[ext_resource type="PackedScene" uid="uid://o8jih1iks4x5" path="res://scene/bullet.tscn" id="1_odgrk"]
+[ext_resource type="Texture2D" uid="uid://c55yufw8vmr3w" path="res://asset/SpaceShooterAssetPack_Projectiles.png" id="2_onmwn"]
+
+[node name="bullet_2" instance=ExtResource("1_odgrk")]
+rotation = -0.785398
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_onmwn")
+region_rect = Rect2(24, 48, 8, 8)
+
+[node name="HitboxComponent" parent="." index="1"]
+energy_point = 2.33
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitboxComponent" index="0"]
+polygon = PackedVector2Array(-4, 4, -2, 0, 0, -2, 4, -4, 2, 0, 0, 2)

@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c1jxovuqyakmr"]
+
+[ext_resource type="Shader" path="res://shader/outline.gdshader" id="1_w52wv"]
+
+[resource]
+shader = ExtResource("1_w52wv")
+shader_parameter/width = 0
+shader_parameter/outline_color = Color(0.167713, 0.943156, 0.509641, 1)
+shader_parameter/flickering_speed = 0.0
+shader_parameter/minimal_flickering_alpha = null

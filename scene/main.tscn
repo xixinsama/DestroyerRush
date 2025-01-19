@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://dcgj6joi43i08"]
+
+[ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_3u3py"]
+[ext_resource type="Script" path="res://script/main.gd" id="1_jhbmh"]
+[ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="4_bycl7"]
+[ext_resource type="PackedScene" uid="uid://b37vd0qec1uo1" path="res://scene/path_2d.tscn" id="4_ja4cq"]
+[ext_resource type="Script" path="res://script/status.gd" id="6_ewnan"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x6ln3"]
+size = Vector2(2079.88, 93)
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_jhbmh")
+
+[node name="status" type="Node" parent="."]
+script = ExtResource("6_ewnan")
+
+[node name="player" parent="." instance=ExtResource("1_3u3py")]
+position = Vector2(360, 1100)
+
+[node name="Path2D" parent="." instance=ExtResource("4_ja4cq")]
+
+[node name="killzone" type="Area2D" parent="."]
+collision_layer = 5
+collision_mask = 48
+script = ExtResource("4_bycl7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="killzone"]
+position = Vector2(440, -632)
+shape = SubResource("RectangleShape2D_x6ln3")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="killzone"]
+position = Vector2(-572, 420)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_x6ln3")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="killzone"]
+position = Vector2(1424, 460)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_x6ln3")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="killzone"]
+position = Vector2(418, 1483)
+shape = SubResource("RectangleShape2D_x6ln3")
+
+[editable path="Path2D"]
