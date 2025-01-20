@@ -20,7 +20,7 @@ func _ready():
 	bar_2.set_value_no_signal(bar_2.max_value) 
 	bar_3.set_value_no_signal(bar_3.max_value)
 	# 绑定信号，当血量变动时改变血条
-	enemy_stats.health_changed.connect(update_bars.unbind(1))
+	enemy_stats.health_changed.connect(update_bars.unbind(2))
 	update_bars()
 
 func update_bars():

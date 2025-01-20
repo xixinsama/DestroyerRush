@@ -7,10 +7,11 @@ extends Node
 @export var health: int = 1: ## 最大血量，最小值为0
 	# 当此值修改时调用下面的函数
 	set(value):
+		var health_before: int = health
 		health = value
 		
 		# 当HP改变时，发送信号
-		health_changed.emit(health)
+		health_changed.emit(health_before, health)
 		
 		print("hp:", health)
 		
@@ -18,7 +19,7 @@ extends Node
 		if health <= 0: no_health.emit()
 
 # HP的信号
-signal health_changed(HP: int)
+signal health_changed(HP_before: int, HP_now: int)
 signal no_health()
 
 @export var energy_max: int = 10 ## 最大能量容量
