@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cafe7oti8500i"
-path.s3tc="res://.godot/imported/SpaceShooterAssetPack_Miscellaneous.png-d650bcacb316f47c76f7827cf1665706.s3tc.ctex"
-path.etc2="res://.godot/imported/SpaceShooterAssetPack_Miscellaneous.png-d650bcacb316f47c76f7827cf1665706.etc2.ctex"
+uid="uid://csrtfxksqtrqg"
+path.s3tc="res://.godot/imported/heart.png-49e547b2fa8a0cecea1a104702f6e70f.s3tc.ctex"
+path.etc2="res://.godot/imported/heart.png-49e547b2fa8a0cecea1a104702f6e70f.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://asset/SpaceShooterAssetPack_Miscellaneous.png"
-dest_files=["res://.godot/imported/SpaceShooterAssetPack_Miscellaneous.png-d650bcacb316f47c76f7827cf1665706.s3tc.ctex", "res://.godot/imported/SpaceShooterAssetPack_Miscellaneous.png-d650bcacb316f47c76f7827cf1665706.etc2.ctex"]
+source_file="res://asset/heart.png"
+dest_files=["res://.godot/imported/heart.png-49e547b2fa8a0cecea1a104702f6e70f.s3tc.ctex", "res://.godot/imported/heart.png-49e547b2fa8a0cecea1a104702f6e70f.etc2.ctex"]
 
 [params]
 

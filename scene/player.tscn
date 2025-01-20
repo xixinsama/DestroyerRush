@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://n51yxye8n0j6"]
+[gd_scene load_steps=28 format=3 uid="uid://n51yxye8n0j6"]
 
 [ext_resource type="Script" path="res://compenent/stats_component.gd" id="1_c2tg5"]
 [ext_resource type="Script" path="res://script/player.gd" id="1_kcnqc"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://81wuve4douh5" path="res://scene/explosion-effect.tscn" id="12_a0kcg"]
 [ext_resource type="PackedScene" uid="uid://b821dikdcn1ee" path="res://UI/player_energy_panel.tscn" id="12_vsasp"]
 [ext_resource type="Texture2D" uid="uid://cafe7oti8500i" path="res://asset/SpaceShooterAssetPack_Miscellaneous.png" id="13_6to12"]
+[ext_resource type="PackedScene" uid="uid://c88ksi4miyfvg" path="res://UI/player_health.tscn" id="14_vmki5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a4fqk"]
 atlas = ExtResource("2_vs1xv")
@@ -105,6 +106,8 @@ script = ExtResource("1_kcnqc")
 
 [node name="StatsComponent" type="Node" parent="."]
 script = ExtResource("1_c2tg5")
+health_max = 6
+health = 6
 roll_speed = 8
 
 [node name="PlayerManageComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "statscomponent", "hurtboxcomponent", "destroy_effect_spawner_component")]
@@ -184,6 +187,9 @@ script = ExtResource("10_5y2br")
 scene = ExtResource("12_a0kcg")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerHealth" parent="CanvasLayer" node_paths=PackedStringArray("player_stats") instance=ExtResource("14_vmki5")]
+player_stats = NodePath("../../StatsComponent")
 
 [node name="PlayerEnergyPanel" parent="CanvasLayer" node_paths=PackedStringArray("player_stats") instance=ExtResource("12_vsasp")]
 anchors_preset = 2
