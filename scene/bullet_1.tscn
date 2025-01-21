@@ -53,15 +53,15 @@ frame = 27
 [node name="HitboxComponent" parent="." index="1"]
 position = Vector2(-0.625, -0.125)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitboxComponent" index="0"]
 position = Vector2(0.625, 0.125)
 shape = SubResource("RectangleShape2D_tmtq6")
 
-[node name="MoveComponent" type="Node" parent="." index="2" node_paths=PackedStringArray("actor")]
+[node name="MoveComponent2" type="Node" parent="." index="2" node_paths=PackedStringArray("actor")]
 script = ExtResource("4_mj4r7")
 actor = NodePath("..")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="3"]
 libraries = {
 "": SubResource("AnimationLibrary_pal8e")
 }

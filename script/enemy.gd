@@ -1,35 +1,33 @@
 extends Node2D
 
 
+@onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var stats_component: StatsComponent = $StatsComponent
 @onready var enemy_manage_component: PlayerManageComponent = $EnemyManageComponent
-@onready var sprite_2d: Sprite2D = $Sprite2D
-@onready var destroy_effect_spawner_component: SpawnerComponent = $DestroyEffectSpawnerComponent
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
-@onready var spawner_component: SpawnerComponent = $SpawnerComponent
-@onready var spawn_points: Node2D = $SpawnPoints
+@onready var destroy_effect_spawner_component: SpawnerComponent = $DestroyEffectSpawnerComponent
 @onready var enemy_health_bar: TextureProgressBar = $EnemyHealthBar
 
-func _ready() -> void:
-	# 发射第一类子弹
-	var fire_timer1: Timer = Timer.new() # 创建一个计时器节点
-	add_child(fire_timer1)
-	fire_timer1.wait_time = 05
-	fire_timer1.autostart = true
-	fire_timer1.name = "FireDelay"
-	# 启动计时器
-	fire_timer1.start()
-	fire_timer1.timeout.connect(fire_bullet1)
-	
-func fire_bullet1() -> void:
-	var l1: Marker2D = spawn_points.get_node("left_1")
-	#spawner_component.spawn(l1.global_position)
-	var r1: Marker2D = spawn_points.get_node("right_1")
-	#spawner_component.spawn(r1.global_position)
+@export_range(0, 24) var enemy_looklike: int = 0 ## 选择敌人皮肤
+@export_range(0,4) var enemy_destroy_effect: int = 0 ## 选择敌人爆炸效果
+@export var enemy_health_max: int = 1## 在关卡中设置最大血量
+@export var enemy_health: int = 1## 在关卡中设置血量
+@export var enemy_damage: int = 1 ## 敌人的碰撞伤害
+@export var energy_point: int = 0 ## 敌人死亡(或其他情况)给玩家回复能量点数
 
+signal init_finish
+
+func _ready() -> void:
+	# 初始化
+	sprite_2d.frame = enemy_looklike
+	stats_component.health_max = enemy_health_max
+	stats_component.health = enemy_health
+	enemy_manage_component.flag_num = enemy_destroy_effect
+	hitbox_component.damage = enemy_damage
+	hitbox_component.energy_point = energy_point
+
+# 另一个ready()
+# 通过spawner生成后调用，在本体ready后
 func initialize(_flag: int = 0) -> void:
 	pass
-	#sprite_2d.frame = flag
-	#if flag == 2:
-		#stats_component.speed == 300

@@ -28,8 +28,10 @@ script = null
 
 [node name="enemy" parent="." instance=ExtResource("3_fpwfm")]
 position = Vector2(554, 457)
+enemy_health_max = 250
+enemy_health = 250
 
 [node name="player" parent="." instance=ExtResource("4_kj7pd")]
-position = Vector2(356, 533)
+position = Vector2(375, 279)
 
 [node name="GPUParticles2D" parent="." instance=ExtResource("5_c71dh")]

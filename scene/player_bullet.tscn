@@ -67,7 +67,7 @@ shape = SubResource("RectangleShape2D_5bixv")
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("3_kt7ov")
 actor = NodePath("..")
-velocity = Vector2(0, -250)
+velocity = Vector2(0, -20)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(0.05, 0.05)

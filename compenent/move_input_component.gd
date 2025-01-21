@@ -11,9 +11,9 @@ signal roll_finish
 
 func _unhandled_input(event: InputEvent) -> void:
 	# 如果按下Esc，退出游戏
-	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_ESCAPE:
-			get_tree().quit()
+	#if event is InputEventKey:
+		#if event.pressed and event.keycode == KEY_ESCAPE:
+			#get_tree().quit()
 	# 控制方向
 	var input_axis_horizonal = Input.get_axis("ui_left", "ui_right")
 	var input_axis_vertical = Input.get_axis("ui_up", "ui_down") #"")
