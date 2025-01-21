@@ -15,10 +15,10 @@ point_count = 2
 script = ExtResource("1_hu5ii")
 
 [node name="player" parent="." instance=ExtResource("1_d8d06")]
-position = Vector2(325, 559)
+position = Vector2(256, 1152)
 
 [node name="enemy" parent="." instance=ExtResource("2_bdh7i")]
-position = Vector2(326, 77)
+position = Vector2(320, 64)
 enemy_looklike = 1
 enemy_health = 160
 

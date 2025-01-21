@@ -9,9 +9,17 @@ extends Node2D
 
 
 func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	player.tree_exited.connect(func():
+		if enemy == null: # 不要动
+			return
+		else:
+			await get_tree().create_timer(1.0).timeout
+			get_tree().change_scene_to_file("res://scene/game_over.tscn")
+		)
+	enemy.tree_exited.connect(func():
+		if player == null:
+			return
+		else:
+			await get_tree().create_timer(1.0).timeout
+			get_tree().change_scene_to_file("res://scene/game_over.tscn") # 该这里
+		)
