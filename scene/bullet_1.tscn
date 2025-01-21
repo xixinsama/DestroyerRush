@@ -44,7 +44,6 @@ _data = {
 }
 
 [node name="bullet_1" instance=ExtResource("1_o6nhv")]
-scale = Vector2(8, 8)
 
 [node name="Sprite2D" parent="." index="0"]
 material = ExtResource("2_yyclp")
@@ -66,3 +65,8 @@ libraries = {
 "": SubResource("AnimationLibrary_pal8e")
 }
 autoplay = "flash"
+
+[node name="MoveComponent" parent="." index="5"]
+roll_vec_rad_2 = -3.142
+roll_r_1 = 100.0
+speed_trail_1 = 150.0

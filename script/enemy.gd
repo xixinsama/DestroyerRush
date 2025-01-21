@@ -31,3 +31,9 @@ func _ready() -> void:
 # 通过spawner生成后调用，在本体ready后
 func initialize(_flag: int = 0) -> void:
 	pass
+	
+func _process(_delta):
+	# 传递 位置 和 位移向量 信息同步至全局‘
+	# 只同步了 普通移动 的位移向量，没有 翻滚 的位移向量
+	Status.enemy_position = global_position
+	##print (global_position)
