@@ -9,8 +9,6 @@ extends Node2D
 @onready var enemy: Node2D = $Path2D/PathFollow2D/enemy # 通过改变敌人纹理来选关
 @onready var killzone: HurtboxComponent = $killzone
 
-var flag: int = 0
-
 func _ready() -> void:
 	player.tree_exited.connect(func():
 		if enemy == null: # 不要动
