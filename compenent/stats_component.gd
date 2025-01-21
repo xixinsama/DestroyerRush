@@ -3,7 +3,7 @@ class_name StatsComponent
 extends Node
 
 
-@export var health_max: int = 1
+@export var health_max: int = 100
 @export var health: int = 1: ## 最大血量，最小值为0
 	# 当此值修改时调用下面的函数
 	set(value):
@@ -23,7 +23,7 @@ signal health_changed(HP_before: int, HP_now: int)
 signal no_health()
 
 @export var energy_max: int = 10 ## 最大能量容量
-@export var energy: int = 0.0: ## 最小值为0.0
+@export var energy: int = 0: ## 最小值为0.0
 	# 当此值修改时调用下面的函数
 	set(value):
 		energy = value
@@ -52,6 +52,3 @@ signal full_energy()
 signal speed_changed(speed_value: int) ## 也不知道有什么用，但就是加上去了
 
 @export var roll_speed: int
-
-func _ready() -> void:
-	health = health_max

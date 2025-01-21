@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://3r2gmpgp3sam"]
+[gd_scene load_steps=13 format=3 uid="uid://3r2gmpgp3sam"]
 
 [ext_resource type="Script" path="res://script/enemy.gd" id="1_hsyke"]
 [ext_resource type="Texture2D" uid="uid://btwx8y4nkejef" path="res://asset/SpaceShooterAssetPack_Ships.png" id="1_lrh0m"]
 [ext_resource type="Script" path="res://compenent/hitbox_component.gd" id="2_8reyk"]
 [ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="3_qp8lr"]
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="4_okoq8"]
-[ext_resource type="PackedScene" uid="uid://6ciocx7syw28" path="res://scene/bullet_1.tscn" id="6_k14tr"]
 [ext_resource type="Script" path="res://compenent/stats_component.gd" id="7_ofyng"]
 [ext_resource type="Script" path="res://compenent/player_manage_component.gd" id="8_7dihk"]
 [ext_resource type="PackedScene" uid="uid://81wuve4douh5" path="res://scene/explosion-effect.tscn" id="9_nh6lm"]
@@ -25,9 +24,13 @@ radius = 4.0
 scale = Vector2(8, 8)
 script = ExtResource("1_hsyke")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_1mpt6")
+hframes = 6
+vframes = 4
+
 [node name="StatsComponent" type="Node" parent="."]
 script = ExtResource("7_ofyng")
-health_max = 10
 
 [node name="EnemyManageComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "statscomponent", "hurtboxcomponent", "destroy_effect_spawner_component")]
 script = ExtResource("8_7dihk")
@@ -35,17 +38,10 @@ actor = NodePath("..")
 statscomponent = NodePath("../StatsComponent")
 hurtboxcomponent = NodePath("../HurtboxComponent")
 destroy_effect_spawner_component = NodePath("../DestroyEffectSpawnerComponent")
-flag_num = 1
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_1mpt6")
-hframes = 6
-vframes = 4
 
 [node name="HitboxComponent" type="Area2D" parent="."]
 collision_layer = 0
 script = ExtResource("2_8reyk")
-energy_point = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("RectangleShape2D_17ody")
@@ -60,30 +56,9 @@ script = ExtResource("3_qp8lr")
 shape = SubResource("CircleShape2D_b05b5")
 debug_color = Color(1, 0.292254, 0.223169, 0.42)
 
-[node name="SpawnerComponent" type="Node2D" parent="."]
-script = ExtResource("4_okoq8")
-scene = ExtResource("6_k14tr")
-
 [node name="DestroyEffectSpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("4_okoq8")
 scene = ExtResource("9_nh6lm")
-
-[node name="SpawnPoints" type="Node2D" parent="."]
-
-[node name="left_1" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(-1, 2)
-
-[node name="right_1" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(2, 2)
-
-[node name="center" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(0.5, 3)
-
-[node name="letf_2" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(-2, 1)
-
-[node name="right_2" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(3, 1)
 
 [node name="EnemyHealthBar" parent="." node_paths=PackedStringArray("enemy_stats") instance=ExtResource("9_qstbb")]
 offset_left = -6.0

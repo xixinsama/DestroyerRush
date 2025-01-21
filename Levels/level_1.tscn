@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4fvwhulmiwl3"]
+
+[ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_d8d06"]
+[ext_resource type="Script" path="res://script/level_1.gd" id="1_hu5ii"]
+[ext_resource type="PackedScene" uid="uid://3r2gmpgp3sam" path="res://scene/enemy.tscn" id="2_bdh7i"]
+[ext_resource type="Script" path="res://compenent/spawner_component.gd" id="4_meg6h"]
+
+[sub_resource type="Curve2D" id="Curve2D_xy6et"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 64, 192, 0, 0, 0, 0, 640, 192)
+}
+point_count = 2
+
+[node name="level1" type="Node2D"]
+script = ExtResource("1_hu5ii")
+
+[node name="player" parent="." instance=ExtResource("1_d8d06")]
+position = Vector2(256, 1152)
+
+[node name="enemy" parent="." instance=ExtResource("2_bdh7i")]
+position = Vector2(320, 64)
+enemy_looklike = 1
+enemy_health = 160
+
+[node name="SpawnerComponent" type="Node2D" parent="."]
+script = ExtResource("4_meg6h")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_xy6et")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(64, 192)

@@ -13,9 +13,11 @@ var layer: int # 总血量层数
 var layer_times: int = 1 # 当前血量层数
 
 func _ready():
+	await get_tree().create_timer(0.1).timeout
 	# 先计算要多少层血
 	layer = floor(enemy_stats.health_max / max_value) + 1
 	# 初始化血条,第一条血量额外突出
+	# 第一条血量等于多出的加上100（未做）
 	self.set_value_no_signal(enemy_stats.health_max - max_value * (layer - layer_times))
 	bar_2.set_value_no_signal(bar_2.max_value) 
 	bar_3.set_value_no_signal(bar_3.max_value)

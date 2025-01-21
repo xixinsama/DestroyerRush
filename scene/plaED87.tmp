@@ -178,13 +178,13 @@ position = Vector2(-2.5, -2)
 [node name="right_2" type="Marker2D" parent="SpawnPoints"]
 position = Vector2(2.5, -2)
 
-[node name="DestroyEffectSpawnerComponent2" type="Node2D" parent="."]
-script = ExtResource("10_5y2br")
-scene = ExtResource("12_a0kcg")
-
 [node name="BulletSpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("10_5y2br")
 scene = ExtResource("11_jj21o")
+
+[node name="DestroyEffectSpawnerComponent2" type="Node2D" parent="."]
+script = ExtResource("10_5y2br")
+scene = ExtResource("12_a0kcg")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
