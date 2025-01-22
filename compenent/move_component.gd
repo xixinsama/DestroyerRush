@@ -46,7 +46,8 @@ func _process(delta):
 ##代码 #追踪弹
 	#Status.player_position;
 	#actor.global_position;
-	trail_v =speed_trail_1*(trail_pos - actor.global_position).normalized();
+	trail_v =speed_trail_1*(trail_pos - actor.global_position ).normalized()# + speed_trail_1*Vector2(randfn(0,1),randfn(0,1));
+	
 ##代码 #旋转追踪弹
 	roll_origin_rad_2=roll_vec_rad_2*delta+roll_origin_rad_2#当前旋转的角度
 	roll_trail_v=Vector2(roll_r_2*cos(roll_origin_rad_2)-roll_r_2*cos(roll_origin_rad_2-roll_vec_rad_2*delta),roll_r_2*sin(roll_origin_rad_2)-roll_r_2*sin(roll_origin_rad_2-roll_vec_rad_2*delta))#在当前旋转角度和和半径干扰下的位移向量
