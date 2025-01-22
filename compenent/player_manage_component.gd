@@ -14,10 +14,15 @@ func _ready() -> void:
 	hurtboxcomponent.hurt.connect(func(hitbox: HitboxComponent):
 		statscomponent.health -= hitbox.damage
 		)
+	statscomponent.full_energy.connect(_on_energy_is_full)
 
 # 当擦弹成功，增加能量
 func _on_edge_ball_energy_up(energy_point: float) -> void:
 	statscomponent.energy += energy_point
+
+func _on_energy_is_full() -> void:
+	statscomponent.energy = 0
+	statscomponent.health += 1
 
 # 血量为0时，播放爆炸效果，消失
 func _on_stats_component_no_health() -> void:
