@@ -14,11 +14,11 @@
  动态难度具体为：
 
 	if 70 > progress and progress > 50:
-		enemy_count = randi_range(1, 5)
+		enemy_count = randi_range(1, 4)
 	elif  90 > progress and progress >= 70:
-		enemy_count = randi_range(2, 5)
+		enemy_count = randi_range(2, 4)
 	elif  100 > progress and progress >= 90:
-		enemy_count = randi_range(3, 4)
+		enemy_count = randi_range(2, 3)
 	elif  50 >= progress and progress >= 0:
 		enemy_count = randi_range(0, 6)
 ## 第五关
