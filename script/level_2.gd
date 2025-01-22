@@ -19,7 +19,7 @@ func _ready() -> void:
 	time_all.start()
 	
 	##关于计时器的初始话
-	time_all.wait_time = 5.0
+	time_all.wait_time = 2.0
 	timer.wait_time = 3.0
 	timer_2.wait_time = 2.0
 	timer.autostart = true
@@ -44,25 +44,25 @@ func luoruixin_time_all() :
 	#var flag_i: int = randf_range(8,18)
 	var luo: Bullet = null
 	if flag == 0:
-		var num: int = 10 ##子弹数量
+		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num) , 200 ),self,0)
 			luo.velocity = Vector2(0,150)
 	if flag == 1:
-		var num: int = 10 ##子弹数量
+		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num) , 200 ),self,0)
 			luo.velocity = Vector2(0,speed)
 	if flag == 2:
-		var num: int = 10 ##子弹数量
+		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num) , 200 ),self,0)
 			luo.velocity = Vector2(0,speed + 10 * i)
 	if flag == 3:
-		var num: int = 10 ##子弹数量
+		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num) , 200 ),self,0)
@@ -83,7 +83,7 @@ func luoruixin_time_all() :
 		luo_roll_trail_right.roll_vec_rad_2 = PI/3
 		luo_roll_trail_left = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_left.roll_vec_rad_2 = -PI/3
-		await get_tree().create_timer(3).timeout
+		await get_tree().create_timer(5).timeout
 		
 		if luo_roll_trail_right!=null:
 				luo_roll_trail_right.queue_free()
@@ -130,7 +130,7 @@ func luoruixin_time_all() :
 		
 		
 		##删除节点
-		await get_tree().create_timer(2.5).timeout
+		await get_tree().create_timer(5).timeout
 		if luo_roll_trail_right!=null:
 			luo_roll_trail_right.queue_free()
 		if luo_roll_trail_left!=null:
@@ -182,13 +182,6 @@ func luoruixin_time_all() :
 	
 
 func luoruixin() :
-	#var luo: Bullet
-	#var i: int = 1
-	#luo = spawner_component.spawn(Vector2(160,900),self,0)
-	#luo.name = "luorui" + String.num_int64(shotgun_flag)
-	#shotgun_flag += 1
-	#luo.velocity = Vector2(50,0)
-	#timer_2.start()
 	pass
 
 func son_luoruixin():
@@ -202,11 +195,4 @@ func son_luoruixin():
 			bullet_luo_son2.velocity = Vector2(0,-50)
 			var bullet_luo_son3 : Bullet = spawner_component.spawn(luo.global_position,self,0)
 			bullet_luo_son3.velocity = Vector2(50,-50)
-	#luo=get_node("luorui1");
-	#var bullet_luo_son1 : Bullet = spawner_component.spawn(luo.global_position,self,0)
-	#bullet_luo_son1.velocity = Vector2(-50,-50)
-	#var bullet_luo_son2 : Bullet = spawner_component.spawn(luo.global_position,self,0)
-	#bullet_luo_son2.velocity = Vector2(0,-50)
-	#var bullet_luo_son3 : Bullet = spawner_component.spawn(luo.global_position,self,0)
-	#bullet_luo_son3.velocity = Vector2(50,-50)s
 			luo.queue_free()
