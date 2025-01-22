@@ -5,6 +5,10 @@
 [ext_resource type="Script" path="res://compenent/hitbox_component.gd" id="2_pl41q"]
 [ext_resource type="Script" path="res://compenent/move_component.gd" id="3_kt7ov"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_et2na"]
+atlas = ExtResource("1_7c7t1")
+region = Rect2(16, 0, 8, 8)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_c000a"]
 atlas = ExtResource("1_7c7t1")
 region = Rect2(0, 0, 8, 8)
@@ -13,15 +17,11 @@ region = Rect2(0, 0, 8, 8)
 atlas = ExtResource("1_7c7t1")
 region = Rect2(8, 0, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_et2na"]
-atlas = ExtResource("1_7c7t1")
-region = Rect2(16, 0, 8, 8)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_8s1rb"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c000a")
+"texture": SubResource("AtlasTexture_et2na")
 }],
 "loop": true,
 "name": &"0",
@@ -46,11 +46,13 @@ animations = [{
 size = Vector2(1, 1)
 
 [node name="player_bullet" type="Node2D"]
+z_index = -100
 scale = Vector2(8, 8)
 script = ExtResource("1_grfbr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-0.5, -0.5)
+modulate = Color(1, 1, 1, 0.501961)
+position = Vector2(0.5, -0.5)
 sprite_frames = SubResource("SpriteFrames_8s1rb")
 animation = &"0"
 autoplay = "0"
@@ -66,9 +68,7 @@ shape = SubResource("RectangleShape2D_5bixv")
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("3_kt7ov")
 actor = NodePath("..")
-velocity = Vector2(0, -400)
 roll_vec_rad_1 = 3.142
-roll_vec_rad_2 = 0.393
 speed_trail_1 = 500.0
 trail_who = 1
 

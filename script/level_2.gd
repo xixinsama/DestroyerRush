@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 @onready var move_component: MoveComponent = $MoveComponent
+@onready var player: Node2D = $player
+@onready var enemy: Node2D = $enemy
 
 var time_all: Timer = null
 var timer_2: Timer = null
@@ -35,6 +37,22 @@ func _ready() -> void:
 	time_all.timeout.connect(luoruixin_time_all)
 	timer.timeout.connect(luoruixin)
 	timer_2.timeout.connect(son_luoruixin)
+	player.tree_exited.connect(func():
+		if enemy == null: # 不要动
+			return
+		else:
+			await get_tree().create_timer(1.0).timeout
+			get_tree().change_scene_to_file("res://scene/game_over.tscn")
+		)
+	enemy.tree_exited.connect(func():
+		# 停止
+		move_component.queue_free()
+		if player == null:
+			return
+		else:
+			await get_tree().create_timer(1.0).timeout
+			get_tree().change_scene_to_file("res://Levels/level_4.tscn") # 该这里
+		)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -181,10 +199,12 @@ func luoruixin_time_all() :
 			rad = rad + PI/(num-1)
 			timer_2.start()
 
-func luoruixin() :
-	move_component.roll_vec_rad_1 = - move_component.roll_vec_rad_1
-	pass
-
+func luoruixin():
+	if move_component != null:
+		move_component.roll_vec_rad_1 = - move_component.roll_vec_rad_1
+	else:
+		return
+	
 func son_luoruixin():
 	var luo: Bullet
 	for i in range(0,10):

@@ -14,13 +14,15 @@ point_count = 2
 [node name="level1" type="Node2D"]
 script = ExtResource("1_hu5ii")
 
-[node name="player" parent="." instance=ExtResource("1_d8d06")]
-position = Vector2(256, 1152)
-
 [node name="enemy" parent="." instance=ExtResource("2_bdh7i")]
 position = Vector2(320, 64)
 enemy_looklike = 1
 enemy_health = 160
+
+[node name="enemy2" parent="." instance=ExtResource("2_bdh7i")]
+
+[node name="player" parent="." instance=ExtResource("1_d8d06")]
+position = Vector2(256, 1152)
 
 [node name="SpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("4_meg6h")

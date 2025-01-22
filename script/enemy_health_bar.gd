@@ -28,8 +28,8 @@ func _ready():
 func update_bars():
 	# 即时更新 Over 层 (直接掉血)
 	# 归化到100之内
-	print(layer)
-	print(layer_times)
+	#print(layer)
+	#print(layer_times)
 	var target_health: int = enemy_stats.health - max_value * (layer - layer_times)
 	# 记录特殊的第一次
 	if layer_times == 1:

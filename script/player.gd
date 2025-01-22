@@ -26,7 +26,7 @@ func _ready():
 	# 发射第一类子弹
 	var fire_timer1: Timer = Timer.new() # 创建一个计时器节点
 	add_child(fire_timer1)
-	fire_timer1.wait_time = 0.5
+	fire_timer1.wait_time = 0.01
 	fire_timer1.autostart = true
 	fire_timer1.name = "FireDelay"
 	# 启动计时器
@@ -52,9 +52,12 @@ func _ready():
 
 func fire_bullet1() -> void:
 	var l1: Marker2D = spawn_points.get_node("left_1")
-	bullet_spawner_component.spawn(l1.global_position)
+	var node1 = bullet_spawner_component.spawn(l1.global_position)
+	node1.get_node("MoveComponent").roll_vec_rad_2 = -0.4
+	
 	var r1: Marker2D = spawn_points.get_node("right_1")
-	bullet_spawner_component.spawn(r1.global_position)
+	var node2 = bullet_spawner_component.spawn(r1.global_position)
+	node2.get_node("MoveComponent").roll_vec_rad_2 = 0.4
 
 func _process(_delta):
 	# 改变移动动画
@@ -63,15 +66,6 @@ func _process(_delta):
 	# 只同步了 普通移动 的位移向量，没有 翻滚 的位移向量
 	Status.player_position = position
 	Status.player_velocity = move_component.velocity + move_component.roll_velocity
-
-#func _physics_process(delta: float) -> void:
-	#if Input.is_action_just_pressed("roll"):
-		#if roll_timer.is_stopped():
-			#is_double_click = false
-			#roll_timer.start()
-		#else:
-			#is_double_click = true
-			#print("Double Click!")
 
 func animate_the_ship() -> void:
 	if move_component.velocity.x < 0:
@@ -121,7 +115,6 @@ func start_trail() -> void:
 	for name_prop1 in anime_properties:
 		animate_trail.set(name_prop1, frame_animated_sprite_2d.get(name_prop1))
 	animate_trail.set("scale", self.scale) # player的根节点放大了，所以这里也要放大
-
 
 # 在翻滚时留下残影，并取消玩家碰撞检测
 func _on_move_input_component_roll_start() -> void:

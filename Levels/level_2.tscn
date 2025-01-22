@@ -10,13 +10,13 @@
 [node name="Level2" type="Node2D"]
 script = ExtResource("1_l3ns6")
 
-[node name="player" parent="." instance=ExtResource("1_2tkxg")]
-position = Vector2(368, 680)
-
 [node name="enemy" parent="." instance=ExtResource("2_sc6v1")]
 position = Vector2(370, 228)
-enemy_health_max = 300
-enemy_health = 300
+enemy_health_max = 5000
+enemy_health = 5000
+
+[node name="player" parent="." instance=ExtResource("1_2tkxg")]
+position = Vector2(368, 680)
 
 [node name="SpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("3_3otc7")
