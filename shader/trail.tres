@@ -4,4 +4,4 @@
 
 [resource]
 shader = ExtResource("1_35d54")
-shader_parameter/tint_color = Color(0.419608, 0.870588, 0.576471, 1)
+shader_parameter/tint_color = Color(0.631373, 0.188235, 0, 1)

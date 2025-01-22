@@ -1,9 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://3r2gmpgp3sam"]
+[gd_scene load_steps=13 format=3 uid="uid://3r2gmpgp3sam"]
 
 [ext_resource type="Script" path="res://script/enemy.gd" id="1_hsyke"]
 [ext_resource type="Texture2D" uid="uid://btwx8y4nkejef" path="res://asset/SpaceShooterAssetPack_Ships.png" id="1_lrh0m"]
 [ext_resource type="Script" path="res://compenent/hitbox_component.gd" id="2_8reyk"]
-[ext_resource type="Texture2D" uid="uid://cafe7oti8500i" path="res://asset/SpaceShooterAssetPack_Miscellaneous.png" id="3_cn61i"]
 [ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="3_qp8lr"]
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="4_okoq8"]
 [ext_resource type="Script" path="res://compenent/stats_component.gd" id="7_ofyng"]
@@ -14,42 +13,6 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_1mpt6"]
 atlas = ExtResource("1_lrh0m")
 region = Rect2(32, 16, 48, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m00kc"]
-atlas = ExtResource("3_cn61i")
-region = Rect2(72, 24, 8, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7cu0v"]
-atlas = ExtResource("3_cn61i")
-region = Rect2(80, 24, 8, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3ollg"]
-atlas = ExtResource("3_cn61i")
-region = Rect2(88, 24, 8, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ji1of"]
-atlas = ExtResource("3_cn61i")
-region = Rect2(96, 24, 8, 8)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_k3vv0"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m00kc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7cu0v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3ollg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ji1of")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_17ody"]
 size = Vector2(5, 5.125)
@@ -62,53 +25,10 @@ scale = Vector2(8, 8)
 script = ExtResource("1_hsyke")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-material = null
-use_parent_material = false
-position = Vector2(0, 0)
-rotation = 0.0
-scale = Vector2(1, 1)
-skew = 0.0
 texture = SubResource("AtlasTexture_1mpt6")
-centered = true
-offset = Vector2(0, 0)
-flip_h = false
-flip_v = false
 hframes = 6
 vframes = 4
-frame = 0
-region_enabled = false
-region_rect = Rect2(0, 0, 0, 0)
-region_filter_clip_enabled = false
-script = null
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -5)
-rotation = 3.14159
-scale = Vector2(0.5, 0.5)
-sprite_frames = SubResource("SpriteFrames_k3vv0")
-autoplay = "default"
+frame = 19
 
 [node name="StatsComponent" type="Node" parent="."]
 script = ExtResource("7_ofyng")

@@ -19,7 +19,7 @@ func _ready() -> void:
 	time_all.start()
 	
 	##关于计时器的初始话
-	time_all.wait_time = 5.0
+	time_all.wait_time = 2.0
 	timer.wait_time = 3.0
 	timer_2.wait_time = 2.0
 	timer.autostart = true

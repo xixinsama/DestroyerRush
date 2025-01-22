@@ -20,6 +20,7 @@ var roll_timer: Timer = null
 var trail_timer: Timer = null
 # var is_double_click: bool = false
 @export_range(0, 4) var play_looklike: int = 0 ## 选择玩家皮肤
+@export var roll_wait_time: float = 2
 
 func _ready():
 	# 发射第一类子弹
@@ -31,15 +32,16 @@ func _ready():
 	# 启动计时器
 	fire_timer1.start()
 	fire_timer1.timeout.connect(fire_bullet1)
-	
-	
-	## 翻滚等待CD的计时器
-	#roll_timer = Timer.new()
-	#roll_timer.one_shot = true
-	#roll_timer.wait_time = 0.25
-	#add_child(roll_timer)
-	#roll_timer.name = "DoubleClickTimer"
-	## 翻滚时的残影计时器
+	# 翻滚等待CD的计时器
+	roll_timer = Timer.new()
+	add_child(roll_timer)
+	roll_timer.autostart = true
+	roll_timer.wait_time = roll_wait_time
+	roll_timer.start()
+	roll_timer.timeout.connect(func():
+		move_input_component.roll_enable = true
+		)
+	# 翻滚时的残影计时器
 	trail_timer = Timer.new()
 	add_child(trail_timer)
 	trail_timer.name = "TrailTimer"
