@@ -8,8 +8,5 @@ rotation = -0.785398
 [node name="Sprite2D" parent="." index="0"]
 region_rect = Rect2(24, 48, 8, 8)
 
-[node name="HitboxComponent" parent="." index="1"]
-energy_point = 2.33
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitboxComponent" index="0"]
 polygon = PackedVector2Array(-4, 4, -2, 0, 0, -2, 4, -4, 2, 0, 0, 2)

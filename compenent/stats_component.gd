@@ -9,7 +9,7 @@ extends Node
 	set(value):
 		var health_before: int = health
 		health = value
-		
+		health = clamp(health, 0 , health_max)
 		# 当HP改变时，发送信号
 		health_changed.emit(health_before, health)
 		
@@ -23,18 +23,18 @@ signal health_changed(HP_before: int, HP_now: int)
 signal no_health()
 
 @export var energy_max: int = 10 ## 最大能量容量
-@export var energy: int = 0: ## 最小值为0.0
+@export var energy: int = 0: ## 最小值为0
 	# 当此值修改时调用下面的函数
 	set(value):
 		energy = value
-		
+		energy = clamp(energy, 0 , energy_max)
 		# 当EP改变时，发送信号
 		energy_changed.emit(energy)
 		
 		print("ep:", energy)
 		 
 		# 当EP等于0时，也就是EP积累满时，发送信号
-		if energy == 0: full_energy.emit()
+		if energy == energy_max: full_energy.emit()
 
 # EP的信号
 signal energy_changed(EP: int)

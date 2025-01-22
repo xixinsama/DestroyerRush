@@ -66,8 +66,8 @@ shape = SubResource("RectangleShape2D_5bixv")
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("3_kt7ov")
 actor = NodePath("..")
+velocity = Vector2(0, -400)
 roll_vec_rad_1 = 3.142
-speed_trail_1 = 150.0
 trail_who = 1
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

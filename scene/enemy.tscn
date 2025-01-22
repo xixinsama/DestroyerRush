@@ -28,6 +28,7 @@ script = ExtResource("1_hsyke")
 texture = SubResource("AtlasTexture_1mpt6")
 hframes = 6
 vframes = 4
+frame = 19
 
 [node name="StatsComponent" type="Node" parent="."]
 script = ExtResource("7_ofyng")
@@ -62,7 +63,7 @@ scene = ExtResource("9_nh6lm")
 
 [node name="EnemyHealthBar" parent="." node_paths=PackedStringArray("enemy_stats") instance=ExtResource("9_qstbb")]
 offset_left = -6.0
-offset_top = -6.0
-offset_right = 6.0
-offset_bottom = -5.0
+offset_top = -7.0
+offset_right = 10.0
+offset_bottom = -6.0
 enemy_stats = NodePath("../StatsComponent")
