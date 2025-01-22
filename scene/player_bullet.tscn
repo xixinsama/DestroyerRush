@@ -68,6 +68,8 @@ script = ExtResource("3_kt7ov")
 actor = NodePath("..")
 velocity = Vector2(0, -400)
 roll_vec_rad_1 = 3.142
+roll_vec_rad_2 = 0.393
+speed_trail_1 = 500.0
 trail_who = 1
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

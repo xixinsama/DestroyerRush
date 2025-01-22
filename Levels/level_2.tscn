@@ -1,22 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://5f88w0v6cwfg"]
+[gd_scene load_steps=7 format=3 uid="uid://5f88w0v6cwfg"]
 
 [ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_2tkxg"]
 [ext_resource type="Script" path="res://script/level_2.gd" id="1_l3ns6"]
 [ext_resource type="PackedScene" uid="uid://3r2gmpgp3sam" path="res://scene/enemy.tscn" id="2_sc6v1"]
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="3_3otc7"]
 [ext_resource type="PackedScene" uid="uid://o8jih1iks4x5" path="res://scene/bullet.tscn" id="4_cqrcl"]
+[ext_resource type="Script" path="res://compenent/move_component.gd" id="6_6d6gy"]
 
 [node name="Level2" type="Node2D"]
 script = ExtResource("1_l3ns6")
 
 [node name="player" parent="." instance=ExtResource("1_2tkxg")]
-position = Vector2(171, 328)
+position = Vector2(368, 680)
 
 [node name="enemy" parent="." instance=ExtResource("2_sc6v1")]
-position = Vector2(487, 276)
+position = Vector2(370, 228)
 enemy_health_max = 300
 enemy_health = 300
 
 [node name="SpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("3_3otc7")
 scene = ExtResource("4_cqrcl")
+
+[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("6_6d6gy")
+actor = NodePath("../enemy")
+roll_origin_rad_1 = 1.571
+roll_vec_rad_1 = 0.628
+roll_r_1 = 100.0
