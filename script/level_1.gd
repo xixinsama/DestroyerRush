@@ -6,7 +6,6 @@ extends Node2D
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 
 
-
 func _ready() -> void:
 	player.tree_exited.connect(func():
 		if enemy == null: # 不要动

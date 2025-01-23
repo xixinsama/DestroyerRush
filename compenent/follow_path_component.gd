@@ -13,10 +13,14 @@ var going_forward: bool = true # 标识当前是否向前移动
 signal finish_oneloop ##一次路径巡游结束后发送信号, 如果是is_loop为true，则每次都发送信号
 
 func _ready() -> void:
-	actor.tree_exiting.connect(stop_process)
-	if path_points == null:
-		is_around = false
-		is_loop = false
+	if actor != null:
+		actor.tree_exiting.connect(stop_process)
+		if path_points == null:
+			is_around = false
+			is_loop = false
+	else:
+		stop_process()
+		return
 
 func _process(delta: float) -> void:
 	var path_length = path_points.get_baked_length() # 路径总长度
