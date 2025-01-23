@@ -4,6 +4,9 @@ extends Node2D
 @onready var move_component: MoveComponent = $MoveComponent
 @onready var player: Node2D = $player
 @onready var enemy: Node2D = $enemy
+@onready var bomm_sprite_2d: AnimatedSprite2D = $enemy/bommSprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 
 var time_all: Timer = null
 var timer_2: Timer = null
@@ -29,7 +32,7 @@ func _ready() -> void:
 	timer_prase.start()
 	
 	##关于计时器的初始话
-	time_all.wait_time = 2.0
+	time_all.wait_time = 3.0
 	timer.wait_time = 10.0
 	timer_2.wait_time = 3.0
 	timer_prase.wait_time = 1
@@ -79,7 +82,7 @@ func luoruixin_time_all() :
 	if flag == 0:
 		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
-		var frame_bullet = flag ##子弹样式
+		var frame_bullet = flag+5 ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num) +randi_range(20,50) , 200 + randi_range(-50,50) ),self,0)
 			luo.frame = frame_bullet
@@ -87,7 +90,7 @@ func luoruixin_time_all() :
 	if flag == 1:
 		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
-		var frame_bullet = flag ##子弹样式
+		var frame_bullet = flag+5 ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num)+randi_range(20,50) , 200 + random_h),self,0)
@@ -96,7 +99,7 @@ func luoruixin_time_all() :
 	if flag == 2:
 		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
-		var frame_bullet = flag ##子弹样式
+		var frame_bullet = flag+5 ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num)+randi_range(20,50) , 200 + random_h ),self,0)
@@ -105,7 +108,7 @@ func luoruixin_time_all() :
 	if flag == 3:
 		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
-		var frame_bullet = flag ##子弹样式
+		var frame_bullet = flag+5 ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num)+randi_range(20,50)  , 200 + random_h ),self,0)
@@ -115,7 +118,7 @@ func luoruixin_time_all() :
 	if flag == 4:
 		var num: int = 10 ##子弹数量
 		var speed: int = 150 ##子弹速度
-		var frame_bullet = flag ##子弹样式
+		var frame_bullet = flag+5 ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num) +randi_range(20,50), 200 + random_h),self,0)
@@ -206,7 +209,7 @@ func luoruixin_time_all() :
 		var rad: float = 0
 		var num: int = 10##子弹数量
 		var speed: int = 150 ##子弹速度
-		var frame_bullet = flag ##子弹样式
+		var frame_bullet = flag+5 ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Status.enemy_position,self,0)
 			luo.velocity = speed * Vector2(1,0).from_angle(rad)
@@ -216,7 +219,7 @@ func luoruixin_time_all() :
 		var num: int = 15##子弹数量
 		var speed: int = 300 ##子弹速度
 		var rad: float = 0
-		var frame_bullet = flag ##子弹样式
+		var frame_bullet = flag+5 ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Status.enemy_position,self,0)
 			luo.name = "luorui" + String.num_int64(shotgun_flag)
@@ -239,10 +242,13 @@ func son_luoruixin():
 		if luo != null:
 			var bullet_luo_son1 : Bullet = spawner_component.spawn(luo.global_position,self,0)
 			bullet_luo_son1.velocity = Vector2(-50,-50)
+			bullet_luo_son1.frame = 12
 			var bullet_luo_son2 : Bullet = spawner_component.spawn(luo.global_position,self,0)
 			bullet_luo_son2.velocity = Vector2(0,-50)
+			bullet_luo_son2.frame = 12
 			var bullet_luo_son3 : Bullet = spawner_component.spawn(luo.global_position,self,0)
 			bullet_luo_son3.velocity = Vector2(50,-50)
+			bullet_luo_son3.frame = 12
 			luo.queue_free()
 			
 			
@@ -250,3 +256,10 @@ func prase_des():
 	if enemy !=null:
 		if enemy.get_node("StatsComponent").health < enemy.enemy_health_max / 2 :
 			prase_flag = 4
+			time_all.wait_time = 2
+			bomm_sprite_2d.play("boom")
+			animation_player.play("big_small")
+			
+		#else : ##如果有血量恢复添加代码
+			#prase_flag = 0
+			#time_all.wait_time = 2
