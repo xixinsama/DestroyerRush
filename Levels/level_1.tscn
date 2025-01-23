@@ -28,6 +28,5 @@ curve = ExtResource("7_l0eh7")
 [node name="FollowPathComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("7_r5vrb")
 actor = NodePath("../enemy")
-path_points = ExtResource("7_l0eh7")
 is_around = true
 speed = 200
