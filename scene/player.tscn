@@ -133,7 +133,6 @@ autoplay = "centre"
 
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("3_mc8tl")
-is_loop = false
 actor = NodePath("..")
 
 [node name="MoveInputComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "move_component")]

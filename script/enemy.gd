@@ -30,7 +30,7 @@ func _ready() -> void:
 	enemy_manage_component.flag_num = enemy_destroy_effect
 	hitbox_component.damage = enemy_damage
 	hitbox_component.energy_point = energy_point
-
+	init_finish.emit()
 # 另一个ready()
 # 通过spawner生成后调用，在本体ready后
 func initialize(_flag: int = 0) -> void:

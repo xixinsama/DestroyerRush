@@ -3,13 +3,6 @@ class_name  MoveComponent
 extends Node
 
 
-@export var path_points: Curve2D = null ##绘制曲线，将节点按曲线轨迹移动
-@export var is_following: bool = false ##是否跟随曲线运动，如果没有curve，则会修改成false 
-@export var is_loop: bool = true ##按曲线移动是否循环，如果没有curve，则会修改成false 
-@export var speed: int = 0 ##节点移动的速度
-var distance_along_path: float = 0.0
-signal finish_oneloop
-
 @export var actor: Node2D
 @export var velocity: Vector2
 @export var roll_velocity: Vector2 = Vector2()
@@ -30,20 +23,10 @@ var roll_trail_v:Vector2 #旋转追踪弹
 var trail_pos = Status.player_position ##追踪谁
 @export var trail_who:int = 0
 
-
 func _ready() -> void:
-	# 判定节点状态
+	# 判定节点状态，连接关闭信号
 	actor.tree_exiting.connect(stop_process)
-	if path_points == null:
-		is_following = false
-		is_loop == false
-		#print(path_points.get_baked_points())
-		#print(path_points.point_count)
-		#print(path_points.get_point_position(3))
-		#print(path_points.get_point_in(7))
-		#print(path_points.get_point_out(3))
-		#print(path_points.sample(2,0.5))
-		
+	
 	if trail_who == 0:
 		trail_pos = Status.player_position
 	else:
@@ -59,20 +42,6 @@ func _ready() -> void:
 
 
 func _process(delta):
-	if is_following and actor != null:
-		distance_along_path += speed * delta
-		var path_length = path_points.get_baked_length()
-		if distance_along_path > path_length:
-			if is_loop:
-				distance_along_path -= path_length
-				emit_signal("finish_oneloop")
-			else:
-				distance_along_path = path_length ## 如果到达路径末端，停止移动
-				
-		var new_position = path_points.sample_baked(distance_along_path)
-		# print(new_position)
-		actor.global_position = new_position
-		
 ##代码 旋转弹
 	if trail_who == 0:
 		trail_pos = Status.player_position
