@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dcgj6joi43i08"]
+[gd_scene load_steps=7 format=3 uid="uid://dcgj6joi43i08"]
 
 [ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_3u3py"]
 [ext_resource type="Script" path="res://script/main.gd" id="1_jhbmh"]
 [ext_resource type="PackedScene" uid="uid://3r2gmpgp3sam" path="res://scene/enemy.tscn" id="3_xper4"]
 [ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="4_bycl7"]
-[ext_resource type="Script" path="res://compenent/follow_path_component.gd" id="5_2aplq"]
-[ext_resource type="Script" path="res://script/status.gd" id="6_ewnan"]
+[ext_resource type="Script" path="res://compenent/move_component.gd" id="6_81wgl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6ln3"]
 size = Vector2(2079.88, 93)
@@ -13,10 +12,8 @@ size = Vector2(2079.88, 93)
 [node name="level0" type="Node2D"]
 script = ExtResource("1_jhbmh")
 
-[node name="status" type="Node" parent="."]
-script = ExtResource("6_ewnan")
-
 [node name="enemy" parent="." instance=ExtResource("3_xper4")]
+position = Vector2(368, 222)
 
 [node name="player" parent="." instance=ExtResource("1_3u3py")]
 position = Vector2(360, 1100)
@@ -44,5 +41,5 @@ shape = SubResource("RectangleShape2D_x6ln3")
 position = Vector2(418, 1483)
 shape = SubResource("RectangleShape2D_x6ln3")
 
-[node name="FollowPathComponent" type="Node" parent="."]
-script = ExtResource("5_2aplq")
+[node name="MoveComponent" type="Node" parent="."]
+script = ExtResource("6_81wgl")
