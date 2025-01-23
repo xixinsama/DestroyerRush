@@ -8,35 +8,48 @@ extends Node2D
 var time_all: Timer = null
 var timer_2: Timer = null
 var timer: Timer = null
-var shotgun_flag: int = 0 #散弹数量标记
+var timer_prase: Timer = null
 
+var shotgun_flag: int = 0 #散弹数量标记
+## signal signal_prase_flag
+var prase_flag = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	##关于计时器
 	timer = Timer.new()
 	timer_2 = Timer.new()
 	time_all = Timer.new()
+	timer_prase = Timer.new()
 	add_child(timer)
 	add_child(timer_2)
 	add_child(time_all)
+	add_child(timer_prase)
 	time_all.start()
 	timer.start()
+	timer_prase.start()
 	
 	##关于计时器的初始话
 	time_all.wait_time = 2.0
 	timer.wait_time = 10.0
 	timer_2.wait_time = 3.0
+	timer_prase.wait_time = 1
+	
 	timer.autostart = true
 	timer_2.autostart = true
 	time_all.autostart = true
+	timer_prase.autostart = true
+	
 	timer.one_shot = false
 	timer_2.one_shot = true
 	time_all.one_shot = false
+	timer_prase.one_shot = false
 	
 	##将不同的计时,带入不同的函数
 	time_all.timeout.connect(luoruixin_time_all)
 	timer.timeout.connect(luoruixin)
 	timer_2.timeout.connect(son_luoruixin)
+	timer_prase.timeout.connect(prase_des)
+	
 	player.tree_exited.connect(func():
 		if enemy == null: # 不要动
 			return
@@ -59,7 +72,7 @@ func _process(delta: float) -> void:
 	pass
 	
 func luoruixin_time_all() :
-	var flag:int = randi_range(0,8)
+	var flag:int = randi_range(0,5) + prase_flag
 	#var flag:int = 8#randi_range(0,7)
 	#var flag_i: int = randf_range(8,18)
 	var luo: Bullet = null
@@ -231,3 +244,9 @@ func son_luoruixin():
 			var bullet_luo_son3 : Bullet = spawner_component.spawn(luo.global_position,self,0)
 			bullet_luo_son3.velocity = Vector2(50,-50)
 			luo.queue_free()
+			
+			
+func prase_des():
+	if enemy !=null:
+		if enemy.get_node("StatsComponent").health < enemy.enemy_health_max / 2 :
+			prase_flag = 4

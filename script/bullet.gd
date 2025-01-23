@@ -31,7 +31,7 @@ func _ready() -> void:
 	for i in range(0,30):
 		if frame == i :
 			animation_player.play("bullet" + String.num_int64(i + 1))
-			print(i)
+			#print(i)
 func initialize(_flag: int) -> void:
 	#move_component.velocity = velocity
 	pass
