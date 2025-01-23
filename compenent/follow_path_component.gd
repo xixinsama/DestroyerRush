@@ -1,4 +1,4 @@
-## 控制节点按照路径移动
+## 控制节点按照路径移动(强制移动，直接操作位置)
 class_name FollowPathComponent
 extends Node
 
@@ -9,17 +9,50 @@ extends Node
 @export var speed: int = 0 ##节点移动的速度
 
 var distance_along_path: float = 0.0
-signal finish_oneloop ##循环结束后发送信号
+var going_forward: bool = true # 标识当前是否向前移动
+signal finish_oneloop ##一次路径巡游结束后发送信号, 如果是is_loop为true，则每次都发送信号
 
 func _ready() -> void:
 	actor.tree_exiting.connect(stop_process)
 	if path_points == null:
 		is_around = false
-		is_loop == false
-
+		is_loop = false
 
 func _process(delta: float) -> void:
-	pass
+	var path_length = path_points.get_baked_length() # 路径总长度
+	# 只去一次
+	if not is_around and not is_loop:
+		distance_along_path += speed * delta
+		distance_along_path = clamp(distance_along_path, 0, path_length)
+		if distance_along_path == path_length:
+			finish_oneloop.emit()
+			stop_process()
+	# 来回循环
+	if is_around:
+		if going_forward:
+			if distance_along_path >= path_length:
+				going_forward = false
+			else:
+				distance_along_path += speed * delta
+		else:
+			if distance_along_path <= 0:
+				going_forward = true
+				# 不准循环
+				if not is_loop:
+					finish_oneloop.emit()
+					stop_process()
+			else:
+				distance_along_path -= speed * delta
+			distance_along_path = clamp(distance_along_path, 0, path_length)
+	# 一直循环走
+	if not is_around and is_loop:
+		distance_along_path += speed * delta
+		if distance_along_path > path_length:
+			distance_along_path -= path_length
+			finish_oneloop.emit()
+	# 获取位置
+	var new_position: Vector2 = path_points.sample_baked(distance_along_path)
+	actor.global_position = new_position
 
 # 停止运动
 func stop_process() -> void:

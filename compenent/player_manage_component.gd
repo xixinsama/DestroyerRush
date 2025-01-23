@@ -18,7 +18,7 @@ func _ready() -> void:
 	statscomponent.full_energy.connect(_on_energy_is_full)
 
 # 当擦弹成功，增加能量
-func _on_edge_ball_energy_up(energy_point: float) -> void:
+func _on_edge_ball_energy_up(energy_point: int) -> void:
 	statscomponent.energy += energy_point
 
 func _on_energy_is_full() -> void:

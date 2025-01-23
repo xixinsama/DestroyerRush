@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcgj6joi43i08"]
+[gd_scene load_steps=8 format=3 uid="uid://dcgj6joi43i08"]
 
 [ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_3u3py"]
 [ext_resource type="Script" path="res://script/main.gd" id="1_jhbmh"]
+[ext_resource type="PackedScene" uid="uid://3r2gmpgp3sam" path="res://scene/enemy.tscn" id="3_xper4"]
 [ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="4_bycl7"]
-[ext_resource type="PackedScene" uid="uid://b37vd0qec1uo1" path="res://scene/path_2d.tscn" id="4_ja4cq"]
+[ext_resource type="Script" path="res://compenent/follow_path_component.gd" id="5_2aplq"]
 [ext_resource type="Script" path="res://script/status.gd" id="6_ewnan"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6ln3"]
@@ -15,14 +16,10 @@ script = ExtResource("1_jhbmh")
 [node name="status" type="Node" parent="."]
 script = ExtResource("6_ewnan")
 
+[node name="enemy" parent="." instance=ExtResource("3_xper4")]
+
 [node name="player" parent="." instance=ExtResource("1_3u3py")]
 position = Vector2(360, 1100)
-
-[node name="Path2D" parent="." instance=ExtResource("4_ja4cq")]
-
-[node name="enemy" parent="Path2D/PathFollow2D" index="0"]
-enemy_health_max = 200
-enemy_health = 200
 
 [node name="killzone" type="Area2D" parent="."]
 collision_layer = 5
@@ -47,4 +44,5 @@ shape = SubResource("RectangleShape2D_x6ln3")
 position = Vector2(418, 1483)
 shape = SubResource("RectangleShape2D_x6ln3")
 
-[editable path="Path2D"]
+[node name="FollowPathComponent" type="Node" parent="."]
+script = ExtResource("5_2aplq")

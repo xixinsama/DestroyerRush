@@ -12,7 +12,7 @@ signal roll_finish
 # 能否翻滚
 var roll_enable: bool = false
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	# 如果按下Esc，退出游戏
 	#if event is InputEventKey:
 		#if event.pressed and event.keycode == KEY_ESCAPE:
