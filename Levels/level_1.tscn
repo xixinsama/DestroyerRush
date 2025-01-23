@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://3r2gmpgp3sam" path="res://scene/enemy.tscn" id="2_bdh7i"]
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="4_meg6h"]
 [ext_resource type="Script" path="res://compenent/move_component.gd" id="5_gmc0g"]
-[ext_resource type="Curve2D" uid="uid://b2a1dxijq41qk" path="res://asset/PathSrc/path0.tres" id="6_i4fxv"]
+[ext_resource type="Curve2D" uid="uid://bmmm0x1r2fd3w" path="res://asset/PathSrc/path2.tres" id="7_l0eh7"]
 
 [node name="level1" type="Node2D"]
 script = ExtResource("1_hu5ii")
@@ -13,8 +13,8 @@ script = ExtResource("1_hu5ii")
 [node name="enemy" parent="." instance=ExtResource("2_bdh7i")]
 position = Vector2(360, 64)
 enemy_looklike = 1
-enemy_health_max = 10000
-enemy_health = 10000
+enemy_health_max = 1000
+enemy_health = 1000
 
 [node name="player" parent="." instance=ExtResource("1_d8d06")]
 position = Vector2(352, 1240)
@@ -24,7 +24,10 @@ script = ExtResource("4_meg6h")
 
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("5_gmc0g")
-path_points = ExtResource("6_i4fxv")
+path_points = ExtResource("7_l0eh7")
 is_following = true
 speed = 200
 actor = NodePath("../enemy")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = ExtResource("7_l0eh7")

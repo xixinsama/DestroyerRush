@@ -36,13 +36,13 @@ func _ready() -> void:
 	actor.tree_exiting.connect(stop_process)
 	if path_points == null:
 		is_following = false
-	if is_following == true and path_points != null:
-		print(path_points.get_baked_points())
-		print(path_points.point_count)
-		print(path_points.get_point_position(3))
+		is_loop == false
+		#print(path_points.get_baked_points())
+		#print(path_points.point_count)
+		#print(path_points.get_point_position(3))
 		#print(path_points.get_point_in(7))
 		#print(path_points.get_point_out(3))
-		print(path_points.sample(2,0.5))
+		#print(path_points.sample(2,0.5))
 		
 	if trail_who == 0:
 		trail_pos = Status.player_position
@@ -70,7 +70,7 @@ func _process(delta):
 				distance_along_path = path_length ## 如果到达路径末端，停止移动
 				
 		var new_position = path_points.sample_baked(distance_along_path)
-		print(new_position)
+		# print(new_position)
 		actor.global_position = new_position
 		
 ##代码 旋转弹

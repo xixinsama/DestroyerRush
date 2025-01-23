@@ -22,7 +22,7 @@ func _ready() -> void:
 			return
 		else:
 			await get_tree().create_timer(1.0).timeout
-			get_tree().change_scene_to_file("res://scene/game_over.tscn") # 该这里
+			get_tree().change_scene_to_file("res://Levels/level_1.tscn")
 		)
 
 # 有多少关，最后一关连接到game_over

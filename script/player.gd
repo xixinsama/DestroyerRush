@@ -14,10 +14,12 @@ extends Node2D
 @onready var bullet_spawner_component: SpawnerComponent = $BulletSpawnerComponent
 @onready var destroy_effect_spawner_component_2: SpawnerComponent = $DestroyEffectSpawnerComponent2
 @onready var frame_animated_sprite_2d: AnimatedSprite2D = $FrameAnimatedSprite2D
+@onready var shake_component: ShakeComponent = $ShakeComponent
 
 # 翻滚计时器
 var roll_timer: Timer = null
 var trail_timer: Timer = null
+var shake_timer: Timer = null
 # var is_double_click: bool = false
 @export_range(0, 4) var play_looklike: int = 0 ## 选择玩家皮肤
 @export var roll_wait_time: float = 2
@@ -48,7 +50,13 @@ func _ready():
 	trail_timer.wait_time = 0.1
 	# trail_timer.autostart = true
 	trail_timer.timeout.connect(start_trail)
-	
+	## 手柄震动计时器
+	#shake_timer = Timer.new()
+	#add_child(shake_timer)
+	#shake_timer.name = "ShakeTimer"
+	#shake_timer.one_shot = true
+	#shake_timer.wait_time = 0.5
+	## shake_timer.timeout.connect()
 
 func fire_bullet1() -> void:
 	var l1: Marker2D = spawn_points.get_node("left_1")
@@ -68,7 +76,8 @@ func _process(_delta):
 	# 只同步了 普通移动 的位移向量，没有 翻滚 的位移向量
 	Status.player_position = position
 	Status.player_velocity = move_component.velocity + move_component.roll_velocity
-
+	Status.player_health = stats_component.health
+	
 func animate_the_ship() -> void:
 	if move_component.velocity.x < 0:
 		sprite_2d.frame_coords = Vector2(0, play_looklike)
@@ -125,4 +134,11 @@ func _on_move_input_component_roll_start() -> void:
 func _on_move_input_component_roll_finish() -> void:
 	trail_timer.stop()
 	hurtbox_component.monitorable = true
-	
+
+
+func _on_stats_component_health_changed(HP_before: int, HP_now: int) -> void:
+	if HP_before > HP_now:
+		# 飞船震动
+		shake_component.tween_shake()
+		# 开启震动
+		Input.start_joy_vibration(0, 0.1, 0.8, 0.5)
