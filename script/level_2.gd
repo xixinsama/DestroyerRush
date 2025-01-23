@@ -51,7 +51,7 @@ func _ready() -> void:
 			return
 		else:
 			await get_tree().create_timer(1.0).timeout
-			get_tree().change_scene_to_file("res://Levels/level_4.tscn") # 该这里
+			get_tree().change_scene_to_file("res://Levels/level_4.tscn")
 		)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

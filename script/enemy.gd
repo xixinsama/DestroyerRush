@@ -8,6 +8,8 @@ extends Node2D
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var destroy_effect_spawner_component: SpawnerComponent = $DestroyEffectSpawnerComponent
 @onready var enemy_health_bar: TextureProgressBar = $EnemyHealthBar
+@onready var health_label: Label = $HealthLabel
+@onready var shake_component: ShakeComponent = $ShakeComponent
 
 @export_range(0, 24) var enemy_looklike: int = 0 ## 选择敌人皮肤
 @export_range(0,4) var enemy_destroy_effect: int = 0 ## 选择敌人爆炸效果
@@ -38,4 +40,11 @@ func _process(_delta):
 	# 传递 位置 和 位移向量 信息同步至全局‘
 	# 只同步了 普通移动 的位移向量，没有 翻滚 的位移向量
 	Status.enemy_position = global_position
-	##print (global_position)
+	Status.enemy_health = stats_component.health
+
+# 血条显示百分比
+func _on_stats_component_health_changed(HP_before: int, HP_now: int) -> void:
+	var health_percent: float = 100 * float(stats_component.health) / float(stats_component.health_max)
+	health_label.text = "%.1f" % health_percent + "%"
+	# 使其晃动
+	shake_component.tween_shake()

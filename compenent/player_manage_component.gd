@@ -12,6 +12,7 @@ func _ready() -> void:
 	statscomponent.no_health.connect(_on_stats_component_no_health)
 	# 自身碰撞盒发出信号，连接匿名函数，扣除血量
 	hurtboxcomponent.hurt.connect(func(hitbox: HitboxComponent):
+		
 		statscomponent.health -= hitbox.damage
 		)
 	statscomponent.full_energy.connect(_on_energy_is_full)

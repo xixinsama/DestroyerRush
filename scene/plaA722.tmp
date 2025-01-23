@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://n51yxye8n0j6"]
+[gd_scene load_steps=28 format=3 uid="uid://n51yxye8n0j6"]
 
 [ext_resource type="Script" path="res://compenent/stats_component.gd" id="1_c2tg5"]
 [ext_resource type="Script" path="res://script/player.gd" id="1_kcnqc"]
@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://b821dikdcn1ee" path="res://UI/player_energy_panel.tscn" id="12_vsasp"]
 [ext_resource type="Texture2D" uid="uid://cafe7oti8500i" path="res://asset/SpaceShooterAssetPack_Miscellaneous.png" id="13_6to12"]
 [ext_resource type="PackedScene" uid="uid://c88ksi4miyfvg" path="res://UI/player_health.tscn" id="14_vmki5"]
-[ext_resource type="Script" path="res://compenent/shake_component.gd" id="16_jds5w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a4fqk"]
 atlas = ExtResource("2_vs1xv")
@@ -133,8 +132,19 @@ autoplay = "centre"
 
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("3_mc8tl")
-is_loop = false
+is_following = null
+is_loop = null
+speed = null
 actor = NodePath("..")
+velocity = null
+roll_velocity = null
+roll_origin_rad_1 = null
+roll_vec_rad_1 = null
+roll_vec_rad_2 = null
+roll_r_1 = null
+speed_trail_1 = null
+speed_trail_2 = null
+trail_who = null
 
 [node name="MoveInputComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "move_component")]
 script = ExtResource("4_jaqh3")
@@ -189,12 +199,6 @@ scene = ExtResource("12_a0kcg")
 script = ExtResource("10_5y2br")
 scene = ExtResource("11_jj21o")
 
-[node name="ShakeComponent" type="Node" parent="." node_paths=PackedStringArray("node")]
-script = ExtResource("16_jds5w")
-node = NodePath("../Sprite2D")
-shake_amount = 4.0
-shake_duration = 0.5
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PlayerHealth" parent="CanvasLayer" node_paths=PackedStringArray("player_stats") instance=ExtResource("14_vmki5")]
@@ -211,7 +215,6 @@ offset_bottom = -8.0
 grow_vertical = 0
 player_stats = NodePath("../../StatsComponent")
 
-[connection signal="health_changed" from="StatsComponent" to="." method="_on_stats_component_health_changed"]
 [connection signal="roll_finish" from="MoveInputComponent" to="." method="_on_move_input_component_roll_finish"]
 [connection signal="roll_start" from="MoveInputComponent" to="." method="_on_move_input_component_roll_start"]
 [connection signal="energy_up" from="EdgeBall" to="PlayerManageComponent" method="_on_edge_ball_energy_up"]

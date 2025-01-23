@@ -36,11 +36,12 @@ var player_position: Vector2
 var enemy_position: Vector2
 
 func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("skill"):
+	if Input.is_action_just_pressed("skill") or Input.is_action_just_pressed("roll"):
 		if game_running:
 			player_count += 1
 		else:
 			animation_player.play("start")
+			Input.start_joy_vibration(0, 0.6, 0.6, 0.8)
 			# 重置
 			player.visible = true
 			player_2d.visible = true
@@ -95,8 +96,10 @@ func evaluate_round():
 	
 	if count >= 0:
 		tween_shake(player_2d)
+		Input.start_joy_vibration(0, 0.4, 0.1, 0.5)
 	else:
 		tween_shake(enemy_2d)
+		Input.start_joy_vibration(0, 0.1, 0.4, 0.5)
 	# 进度范围限制
 	progress = clamp(progress, START, GOAL)
 
