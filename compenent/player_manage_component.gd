@@ -5,6 +5,7 @@ extends Node
 @export var actor: Node2D
 @export var statscomponent: StatsComponent
 @export var hurtboxcomponent: HurtboxComponent
+@export var shake_component: ShakeComponent
 @export var destroy_effect_spawner_component: SpawnerComponent
 @export var flag_num: int = 0
 
@@ -12,7 +13,8 @@ func _ready() -> void:
 	statscomponent.no_health.connect(_on_stats_component_no_health)
 	# 自身碰撞盒发出信号，连接匿名函数，扣除血量
 	hurtboxcomponent.hurt.connect(func(hitbox: HitboxComponent):
-		
+			# 使其晃动
+		shake_component.tween_shake()
 		statscomponent.health -= hitbox.damage
 		)
 	statscomponent.full_energy.connect(_on_energy_is_full)

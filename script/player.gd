@@ -134,11 +134,3 @@ func _on_move_input_component_roll_start() -> void:
 func _on_move_input_component_roll_finish() -> void:
 	trail_timer.stop()
 	hurtbox_component.monitorable = true
-
-
-func _on_stats_component_health_changed(HP_before: int, HP_now: int) -> void:
-	if HP_before > HP_now:
-		# 飞船震动
-		shake_component.tween_shake()
-		# 开启震动
-		Input.start_joy_vibration(0, 0.1, 0.8, 0.5)
