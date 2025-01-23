@@ -21,7 +21,7 @@ func _ready() -> void:
 	##关于计时器
 	timer = Timer.new()
 	timer_2 = Timer.new()
-	time_all = Timer.new()
+	time_all = Timer.new()##控制弹幕生产的计时器
 	timer_prase = Timer.new()
 	add_child(timer)
 	add_child(timer_2)
@@ -32,7 +32,7 @@ func _ready() -> void:
 	timer_prase.start()
 	
 	##关于计时器的初始话
-	time_all.wait_time = 3.0
+	time_all.wait_time = 3.0##弹幕生产
 	timer.wait_time = 10.0
 	timer_2.wait_time = 3.0
 	timer_prase.wait_time = 1
@@ -48,7 +48,7 @@ func _ready() -> void:
 	timer_prase.one_shot = false
 	
 	##将不同的计时,带入不同的函数
-	time_all.timeout.connect(luoruixin_time_all)
+	time_all.timeout.connect(luoruixin_time_all)##生产弹幕的函数
 	timer.timeout.connect(luoruixin)
 	timer_2.timeout.connect(son_luoruixin)
 	timer_prase.timeout.connect(prase_des)
@@ -79,15 +79,15 @@ func luoruixin_time_all() :
 	#var flag:int = 8#randi_range(0,7)
 	#var flag_i: int = randf_range(8,18)
 	var luo: Bullet = null
-	if flag == 0:
+	if flag == 0:##生产弹幕，每一个flag都对应一个弹幕类型，一整排向下
 		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
 		var frame_bullet = flag+5 ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num) +randi_range(20,50) , 200 + randi_range(-50,50) ),self,0)
 			luo.frame = frame_bullet
-			luo.velocity = Vector2(0,150)
-	if flag == 1:
+			luo.velocity = Vector2(0,speed)
+	if flag == 1: ##一整排向下，但是高度不一定等
 		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
 		var frame_bullet = flag+5 ##子弹样式

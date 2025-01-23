@@ -262,13 +262,13 @@ func son_luoruixin():
 			
 			
 func prase_des():
-	if enemy !=null:
-		if enemy.get_node("StatsComponent").health < enemy.enemy_health_max / 2 :
-			prase_flag = 4
-			time_all.wait_time = 2
-			bomm_sprite_2d.play("boom")
-			animation_player.play("big_small")
-			
+	#if enemy !=null:
+		#if enemy.get_node("StatsComponent").health < enemy.enemy_health_max / 2 :
+			#prase_flag = 4
+			#time_all.wait_time = 2
+			#bomm_sprite_2d.play("boom")
+			#animation_player.play("big_small")
+	pass
 		#else : ##如果有血量恢复添加代码
 			#prase_flag = 0
 			#time_all.wait_time = 2
