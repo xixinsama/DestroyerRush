@@ -112,11 +112,12 @@ health_max = 6
 health = 6
 roll_speed = 8
 
-[node name="PlayerManageComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "statscomponent", "hurtboxcomponent", "destroy_effect_spawner_component")]
+[node name="PlayerManageComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "statscomponent", "hurtboxcomponent", "shake_component", "destroy_effect_spawner_component")]
 script = ExtResource("8_rsuy1")
 actor = NodePath("..")
 statscomponent = NodePath("../StatsComponent")
 hurtboxcomponent = NodePath("../HurtboxComponent")
+shake_component = NodePath("../ShakeComponent")
 destroy_effect_spawner_component = NodePath("../DestroyEffectSpawnerComponent2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -192,7 +193,6 @@ scene = ExtResource("11_jj21o")
 script = ExtResource("16_jds5w")
 node = NodePath("../Sprite2D")
 shake_amount = 4.0
-shake_duration = 0.5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -210,7 +210,6 @@ offset_bottom = -8.0
 grow_vertical = 0
 player_stats = NodePath("../../StatsComponent")
 
-[connection signal="health_changed" from="StatsComponent" to="." method="_on_stats_component_health_changed"]
 [connection signal="roll_finish" from="MoveInputComponent" to="." method="_on_move_input_component_roll_finish"]
 [connection signal="roll_start" from="MoveInputComponent" to="." method="_on_move_input_component_roll_start"]
 [connection signal="energy_up" from="EdgeBall" to="PlayerManageComponent" method="_on_edge_ball_energy_up"]

@@ -3,31 +3,41 @@
 [ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_d8d06"]
 [ext_resource type="Script" path="res://script/level_1.gd" id="1_hu5ii"]
 [ext_resource type="PackedScene" uid="uid://3r2gmpgp3sam" path="res://scene/enemy.tscn" id="2_bdh7i"]
-[ext_resource type="Script" path="res://compenent/spawner_component.gd" id="4_meg6h"]
-[ext_resource type="Curve2D" uid="uid://bmmm0x1r2fd3w" path="res://asset/PathSrc/path2.tres" id="7_l0eh7"]
+[ext_resource type="Script" path="res://script/enemy_copy_for_twoboss.gd" id="3_pggb1"]
+[ext_resource type="Curve2D" uid="uid://dl4ls6uwej76y" path="res://asset/PathSrc/path_heart.tres" id="7_06lwt"]
 [ext_resource type="Script" path="res://compenent/follow_path_component.gd" id="7_r5vrb"]
 
 [node name="level1" type="Node2D"]
 script = ExtResource("1_hu5ii")
 
-[node name="enemy" parent="." instance=ExtResource("2_bdh7i")]
-position = Vector2(360, 64)
-enemy_looklike = 1
+[node name="enemy1" parent="." instance=ExtResource("2_bdh7i")]
+script = ExtResource("3_pggb1")
+enemy_looklike = 18
+enemy_destroy_effect = 0
+enemy_health_max = 1000
+enemy_health = 1000
+
+[node name="enemy2" parent="." instance=ExtResource("2_bdh7i")]
+position = Vector2(720, 0)
+script = ExtResource("3_pggb1")
+enemy_looklike = 19
+enemy_destroy_effect = 0
 enemy_health_max = 1000
 enemy_health = 1000
 
 [node name="player" parent="." instance=ExtResource("1_d8d06")]
-position = Vector2(352, 1240)
-
-[node name="SpawnerComponent" type="Node2D" parent="."]
-script = ExtResource("4_meg6h")
-
-[node name="Path2D" type="Path2D" parent="."]
-curve = ExtResource("7_l0eh7")
+position = Vector2(296, 1112)
 
 [node name="FollowPathComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("7_r5vrb")
-actor = NodePath("../enemy")
-path_points = ExtResource("7_l0eh7")
+actor = NodePath("../enemy1")
+path_points = ExtResource("7_06lwt")
+is_around = true
+speed = 200
+
+[node name="FollowPathComponent2" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("7_r5vrb")
+actor = NodePath("../enemy2")
+path_points = ExtResource("7_06lwt")
 is_around = true
 speed = 200

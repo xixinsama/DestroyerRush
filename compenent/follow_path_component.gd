@@ -4,6 +4,7 @@ extends Node
 
 @export var actor: Node2D
 @export var path_points: Curve2D = null ##绘制曲线，将节点按曲线轨迹移动
+@export var auto_start: bool = false ##是否自动开启（立即），建议使用方法start_follow()
 @export var is_around: bool = false ##是否来回移动，周期为到终点后原路返回起点。若is_loop为false，则只来回一次。在终点会原路返回。
 @export var is_loop: bool = true ##是否循环。若曲线未闭合，则会直接跳到起点。
 @export var speed: int = 0 ##节点移动的速度
@@ -16,16 +17,14 @@ signal finish_oneloop ##一次路径巡游结束后发送信号, 如果是is_loo
 func _ready() -> void:
 	if path_points != null and actor != null:
 		actor.tree_exiting.connect(stop_process)
-		start_follow()
+		if auto_start == true:
+			start_follow()
 	else:
 		stop_process()
 		return
 
-func start_follow() -> void:
-		if path_points == null:
-			print("没有路径资源")
-			is_around = false
-			is_loop = false
+func start_follow(progress: float = 0) -> void:
+		distance_along_path = progress
 		is_following = true
 		set_process(true)
 
@@ -36,6 +35,7 @@ func stop_process() -> void:
 
 func _process(delta: float) -> void:
 	var path_length = path_points.get_baked_length() # 路径总长度
+	# print(path_length)
 	# 只去一次
 	if not is_around and not is_loop:
 		distance_along_path += speed * delta

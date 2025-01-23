@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://5f88w0v6cwfg"]
+[gd_scene load_steps=32 format=3 uid="uid://5f88w0v6cwfg"]
 
 [ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_2tkxg"]
 [ext_resource type="Script" path="res://script/level_2.gd" id="1_l3ns6"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://o8jih1iks4x5" path="res://scene/bullet.tscn" id="4_cqrcl"]
 [ext_resource type="Script" path="res://compenent/move_component.gd" id="6_6d6gy"]
 [ext_resource type="Texture2D" uid="uid://b51s3ftbi3t4v" path="res://asset/Free Smoke Fx  Pixel 07.png" id="7_8rr1s"]
+[ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="9_b2qnh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k7or5"]
 shader = ExtResource("3_5q21k")
@@ -170,6 +171,9 @@ _data = {
 "big_small": SubResource("Animation_kfi8l")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qsuto"]
+size = Vector2(2079.88, 93)
+
 [node name="Level2" type="Node2D"]
 script = ExtResource("1_l3ns6")
 
@@ -204,3 +208,26 @@ root_node = NodePath("../enemy")
 libraries = {
 "": SubResource("AnimationLibrary_r7r24")
 }
+
+[node name="killzone" type="Area2D" parent="."]
+collision_layer = 5
+collision_mask = 48
+script = ExtResource("9_b2qnh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="killzone"]
+position = Vector2(424, -552)
+shape = SubResource("RectangleShape2D_qsuto")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="killzone"]
+position = Vector2(-572, 420)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_qsuto")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="killzone"]
+position = Vector2(1424, 460)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_qsuto")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="killzone"]
+position = Vector2(418, 1483)
+shape = SubResource("RectangleShape2D_qsuto")
