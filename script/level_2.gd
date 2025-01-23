@@ -66,38 +66,48 @@ func luoruixin_time_all() :
 	if flag == 0:
 		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
+		var frame_bullet = flag ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num) +randi_range(20,50) , 200 + randi_range(-50,50) ),self,0)
+			luo.frame = frame_bullet
 			luo.velocity = Vector2(0,150)
 	if flag == 1:
 		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
+		var frame_bullet = flag ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num)+randi_range(20,50) , 200 + random_h),self,0)
 			luo.velocity = Vector2(0,speed)
+			luo.frame = frame_bullet
 	if flag == 2:
 		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
+		var frame_bullet = flag ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num)+randi_range(20,50) , 200 + random_h ),self,0)
 			luo.velocity = Vector2(0,speed + 10 * i)
+			luo.frame = frame_bullet
 	if flag == 3:
 		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度
+		var frame_bullet = flag ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num)+randi_range(20,50)  , 200 + random_h ),self,0)
 			luo.velocity = Vector2(0,speed)
 			luo.roll_r_1 = 50
+			luo.frame = frame_bullet
 	if flag == 4:
 		var num: int = 10 ##子弹数量
 		var speed: int = 150 ##子弹速度
+		var frame_bullet = flag ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num) +randi_range(20,50), 200 + random_h),self,0)
 			luo.velocity = Vector2(0,speed)
+			luo.frame = frame_bullet
 			if randi_range( 0 , 10 ) > 8:
 				luo.queue_free()
 	if flag == 5:##圆型子弹需要控制删除，因为他们不和边界接触
@@ -183,19 +193,23 @@ func luoruixin_time_all() :
 		var rad: float = 0
 		var num: int = 10##子弹数量
 		var speed: int = 150 ##子弹速度
+		var frame_bullet = flag ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Status.enemy_position,self,0)
 			luo.velocity = speed * Vector2(1,0).from_angle(rad)
 			rad = rad + PI/(num-1)
+			luo.frame = frame_bullet
 	if flag == 8:##霰弹尝试
 		var num: int = 15##子弹数量
 		var speed: int = 300 ##子弹速度
 		var rad: float = 0
+		var frame_bullet = flag ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Status.enemy_position,self,0)
 			luo.name = "luorui" + String.num_int64(shotgun_flag)
 			shotgun_flag += 1
 			luo.velocity = speed * Vector2(1,0).from_angle(rad)
+			luo.frame = frame_bullet
 			rad = rad + PI/(num-1)
 			timer_2.start()
 

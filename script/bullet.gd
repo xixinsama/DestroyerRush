@@ -15,7 +15,7 @@ extends Node2D
 @export var speed_trail_1:float = 0.0;##追踪子弹速度 追踪弹
 @export var speed_trail_2:float = 0.0;##追踪子弹速度 直线追踪弹
 
-@export var frame : int = 8
+@export var frame : int = 0
 
 func _ready() -> void:
 	await get_tree().create_timer(0.1).timeout
@@ -27,9 +27,11 @@ func _ready() -> void:
 	move_component.speed_trail_1 = speed_trail_1
 	move_component.speed_trail_2 = speed_trail_2
 	move_component.roll_origin_rad_1=roll_origin_rad_1
-	#sprite_2d.frame = frame
-	if frame == 8:
-		animation_player.play("Bullet_3")
+	sprite_2d.frame = frame
+	for i in range(0,30):
+		if frame == i :
+			animation_player.play("bullet" + String.num_int64(i + 1))
+			print(i)
 func initialize(_flag: int) -> void:
 	#move_component.velocity = velocity
 	pass
