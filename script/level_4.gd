@@ -36,17 +36,16 @@ var player_position: Vector2
 var enemy_position: Vector2
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_SPACE:
-			if game_running:
-				player_count += 1
-			else:
-				animation_player.play("start")
-				# 重置
-				player.visible = true
-				player_2d.visible = true
-				enemy_2d.visible = true
-				animation_player.animation_finished.connect(start_game.unbind(1))
+	if Input.is_action_just_pressed("skill"):
+		if game_running:
+			player_count += 1
+		else:
+			animation_player.play("start")
+			# 重置
+			player.visible = true
+			player_2d.visible = true
+			enemy_2d.visible = true
+			animation_player.animation_finished.connect(start_game.unbind(1))
 
 
 func start_game() -> void:

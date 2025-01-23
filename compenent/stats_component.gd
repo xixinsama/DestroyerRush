@@ -13,7 +13,7 @@ extends Node
 		# 当HP改变时，发送信号
 		health_changed.emit(health_before, health)
 		
-		print("hp:", health)
+		# print("hp:", health)
 		
 		# 当HP小于等于0时，发送信号
 		if health <= 0: no_health.emit()

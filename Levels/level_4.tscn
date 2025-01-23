@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://b80qppmdoa0k7"]
+[gd_scene load_steps=93 format=3 uid="uid://b80qppmdoa0k7"]
 
 [ext_resource type="Script" path="res://script/level_4.gd" id="1_yvr8i"]
 [ext_resource type="Texture2D" uid="uid://btwx8y4nkejef" path="res://asset/SpaceShooterAssetPack_Ships.png" id="2_ock7y"]
@@ -56,6 +56,10 @@ animations = [{
 [sub_resource type="AtlasTexture" id="AtlasTexture_4rqcb"]
 atlas = ExtResource("2_ock7y")
 region = Rect2(32, 16, 48, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oo5ig"]
+shader = ExtResource("8_j0nkb")
+shader_parameter/tint_color = Color(0.631373, 0.188235, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m00kc"]
 atlas = ExtResource("3_morq6")
@@ -636,7 +640,7 @@ vframes = 4
 frame = 9
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemy"]
-material = ExtResource("6_jdorj")
+material = SubResource("ShaderMaterial_oo5ig")
 position = Vector2(-0.583333, -5)
 rotation = 3.14159
 scale = Vector2(0.5, 0.5)

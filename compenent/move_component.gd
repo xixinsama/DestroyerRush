@@ -2,6 +2,11 @@
 class_name  MoveComponent
 extends Node
 
+
+@export var path_points: Curve2D = null ##绘制曲线，将节点按曲线轨迹移动
+@export var is_following: bool = false ##是否跟随曲线运动，如果没有curve，则会修改成false 
+@export var speed: int = 0 ##节点移动的速度
+
 @export var actor: Node2D
 @export var velocity: Vector2
 @export var roll_velocity: Vector2 = Vector2()
@@ -21,7 +26,21 @@ var trail_stright_v:Vector2 #直线追踪弹
 var roll_trail_v:Vector2 #旋转追踪弹
 var trail_pos = Status.player_position ##追踪谁
 @export var trail_who:int = 0
+
+
 func _ready() -> void:
+	# 判定节点状态
+	actor.tree_exiting.connect(stop_process)
+	if path_points == null:
+		is_following = false
+	if is_following == true and path_points != null:
+		print(path_points.get_baked_points())
+		print(path_points.point_count)
+		print(path_points.get_point_position(3))
+		#print(path_points.get_point_in(7))
+		#print(path_points.get_point_out(3))
+		print(path_points.sample(2,0.5))
+		
 	if trail_who == 0:
 		trail_pos = Status.player_position
 	else:
@@ -34,7 +53,8 @@ func _ready() -> void:
 	roll_r_2=(trail_pos - actor.position).length()/2;
 	#print(roll_r)
 	roll_origin_rad_2=(trail_pos - actor.position).angle()-PI;
-	pass
+
+
 func _process(delta):
 ##代码 旋转弹
 	if trail_who == 0:
@@ -54,3 +74,7 @@ func _process(delta):
 ##代码 向量求和
 	sum_velocity = (velocity + roll_velocity) * delta + roll_v + trail_v * delta + trail_stright_v * delta + roll_trail_v #总位移向量
 	actor.translate(sum_velocity)
+
+# 停止每帧运动
+func stop_process() -> void:
+	set_process(false)

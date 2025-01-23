@@ -24,7 +24,7 @@ func _on_hurtbox_entered(hurtbox):
 	if not hurtbox is HurtboxComponent: return
 	# 确保受击碰撞盒不是无敌状态
 	if hurtbox.is_invincible: return
-	print("hurt_area:", hurtbox.name)
+	#print("hurt_area:", hurtbox.name)
 	# Signal out that we hit a hurtbox (this is useful for destroying projectiles when they hit something)
 	# 发出信号表明我们击中了受击碰撞盒（这对于在子弹击中某物时摧毁射弹很有用）
 	hit_hurtbox.emit(hurtbox)
