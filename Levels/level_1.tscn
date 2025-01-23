@@ -26,4 +26,5 @@ script = ExtResource("4_meg6h")
 script = ExtResource("5_gmc0g")
 path_points = ExtResource("6_i4fxv")
 is_following = true
+speed = 200
 actor = NodePath("../enemy")
