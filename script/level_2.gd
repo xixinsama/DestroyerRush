@@ -75,7 +75,7 @@ func _process(delta: float) -> void:
 	pass
 	
 func luoruixin_time_all() :
-	var flag:int = randi_range(0,5) + prase_flag
+	var flag:int = 0#randi_range(0,5) + prase_flag
 	#var flag:int = 8#randi_range(0,7)
 	#var flag_i: int = randf_range(8,18)
 	var luo: Bullet = null
@@ -87,6 +87,7 @@ func luoruixin_time_all() :
 			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num) +randi_range(20,50) , 200 + randi_range(-50,50) ),self,0)
 			luo.frame = frame_bullet
 			luo.velocity = Vector2(0,speed)
+			luo.initialize()
 	if flag == 1: ##一整排向下，但是高度不一定等
 		var num: int = 8 ##子弹数量
 		var speed: int = 150 ##子弹速度

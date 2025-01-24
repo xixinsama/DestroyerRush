@@ -1,13 +1,10 @@
-[gd_scene load_steps=68 format=3 uid="uid://o8jih1iks4x5"]
+[gd_scene load_steps=67 format=3 uid="uid://o8jih1iks4x5"]
 
 [ext_resource type="Script" path="res://script/bullet.gd" id="1_q3cks"]
 [ext_resource type="Texture2D" uid="uid://c55yufw8vmr3w" path="res://asset/SpaceShooterAssetPack_Projectiles.png" id="2_tscps"]
 [ext_resource type="Script" path="res://compenent/hitbox_component.gd" id="2_yc08d"]
 [ext_resource type="Script" path="res://compenent/move_component.gd" id="4_oa5dl"]
 [ext_resource type="Script" path="res://compenent/follow_path_component.gd" id="5_78lcc"]
-
-[sub_resource type="Animation" id="Animation_1kua7"]
-resource_name = "Bullet_3"
 
 [sub_resource type="Animation" id="Animation_cuyw4"]
 length = 0.001
@@ -1055,7 +1052,6 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j0bhn"]
 _data = {
-"Bullet_3": SubResource("Animation_1kua7"),
 "RESET": SubResource("Animation_cuyw4"),
 "bullet1": SubResource("Animation_qw3ls"),
 "bullet10": SubResource("Animation_njo3e"),
@@ -1097,6 +1093,7 @@ script = ExtResource("1_q3cks")
 texture = ExtResource("2_tscps")
 hframes = 6
 vframes = 5
+frame = 8
 region_enabled = true
 region_rect = Rect2(0, 0, 48, 40)
 
