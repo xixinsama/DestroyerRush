@@ -41,13 +41,15 @@ func _ready() -> void:
 	initialize()
 
 func initialize(flag: int = 0) -> void:
-	move_component.velocity = velocity
-	move_component.roll_velocity = roll_velocity
-	move_component.roll_vec_rad_2 = roll_vec_rad_2
-	move_component.roll_r_1 = roll_r_1
-	move_component.speed_trail_1 = speed_trail_1
-	move_component.speed_trail_2 = speed_trail_2
-	move_component.roll_origin_rad_1=roll_origin_rad_1
+	if move_component != null:
+		move_component.velocity = velocity
+		move_component.roll_velocity = roll_velocity
+		move_component.roll_vec_rad_1 = roll_vec_rad_1
+		move_component.roll_vec_rad_2 = roll_vec_rad_2
+		move_component.roll_r_1 = roll_r_1
+		move_component.speed_trail_1 = speed_trail_1
+		move_component.speed_trail_2 = speed_trail_2
+		move_component.roll_origin_rad_1=roll_origin_rad_1
 	
 	sprite_2d.frame = frame
 	

@@ -42,8 +42,8 @@ func _ready() -> void:
 	timer_prase.start()
 	
 	##关于计时器的初始话
-	time_all.wait_time = 0.5
-	timer.wait_time = 10.0
+	time_all.wait_time = 0.2
+	timer.wait_time = 1
 	timer_2.wait_time = 3.0
 	timer_prase.wait_time = 1
 	
@@ -84,66 +84,51 @@ func _process(delta: float) -> void:
 	pass
 	
 func luoruixin_time_all() :
-	var flag:int =7#randi_range(3,4)#randi_range(0,5) + prase_flag
+	var flag:int =3#randi_range(3,4)#randi_range(0,5) + prase_flag
 	#var flag:int = 8#randi_range(0,7)
 	#var flag_i: int = randf_range(8,18)
 	var luo: Bullet = null
 	if flag == 3:
 		var num: int = 45 ##子弹数量
-		var speed: int = 200 ##子弹速度
-		var frame_bullet =6 ##子弹样式
-		for i in range(0,num/2-num/9):
-			luo = spawner_component.spawn(Vector2( round(i * 720.0 / num)  , 200  ),self,0)
+		var speed: int = 375 ##子弹速度
+		var frame_bullet =3 ##子弹样式
+		for i in range(0,num/2):
+			luo = spawner_component.spawn(Vector2( round(i * 720.0 / num)  , 300  ),self,0)
 			luo.frame = frame_bullet
 			luo.velocity = Vector2(0,speed)
-			luo.roll_r_1=10
-		for i in range(num/2+num/9,num):
-			luo = spawner_component.spawn(Vector2(round( i * 720.0 / num)  , 200 + randi_range(-10,10) ),self,0)
+			luo.roll_origin_rad_1 = -PI/2
+			luo.roll_r_1=100
+			luo.initialize()
+		for i in range(0,num/2):
+			luo = spawner_component.spawn(Vector2(720 - round(i * 720.0 / num)  , 300  ),self,0)
+			#print(round(i * 720.0 / num))
 			luo.frame = frame_bullet
 			luo.velocity = Vector2(0,speed)
-			luo.roll_r_1=10
+			luo.roll_vec_rad_1 = PI
+			luo.roll_origin_rad_1 = -PI/2
+			luo.roll_r_1=100
+			luo.initialize()
 			#print(Vector2( 30+ i * round(720 / num) +randi_range(-20,20) , 200 + randi_range(-50,50) ))
 			
+			#
+	#if flag == 3:
+		#var num: int = 45 ##子弹数量
+		#var speed: int = 700 ##子弹速度
+		#var frame_bullet = 5 ##子弹样式
+		#for i in range(0,num):
+			#luo = spawner_component.spawn(Vector2(30 ,  250 + round(i *  (1080-250) / num)   ),self,0)
+			#luo.frame = frame_bullet
+			#luo.velocity = Vector2(speed,0)
+			#luo.roll_r_1=10
+			#luo.initialize()
+		#for i in range(0,num):
+			#luo = spawner_component.spawn(Vector2(720 - 30 , 250 + round(i * (1080-250) / num)  ),self,0)
+			#luo.frame = frame_bullet
+			#luo.velocity = Vector2(-speed,0)
+			#luo.roll_r_1=10
+			#luo.initialize()
 			
-	if flag == 3:
-		var num: int = 45 ##子弹数量
-		var speed: int = 150 ##子弹速度
-		var frame_bullet = 5 ##子弹样式
-		for i in range(0,num):
-			luo = spawner_component.spawn(Vector2(30 ,  250 + round(i *  (1080-250) / num)   ),self,0)
-			luo.frame = frame_bullet
-			luo.velocity = Vector2(150,0)
-			luo.roll_r_1=10
-		for i in range(0,num):
-			luo = spawner_component.spawn(Vector2(720 - 30 , 250 + round(i * (1080-250) / num)  ),self,0)
-			luo.frame = frame_bullet
-			luo.velocity = Vector2(-150,0)
-			luo.roll_r_1=10
-			
-	if flag == 4:
-		var num: int = 45 ##子弹数量
-		var speed: int = randi_range(15,18) ##子弹速度
-		var frame_bullet = flag+5 ##子弹样式
-		var random_h: int = randi_range(-50,50)
-		for i in range(0,num):
-			luo = spawner_component.spawn(Vector2(30 + round(i * 720 / num) , 200 ),self,0)
-			luo.velocity = Vector2(speed,0)
-			luo.speed_trail_2 = 300
-			luo.roll_r_1 = 3
-			luo.roll_origin_rad_1 = PI/2
-			luo.frame = frame_bullet
-	if flag == 4:
-		var num: int = 45 ##子弹数量
-		var speed: int = -randi_range(15,18) ##子弹速度
-		var frame_bullet = flag+5 ##子弹样式
-		var random_h: int = randi_range(-50,50)
-		for i in range(0,num):
-			luo = spawner_component.spawn(Vector2(30 + round(i * 720 / num) , 200 ),self,0)
-			luo.velocity = Vector2(speed,0)
-			luo.speed_trail_2 = 300
-			luo.roll_r_1 = 3
-			luo.roll_origin_rad_1 = PI/2
-			luo.frame = frame_bullet
+
 
 	if flag == 7:
 		var rad: float = 0
@@ -162,6 +147,7 @@ func luoruixin_time_all() :
 		var speed: int = 300 ##子弹速度
 		var rad: float = 0
 		var frame_bullet = flag+5 ##子弹样式
+		
 		for i in range(0,num):
 			luo = spawner_component.spawn(Status.enemy_position,self,0)
 			luo.name = "luorui" + String.num_int64(shotgun_flag)
@@ -169,13 +155,54 @@ func luoruixin_time_all() :
 			luo.velocity = speed * Vector2(1,0).from_angle(rad)
 			luo.frame = frame_bullet
 			rad = rad + PI/(num-1)
+			luo.initialize()
 			timer_2.start()
 
 func luoruixin():
-	if move_component != null:
-		move_component.roll_vec_rad_1 = - move_component.roll_vec_rad_1
-	else:
-		return
+
+	var num: int = 20 ##子弹数量
+	var speed: int = randi_range(190,210) ##子弹速度
+	var frame_bullet = 20 ##子弹样式
+	var random_h: int = randi_range(-50,50)
+	var luo: Bullet = null
+	var luo_1: Bullet = null
+	for i in range(0,num):
+		luo = spawner_component.spawn(Vector2(round(i * 280 / num) , 200 ),self,0)
+		luo.velocity = Vector2(speed,0)
+		luo.speed_trail_2 = 500
+		luo.speed_trail_1 = 500
+		luo.roll_r_1 = 3
+		luo.roll_origin_rad_1 = PI/2
+		luo.frame = frame_bullet
+		luo.initialize()
+		luo_1 = spawner_component.spawn(Vector2(round(720 - 280 +(num- i) * 280 / num) , 200 ),self,0)
+		luo_1.velocity = Vector2(-speed,0)
+		luo_1.speed_trail_2 = 500
+		luo_1.speed_trail_1 = 500
+		luo_1.roll_r_1 = 3
+		luo_1.roll_origin_rad_1 = PI/2
+		luo_1.frame = frame_bullet
+		luo_1.initialize()
+		await get_tree().create_timer(0.05).timeout
+		#await get_tree().create_timer(0.05).timeout
+	#var num: int = 45 ##子弹数量
+	#var speed: int = -randi_range(15,18) ##子弹速度
+	#var frame_bullet = flag+5 ##子弹样式
+	#var random_h: int = randi_range(-50,50)
+	#num= 45 ##子弹数量
+	#speed= -randi_range(15,18) ##子弹速度
+	#frame_bullet = 8 ##子弹样式
+	#random_h= randi_range(-50,50)
+	#for i in range(0,num):
+		#luo_1 = spawner_component.spawn(Vector2(round(720 - 280 + i * 280 / num) , 200 ),self,0)
+		#luo_1.velocity = Vector2(speed,0)
+		#luo_1.speed_trail_2 = 300
+		#luo_1.roll_r_1 = 5
+		#luo_1.roll_origin_rad_1 = PI/2
+		#luo_1.frame = frame_bullet
+		#luo_1.initialize()
+		#await get_tree().create_timer(0.05).timeout
+		##return
 	
 func son_luoruixin():
 	var luo: Bullet

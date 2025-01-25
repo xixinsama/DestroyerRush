@@ -306,12 +306,12 @@ animations = [{
 script = ExtResource("1_jhbmh")
 
 [node name="enemy" parent="." instance=ExtResource("3_xper4")]
-position = Vector2(368, 222)
+position = Vector2(360, 200)
 enemy_health_max = 500
 enemy_health = 500
 
 [node name="player" parent="." instance=ExtResource("1_3u3py")]
-position = Vector2(377, 1104)
+position = Vector2(360, 1100)
 
 [node name="killzone" type="Area2D" parent="."]
 collision_layer = 5
