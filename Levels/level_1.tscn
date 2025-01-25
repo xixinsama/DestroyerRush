@@ -16,7 +16,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5e2qq"]
 size = Vector2(2079.88, 93)
 
-[node name="level1" type="Node2D"]
+[node name="Level1" type="Node2D"]
 script = ExtResource("1_hu5ii")
 
 [node name="enemy1" parent="." instance=ExtResource("2_bdh7i")]
@@ -24,7 +24,7 @@ script = ExtResource("3_pggb1")
 enemy_looklike = 22
 enemy_destroy_effect = 0
 enemy_health_max = 800
-enemy_health = 300
+enemy_health = 800
 
 [node name="enemy2" parent="." instance=ExtResource("2_bdh7i")]
 position = Vector2(720, 0)
@@ -32,7 +32,7 @@ script = ExtResource("3_pggb1")
 enemy_looklike = 19
 enemy_destroy_effect = 0
 enemy_health_max = 800
-enemy_health = 300
+enemy_health = 800
 
 [node name="player" parent="." instance=ExtResource("1_d8d06")]
 position = Vector2(340, 1092)

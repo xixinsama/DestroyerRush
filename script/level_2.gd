@@ -75,7 +75,7 @@ func _process(delta: float) -> void:
 	pass
 	
 func luoruixin_time_all() :
-	var flag:int = randi_range(0,5) + prase_flag
+	var flag:int = 8 # randi_range(0,5) + prase_flag
 	#var flag:int = 8#randi_range(0,7)
 	#var flag_i: int = randf_range(8,18)
 	var luo: Bullet = null
@@ -246,7 +246,7 @@ func luoruixin_time_all() :
 			luo.frame = frame_bullet
 			rad = rad + PI/(num-1)
 			luo.initialize()
-			timer_2.start()
+		timer_2.start()
 
 func luoruixin():
 	if move_component != null:

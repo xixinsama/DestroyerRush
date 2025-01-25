@@ -27,10 +27,10 @@ func _ready() -> void:
 	follow_path_component_2.start_follow()
 	
 	attack_method1 = Timer.new()
+	attack_method1.autostart = true
 	add_child(attack_method1)
 	attack_method1.wait_time = 6.0
 	attack_method1.timeout.connect(attack_1)
-	attack_method1.start()
 	
 	attack_method2 = Timer.new()
 	add_child(attack_method2)
@@ -56,11 +56,11 @@ func _ready() -> void:
 
 	attack_method6 = Timer.new()
 	add_child(attack_method6)
-	attack_method6.wait_time = 0.2
+	attack_method6.wait_time = 3
 	attack_method6.timeout.connect(attack_6)
 	
 	attack_method7 = Timer.new()
-	add_child(attack_method5)
+	add_child(attack_method7)
 	attack_method5.wait_time = 0.2
 	attack_method5.timeout.connect(attack_5)
 
@@ -110,13 +110,16 @@ func update_phase() -> void:
 		stat1 = enemy_1.get_node("StatsComponent")
 	if enemy_2 != null:
 		stat2 = enemy_2.get_node("StatsComponent")
+	## 半血以下出现攻击模式4和5
 	if stat1 != null:
 		if stat1.health < stat1.health_max / 2 and attack_method5.is_stopped():
 			attack_method5.start()
 	if stat2 != null:
 		if stat2.health < stat2.health_max / 2 and attack_method4.is_stopped():
 			attack_method4.start()
-
+			attack_method6.start()
+	
+	
 # 全局下攻击
 func attack_1() -> void:
 	var line_down: Bullet # 一排竖着随机水平位置往下落
@@ -188,7 +191,38 @@ func attack_5() -> void:
 	line.velocity = speed * Vector2(-540, 1000).normalized()
 	line.initialize()
 
+# 从敌人一周围射出，然后追踪player
 func attack_6() -> void:
 	var unfold: Bullet # 光翼展开
-	var speed: int = 400 ##子弹速度
+	var num: int = 12 ##子弹数量
+	var speed: int = 200 ##子弹速度
 	var frame_bullet = 29 ##子弹样式
+	for i in range(6):
+		unfold = spawner_component.spawn(enemy_1.global_position + Vector2(-56, i*2-8), self, 0)
+		#unfold.name = "unfold" + String.num_int64(i)
+		unfold.velocity = speed * Vector2.from_angle(1.25 * PI - i * PI / 16)
+		unfold.frame = frame_bullet
+		unfold.wait_time = 0.8
+		unfold.one_shot = true
+		unfold.life_timer.timeout.connect(asign_value.bind(unfold))
+		unfold.initialize()
+		unfold.life_timer.start()
+		
+	for i in range(6, num):
+		unfold = spawner_component.spawn(enemy_1.global_position + Vector2(56, i*2-8), self, 0)
+		#unfold.name = "unfold" + String.num_int64(i)
+		unfold.velocity = speed * Vector2(-1,0).from_angle(-0.25 * PI + (i-8) * PI / 16)
+		unfold.frame = frame_bullet
+		unfold.wait_time = 0.8
+		unfold.one_shot = true
+		unfold.life_timer.timeout.connect(asign_value.bind(unfold))
+		unfold.initialize()
+		unfold.life_timer.start()
+	
+
+func asign_value(unfold: Bullet) -> void:
+	if unfold != null:
+		# print("在追踪")
+		unfold.velocity = Vector2(0, 550)
+		unfold.speed_trail_1 = 250
+		unfold.initialize()
