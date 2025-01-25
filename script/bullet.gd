@@ -24,7 +24,7 @@ extends Node2D
 @export var speed: int = 0 ##节点移动的速度
 
 func _ready() -> void:
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.05).timeout
 	# 初始化
 	hitbox_component.hit_hurtbox.connect(queue_free.unbind(1))
 	move_component.velocity = velocity

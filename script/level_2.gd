@@ -80,7 +80,7 @@ func luoruixin_time_all() :
 	#var flag_i: int = randf_range(8,18)
 	var luo: Bullet = null
 	if flag == 0:##生产弹幕，每一个flag都对应一个弹幕类型，一整排向下
-		var num: int = 8 ##子弹数量
+		var num: int = 50 ##子弹数量
 		var speed: int = 150 ##子弹速度
 		var frame_bullet = flag+5 ##子弹样式
 		for i in range(0,num):
