@@ -1,6 +1,6 @@
 extends Node2D
 
-
+## 29 28 7 16 5 不准用了
 @onready var player: Node2D = $player
 @onready var enemy_1: Node2D = $enemy1
 @onready var enemy_2: Node2D = $enemy2
@@ -8,9 +8,16 @@ extends Node2D
 @onready var follow_path_component_2: FollowPathComponent = $FollowPathComponent2
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 
+var enemy1_is_dead: bool = false
+var enemy2_is_dead: bool = false
+
 var attack_method1: Timer
 var attack_method2: Timer
 var attack_method3: Timer
+var attack_method4: Timer
+var attack_method5: Timer
+var attack_method6: Timer
+var attack_method7: Timer
 
 func _ready() -> void:
 	player.tree_exited.connect(_on_player_exited)
@@ -36,31 +43,79 @@ func _ready() -> void:
 	attack_method3.wait_time = 12.0
 	attack_method3.timeout.connect(attack_3)
 	attack_method3.start()
+	
+	attack_method4 = Timer.new()
+	add_child(attack_method4)
+	attack_method4.wait_time = 0.2
+	attack_method4.timeout.connect(attack_4)
+	
+	attack_method5 = Timer.new()
+	add_child(attack_method5)
+	attack_method5.wait_time = 0.2
+	attack_method5.timeout.connect(attack_5)
+
+	attack_method6 = Timer.new()
+	add_child(attack_method6)
+	attack_method6.wait_time = 0.2
+	attack_method6.timeout.connect(attack_6)
+	
+	attack_method7 = Timer.new()
+	add_child(attack_method5)
+	attack_method5.wait_time = 0.2
+	attack_method5.timeout.connect(attack_5)
 
 func _process(delta: float) -> void:
 	# 根据玩家位置上传敌人位置信息至全局
 	if player != null:
-		if player.global_position.x < 360:
-			Status.enemy_position = enemy_1.global_position
-		elif player.global_position.x >= 360:
-			Status.enemy_position = enemy_2.global_position
-		else:
-			print("玩家位于三界之外")
-			return
+		if enemy_1 != null or enemy_2 != null:
+			if player.global_position.x < 360:
+				if enemy1_is_dead:
+					Status.enemy_position = enemy_2.global_position
+				else:
+					Status.enemy_position = enemy_1.global_position
+			elif player.global_position.x >= 360:
+				if enemy2_is_dead:
+					Status.enemy_position = enemy_1.global_position
+				else:
+					Status.enemy_position = enemy_2.global_position
+			else:
+				print("玩家位于三界之外")
+				return
+	# 分阶段
+	update_phase()
+	# 此场景结束
+	if enemy1_is_dead and enemy2_is_dead:
+		set_process(false)
+		await get_tree().create_timer(3.0).timeout
+		get_tree().change_scene_to_file("res://Levels/level_2.tscn")
+
 
 func _on_player_exited() -> void:
-	if enemy_1 or enemy_2 == null: # 不要动
-			return
-	else:
-		await get_tree().create_timer(1.0).timeout
-		set_process(false)
-		get_tree().change_scene_to_file("res://scene/game_over.tscn")
+	set_process(false)
+	await  get_tree().create_timer(3.0).timeout
+	get_tree().change_scene_to_file("res://scene/game_over.tscn")
 
 func _on_enemy1_exited() -> void:
-	pass
+	attack_method3.stop() # 停止攻击
+	enemy1_is_dead = true
 
 func _on_enemy2_exited() -> void:
-	pass
+	attack_method2.stop() # 停止攻击
+	enemy2_is_dead = true
+
+func update_phase() -> void:
+	var stat1: StatsComponent
+	var stat2: StatsComponent
+	if enemy_1 != null:
+		stat1 = enemy_1.get_node("StatsComponent")
+	if enemy_2 != null:
+		stat2 = enemy_2.get_node("StatsComponent")
+	if stat1 != null:
+		if stat1.health < stat1.health_max / 2 and attack_method5.is_stopped():
+			attack_method5.start()
+	if stat2 != null:
+		if stat2.health < stat2.health_max / 2 and attack_method4.is_stopped():
+			attack_method4.start()
 
 # 全局下攻击
 func attack_1() -> void:
@@ -76,6 +131,8 @@ func attack_1() -> void:
 
 # 敌人二的攻击
 func attack_2() -> void:
+	if enemy2_is_dead == true:
+		return
 	var direct_follow: Bullet # 瞬间跟踪并很快的往玩家身上射
 	var num: int = 40 ##子弹数量
 	var speed: int = 600 ##子弹速度
@@ -90,12 +147,48 @@ func attack_2() -> void:
 
 # 敌人一的攻击
 func attack_3() -> void:
+	if enemy1_is_dead == true:
+		return
 	var scatter: Bullet # 散射
 	var num: int = 15 ##子弹数量
 	var speed: int = 250 ##子弹速度
 	var frame_bullet = 7 ##子弹样式
 	for i in range(0,num):
-		scatter = spawner_component.spawn(enemy_1.global_position + Vector2(0 ,48), self, 0)
+		scatter = spawner_component.spawn(enemy_1.global_position + Vector2(0, 48), self, 0)
 		scatter.frame = frame_bullet
-		scatter.velocity = speed * Vector2(sin(i) ,abs(cos(i)))
+		scatter.velocity = speed * Vector2(sin(i), abs(cos(i)))
 		scatter.initialize()
+
+# 全局生成两条相交的直线
+func attack_4() -> void:
+	var line: Bullet # 只是直线
+	var speed: int = 300 ##子弹速度
+	var frame_bullet = 28 ##子弹样式
+	line = spawner_component.spawn(Vector2(360, 0), self, 0)
+	line.frame = frame_bullet
+	line.velocity = speed * Vector2(0, 1)
+	line.initialize()
+	
+	line = spawner_component.spawn(Vector2(0, 640), self, 0)
+	line.frame = frame_bullet
+	line.velocity = speed * Vector2(1, 0)
+	line.initialize()
+
+func attack_5() -> void:
+	var line: Bullet # 只是直线
+	var speed: int = 300 ##子弹速度
+	var frame_bullet = 28 ##子弹样式
+	line = spawner_component.spawn(Vector2(0, 280), self, 0)
+	line.frame = frame_bullet
+	line.velocity = speed * Vector2(540, 1000).normalized()
+	line.initialize()
+	
+	line = spawner_component.spawn(Vector2(720, 280), self, 0)
+	line.frame = frame_bullet
+	line.velocity = speed * Vector2(-540, 1000).normalized()
+	line.initialize()
+
+func attack_6() -> void:
+	var unfold: Bullet # 光翼展开
+	var speed: int = 400 ##子弹速度
+	var frame_bullet = 29 ##子弹样式

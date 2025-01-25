@@ -7,14 +7,14 @@ extends Node
 @export var velocity: Vector2
 @export var roll_velocity: Vector2 = Vector2()
 var sum_velocity: Vector2 
-@export var roll_origin_rad_1:float = 0.0;##加入旋转的初始角度 旋转弹
-var roll_origin_rad_2:float = 0.0;##加入旋转的初始角度 旋转追踪弹
-@export var roll_vec_rad_1:float = -PI;##加入旋转的角度速度,正是顺时针，负是逆时针 旋转弹
-@export var roll_vec_rad_2:float = 0.0;##加入旋转的角度速度,正是顺时针，负是逆时针 旋转追踪弹
-@export var roll_r_1:float = 0.0;##旋转半径 旋转弹
-var roll_r_2:float = 0.0;##旋转半径 旋转追踪弹
-@export var speed_trail_1:float = 0.0;##追踪子弹速度 追踪弹
-@export var speed_trail_2:float = 0.0;##追踪子弹速度 直线追踪弹
+@export var roll_origin_rad_1:float = 0.0 ##加入旋转的初始角度 旋转弹
+var roll_origin_rad_2:float = 0.0 ##加入旋转的初始角度 旋转追踪弹
+@export var roll_vec_rad_1:float = -PI ##加入旋转的角度速度,正是顺时针，负是逆时针 旋转弹
+@export var roll_vec_rad_2:float = 0.0 ##加入旋转的角度速度,正是顺时针，负是逆时针 旋转追踪弹
+@export var roll_r_1:float = 0.0 ##旋转半径 旋转弹
+var roll_r_2: float = 0.0 ##旋转半径 旋转追踪弹
+@export var speed_trail_1:float = 0.0 ##追踪子弹速度 追踪弹
+@export var speed_trail_2:float = 0.0 ##追踪子弹速度 直线追踪弹
 
 var roll_v:Vector2 #旋转弹
 var trail_v:Vector2#追踪弹
