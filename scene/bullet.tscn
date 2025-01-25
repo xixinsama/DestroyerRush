@@ -1118,7 +1118,6 @@ texture = ExtResource("2_tscps")
 flip_v = true
 hframes = 6
 vframes = 5
-frame = 8
 region_enabled = true
 region_rect = Rect2(0, 0, 48, 40)
 
