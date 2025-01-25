@@ -1,6 +1,6 @@
 ## 控制节点按照路径移动(强制移动，直接操作位置)
 class_name FollowPathComponent
-extends Node
+extends Node2D
 
 @export var actor: Node2D
 @export var path_points: Curve2D = null ##绘制曲线，将节点按曲线轨迹移动
@@ -24,6 +24,10 @@ func _ready() -> void:
 		return
 
 func start_follow(progress: float = 0) -> void:
+		#if path_points == null:
+			#print("为什么呢？")
+			#return
+		auto_start = false
 		distance_along_path = progress
 		is_following = true
 		set_process(true)

@@ -19,14 +19,16 @@ extends Node2D
 @export var speed_trail_2:float = 0.0;##追踪子弹速度 直线追踪弹
 
 @export var path_points: Curve2D = null ##绘制曲线，将节点按曲线轨迹移动
-@export var is_around: bool = false ##是否来回移动，周期为到终点后原路返回起点。若is_loop为false，则只来回一次。在终点会原路返回。如果没有curve，则会修改成false 
-@export var is_loop: bool = true ##是否循环。若曲线未闭合，则会直接跳到起点。如果没有curve，则会修改成false 
+@export var auto_start: bool = false ##是否自动开启（立即），建议使用方法start_follow()
+@export var is_around: bool = false ##是否来回移动，周期为到终点后原路返回起点。若is_loop为false，则只来回一次。在终点会原路返回。
+@export var is_loop: bool = true ##是否循环。若曲线未闭合，则会直接跳到起点。
 @export var speed: int = 0 ##节点移动的速度
 
 func _ready() -> void:
-	await get_tree().create_timer(0.05).timeout
-	# 初始化
 	hitbox_component.hit_hurtbox.connect(queue_free.unbind(1))
+	initialize()
+
+func initialize(flag: int = 0) -> void:
 	move_component.velocity = velocity
 	move_component.roll_velocity = roll_velocity
 	move_component.roll_vec_rad_2 = roll_vec_rad_2
@@ -39,15 +41,7 @@ func _ready() -> void:
 	
 	follow_path_component.path_points = path_points
 	follow_path_component.is_around = is_around
+	follow_path_component.auto_start = auto_start
 	follow_path_component.is_loop = is_loop
 	follow_path_component.speed = speed
-	# 更改皮肤，添加碰撞
-	for i in range(0,30):
-		if frame == i :
-			animation_player.play("bullet" + String.num_int64(i + 1))
-			#print(i)
-
-
-func initialize(_flag: int) -> void:
-	#move_component.velocity = velocity
-	pass
+	animation_player.play("bullet" + String.num_int64(sprite_2d.frame + 1))
