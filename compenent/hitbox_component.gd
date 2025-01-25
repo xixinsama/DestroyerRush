@@ -7,7 +7,7 @@ extends Area2D
 # 一是伤害，击中后扣除对方血量
 # 二是能量，擦弹后增加对方能量
 @export var damage: int = 1
-@export var energy_point: float = 1
+@export var energy_point: int = 1
 
 # 创建一个信号，当攻击碰撞盒 击中 受击碰撞盒
 signal hit_hurtbox(hurtbox)
@@ -24,7 +24,7 @@ func _on_hurtbox_entered(hurtbox):
 	if not hurtbox is HurtboxComponent: return
 	# 确保受击碰撞盒不是无敌状态
 	if hurtbox.is_invincible: return
-	print("hurt_area:", hurtbox.name)
+	#print("hurt_area:", hurtbox.name)
 	# Signal out that we hit a hurtbox (this is useful for destroying projectiles when they hit something)
 	# 发出信号表明我们击中了受击碰撞盒（这对于在子弹击中某物时摧毁射弹很有用）
 	hit_hurtbox.emit(hurtbox)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dlx7hoxvyuy7v"]
+[gd_scene load_steps=20 format=3 uid="uid://81wuve4douh5"]
 
 [ext_resource type="Texture2D" uid="uid://cafe7oti8500i" path="res://asset/SpaceShooterAssetPack_Miscellaneous.png" id="1_kd7h3"]
 [ext_resource type="Script" path="res://compenent/onetime_animated_effect.gd" id="2_ljy2s"]

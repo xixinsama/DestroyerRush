@@ -2,51 +2,82 @@
 class_name  MoveComponent
 extends Node
 
+
 @export var actor: Node2D
 @export var velocity: Vector2
 @export var roll_velocity: Vector2 = Vector2()
-@export var flag_cha:int = 0##默认的选择类型为0，即飞机的移动，其中1为玩家子弹，2为旋转弹
 var sum_velocity: Vector2 
-@export var roll_origin_rad:float = 0.0;##加入旋转的初始角度
-@export var roll_vec_rad:float = -PI;##加入旋转的角度速度,正是顺时针，负是逆时针
-@export var roll_r:float = 50.0;##旋转半径
-@export var speed_trail:float = 50;##追踪子弹速度
-#@export var roll_p:Vector2 = ;位置向量暂时未加入，初始位置的设置在spawn相关设置，和位移无关
+@export_group("Roll")
+@export var roll_origin_rad_1:float = 0.0 ##加入旋转的初始角度 旋转弹
+var roll_origin_rad_2:float = 0.0 ##加入旋转的初始角度 旋转追踪弹
+@export var roll_vec_rad_1:float = -PI ##加入旋转的角度速度,正是顺时针，负是逆时针 旋转弹
+@export var roll_vec_rad_2:float = 0.0 ##加入旋转的角度速度,正是顺时针，负是逆时针 旋转追踪弹
+@export var roll_r_1:float = 0.0 ##旋转半径 旋转弹
+var roll_r_2: float = 0.0 ##旋转半径 旋转追踪弹
+@export_group("Trail")
+@export var speed_trail_1:float = 0.0 ##追踪子弹速度 追踪弹
+@export var speed_trail_2:float = 0.0 ##追踪子弹速度 直线追踪弹
+
+var roll_v:Vector2 #旋转弹
+var trail_v:Vector2#追踪弹
+var trail_stright_v:Vector2 #直线追踪弹
+var roll_trail_v:Vector2 #旋转追踪弹
+var trail_pos = Status.player_position ##追踪谁
+@export var trail_who:int = 0
+
+@export_group("trigonometric")
+@export_range(-180, 180, 0.001, "radians_as_degrees") var angle_radians = 0.0 ## 朝向，相互垂直
+@export var amplitude: float = 1.0 ##振幅
+@export var frequency: float = 1.0 ##频率，位移为（2 * 振幅/频率）
+@export var phase: float = 0 ##相位
+var trigo_v: Vector2
+var phase_now: float = 0
+
 func _ready() -> void:
+	# 判定节点状态，连接关闭信号
+	actor.tree_exiting.connect(stop_process)
+	
+	if trail_who == 0:
+		trail_pos = Status.player_position
+	else:
+		trail_pos = Status.enemy_position
 	await get_tree().create_timer(0.1).timeout
-	if flag_cha==4:
-		roll_velocity =speed_trail*(Status.player_position - actor.position).normalized();
-	if flag_cha==5:
-		#roll_velocity =(Status.player_position - actor.position);
-		roll_r=(Status.player_position - actor.position).length()/2;
-		#print(roll_r)
-		roll_origin_rad=(Status.player_position - actor.position).angle()-PI;
-	pass
+	##代码 #直线追踪弹
+	trail_stright_v =speed_trail_2*(trail_pos - actor.position).normalized();
+	#roll_velocity =(Status.player_position - actor.position);
+	##代码 #旋转追踪弹
+	roll_r_2=(trail_pos - actor.position).length()/2;
+	#print(roll_r)
+	roll_origin_rad_2=(trail_pos - actor.position).angle()-PI;
+
 
 func _process(delta):
-	if flag_cha == 2:#旋转弹
-		roll_origin_rad=roll_vec_rad*delta+roll_origin_rad#当前旋转的角度
-		#print(roll_origin_rad)#测试代码
-		roll_velocity=Vector2(roll_r*cos(roll_origin_rad)-roll_r*cos(roll_origin_rad-roll_vec_rad*delta),roll_r*sin(roll_origin_rad)-roll_r*sin(roll_origin_rad-roll_vec_rad*delta))#在当前旋转角度和和半径干扰下的位移向量
-		sum_velocity = velocity #原本的速度向量
-		actor.translate(sum_velocity * delta+roll_velocity)#总位移
-	elif flag_cha==3:#追踪弹
-		#Status.player_position;
-		#actor.global_position;
-		roll_velocity =speed_trail*(Status.player_position - actor.global_position).normalized();
-		sum_velocity = (velocity +roll_velocity)
-		actor.translate(sum_velocity * delta)
-	elif flag_cha==4:#直线追踪弹
-		#Status.player_position;
-		#actor.global_position;
-		sum_velocity = (velocity +roll_velocity)
-		actor.translate(sum_velocity * delta)
-	elif flag_cha == 5:#旋转追踪弹
-		roll_origin_rad=roll_vec_rad*delta+roll_origin_rad#当前旋转的角度
-		#print(roll_origin_rad)#测试代码
-		roll_velocity=Vector2(roll_r*cos(roll_origin_rad)-roll_r*cos(roll_origin_rad-roll_vec_rad*delta),roll_r*sin(roll_origin_rad)-roll_r*sin(roll_origin_rad-roll_vec_rad*delta))#在当前旋转角度和和半径干扰下的位移向量
-		sum_velocity = velocity #原本的速度向量
-		actor.translate(sum_velocity * delta+roll_velocity)#总位移
-	else :
-		sum_velocity = velocity +roll_velocity
-		actor.translate(sum_velocity * delta)
+##代码 旋转弹
+	if trail_who == 0:
+		trail_pos = Status.player_position
+	else:
+		trail_pos = Status.enemy_position
+	roll_origin_rad_1=roll_vec_rad_1*delta+roll_origin_rad_1#当前旋转的角度
+	roll_v=Vector2(roll_r_1*cos(roll_origin_rad_1)-roll_r_1*cos(roll_origin_rad_1-roll_vec_rad_1*delta),roll_r_1*sin(roll_origin_rad_1)-roll_r_1*sin(roll_origin_rad_1-roll_vec_rad_1*delta))#在当前旋转角度和和半径干扰下的位移向量
+##代码 #追踪弹
+	#Status.player_position;
+	#actor.global_position;
+	trail_v =speed_trail_1*(trail_pos - actor.global_position ).normalized()# + speed_trail_1*Vector2(randfn(0,1),randfn(0,1))
+##代码 #旋转追踪弹
+	roll_origin_rad_2=roll_vec_rad_2*delta+roll_origin_rad_2#当前旋转的角度
+	roll_trail_v=Vector2(roll_r_2*cos(roll_origin_rad_2)-roll_r_2*cos(roll_origin_rad_2-roll_vec_rad_2*delta),roll_r_2*sin(roll_origin_rad_2)-roll_r_2*sin(roll_origin_rad_2-roll_vec_rad_2*delta))#在当前旋转角度和和半径干扰下的位移向量
+	# 三角函数
+	var direct: Vector2 = Vector2.from_angle(angle_radians)
+	#print("弧度", angle_radians)
+	#print("方向", direct)
+	phase_now += frequency * delta
+	trigo_v = amplitude * sin(phase_now + phase) * direct
+	# print(trigo_v)
+##代码 向量求和
+	sum_velocity = (velocity + roll_velocity) * delta + roll_v + trail_v * delta + trail_stright_v * delta + roll_trail_v + trigo_v * delta #总位移向量
+	# print("en", sum_velocity)
+	actor.translate(sum_velocity)
+
+# 停止每帧运动
+func stop_process() -> void:
+	set_process(false)

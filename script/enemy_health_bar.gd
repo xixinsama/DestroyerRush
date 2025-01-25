@@ -13,21 +13,23 @@ var layer: int # 总血量层数
 var layer_times: int = 1 # 当前血量层数
 
 func _ready():
+	await get_tree().create_timer(0.1).timeout
 	# 先计算要多少层血
 	layer = floor(enemy_stats.health_max / max_value) + 1
 	# 初始化血条,第一条血量额外突出
+	# 第一条血量等于多出的加上100（未做）
 	self.set_value_no_signal(enemy_stats.health_max - max_value * (layer - layer_times))
 	bar_2.set_value_no_signal(bar_2.max_value) 
 	bar_3.set_value_no_signal(bar_3.max_value)
 	# 绑定信号，当血量变动时改变血条
-	enemy_stats.health_changed.connect(update_bars.unbind(1))
+	enemy_stats.health_changed.connect(update_bars.unbind(2))
 	update_bars()
 
 func update_bars():
 	# 即时更新 Over 层 (直接掉血)
 	# 归化到100之内
-	print(layer)
-	print(layer_times)
+	#print(layer)
+	#print(layer_times)
 	var target_health: int = enemy_stats.health - max_value * (layer - layer_times)
 	# 记录特殊的第一次
 	if layer_times == 1:

@@ -44,7 +44,6 @@ _data = {
 }
 
 [node name="bullet_1" instance=ExtResource("1_o6nhv")]
-scale = Vector2(8, 8)
 
 [node name="Sprite2D" parent="." index="0"]
 material = ExtResource("2_yyclp")
@@ -53,17 +52,21 @@ frame = 27
 [node name="HitboxComponent" parent="." index="1"]
 position = Vector2(-0.625, -0.125)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitboxComponent" index="0"]
 position = Vector2(0.625, 0.125)
 shape = SubResource("RectangleShape2D_tmtq6")
 
-[node name="MoveComponent" type="Node" parent="." index="2" node_paths=PackedStringArray("actor")]
+[node name="MoveComponent2" type="Node" parent="." index="2" node_paths=PackedStringArray("actor")]
 script = ExtResource("4_mj4r7")
 actor = NodePath("..")
-flag_cha = 5
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="3"]
 libraries = {
 "": SubResource("AnimationLibrary_pal8e")
 }
 autoplay = "flash"
+
+[node name="MoveComponent" parent="." index="5"]
+roll_vec_rad_2 = -3.142
+roll_r_1 = 100.0
+speed_trail_1 = 150.0
