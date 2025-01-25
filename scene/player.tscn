@@ -200,6 +200,7 @@ shake_amount = 4.0
 player_stats = NodePath("../../StatsComponent")
 
 [node name="PlayerEnergyPanel" parent="CanvasLayer" node_paths=PackedStringArray("player_stats") instance=ExtResource("12_vsasp")]
+z_index = -50
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0

@@ -23,16 +23,16 @@ script = ExtResource("1_hu5ii")
 script = ExtResource("3_pggb1")
 enemy_looklike = 22
 enemy_destroy_effect = 0
-enemy_health_max = 1000
-enemy_health = 1000
+enemy_health_max = 800
+enemy_health = 300
 
 [node name="enemy2" parent="." instance=ExtResource("2_bdh7i")]
 position = Vector2(720, 0)
 script = ExtResource("3_pggb1")
 enemy_looklike = 19
 enemy_destroy_effect = 0
-enemy_health_max = 1000
-enemy_health = 1000
+enemy_health_max = 800
+enemy_health = 300
 
 [node name="player" parent="." instance=ExtResource("1_d8d06")]
 position = Vector2(340, 1092)
