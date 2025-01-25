@@ -11,7 +11,7 @@ void fragment() {
 	// vec2 pixel_size = vec2(pixel_size_x, pixel_size_y);
 	vec2 pixel_size = TEXTURE_PIXEL_SIZE;
 	if (texture(TEXTURE, UV).a == 0.)
-	{ 
+	{
 		for(int x = -width; x <= width; x++)
 		{
 			for(int y = -width; y <= width; y++)

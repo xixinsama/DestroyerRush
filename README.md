@@ -2,14 +2,16 @@
  STG, Boss Rush
 
 # 关卡设计
- 暂时这样
-## 第一关
- 简单的弹幕对射
-## 第二关
- 有攻击模式的弹幕对射
-## 第三关
- 双BOSS，左右各一边，攻击方式不同。当其中一名敌人血量远低于另一名敌人血量时，会互换位置。当
-## 第四关
+
+## level 0
+ 奖励关，很多很多弹幕，不需要动就可以通关
+## level 1
+ 双BOSS，左右各一边，攻击方式不同。
+## level 2
+ 很多攻击模式
+## level 3
+ player变得极小（原本尺寸）
+## level 4
  奖励关，手速小游戏
  动态难度具体为：
 
@@ -21,7 +23,6 @@
 		enemy_count = randi_range(2, 3)
 	elif  50 >= progress and progress >= 0:
 		enemy_count = randi_range(0, 6)
-## 第五关
- 阶段性BOSS关
-## 第六关
- 不要动挑战
+
+## level 5
+ BOSS关，前面的弹幕的大杂烩

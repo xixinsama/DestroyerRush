@@ -14,10 +14,12 @@ extends Node2D
 @onready var bullet_spawner_component: SpawnerComponent = $BulletSpawnerComponent
 @onready var destroy_effect_spawner_component_2: SpawnerComponent = $DestroyEffectSpawnerComponent2
 @onready var frame_animated_sprite_2d: AnimatedSprite2D = $FrameAnimatedSprite2D
+@onready var shake_component: ShakeComponent = $ShakeComponent
 
 # 翻滚计时器
 var roll_timer: Timer = null
 var trail_timer: Timer = null
+var shake_timer: Timer = null
 # var is_double_click: bool = false
 @export_range(0, 4) var play_looklike: int = 0 ## 选择玩家皮肤
 @export var roll_wait_time: float = 2
@@ -26,7 +28,7 @@ func _ready():
 	# 发射第一类子弹
 	var fire_timer1: Timer = Timer.new() # 创建一个计时器节点
 	add_child(fire_timer1)
-	fire_timer1.wait_time = 0.5
+	fire_timer1.wait_time = 0.1
 	fire_timer1.autostart = true
 	fire_timer1.name = "FireDelay"
 	# 启动计时器
@@ -48,14 +50,25 @@ func _ready():
 	trail_timer.wait_time = 0.1
 	# trail_timer.autostart = true
 	trail_timer.timeout.connect(start_trail)
-	
+	## 手柄震动计时器
+	#shake_timer = Timer.new()
+	#add_child(shake_timer)
+	#shake_timer.name = "ShakeTimer"
+	#shake_timer.one_shot = true
+	#shake_timer.wait_time = 0.5
+	## shake_timer.timeout.connect()
 
 func fire_bullet1() -> void:
 	var l1: Marker2D = spawn_points.get_node("left_1")
-	bullet_spawner_component.spawn(l1.global_position)
+	var node1 = bullet_spawner_component.spawn(l1.global_position)
+	node1.get_node("MoveComponent").roll_r_1 = 10
+	node1.get_node("MoveComponent").roll_vec_rad_1 = 2*PI
+	node1.get_node("MoveComponent").roll_origin_rad_1 =  PI
 	var r1: Marker2D = spawn_points.get_node("right_1")
-	bullet_spawner_component.spawn(r1.global_position)
-
+	var node2 = bullet_spawner_component.spawn(r1.global_position)
+	node2.get_node("MoveComponent").roll_r_1 = 10
+	node2.get_node("MoveComponent").roll_vec_rad_1 = -2*PI
+	node2.get_node("MoveComponent").roll_origin_rad_1 = 0
 func _process(_delta):
 	# 改变移动动画
 	animate_the_ship()
@@ -63,16 +76,8 @@ func _process(_delta):
 	# 只同步了 普通移动 的位移向量，没有 翻滚 的位移向量
 	Status.player_position = position
 	Status.player_velocity = move_component.velocity + move_component.roll_velocity
-
-#func _physics_process(delta: float) -> void:
-	#if Input.is_action_just_pressed("roll"):
-		#if roll_timer.is_stopped():
-			#is_double_click = false
-			#roll_timer.start()
-		#else:
-			#is_double_click = true
-			#print("Double Click!")
-
+	Status.player_health = stats_component.health
+	
 func animate_the_ship() -> void:
 	if move_component.velocity.x < 0:
 		sprite_2d.frame_coords = Vector2(0, play_looklike)
@@ -122,7 +127,6 @@ func start_trail() -> void:
 		animate_trail.set(name_prop1, frame_animated_sprite_2d.get(name_prop1))
 	animate_trail.set("scale", self.scale) # player的根节点放大了，所以这里也要放大
 
-
 # 在翻滚时留下残影，并取消玩家碰撞检测
 func _on_move_input_component_roll_start() -> void:
 	trail_timer.start()
@@ -130,4 +134,3 @@ func _on_move_input_component_roll_start() -> void:
 func _on_move_input_component_roll_finish() -> void:
 	trail_timer.stop()
 	hurtbox_component.monitorable = true
-	
