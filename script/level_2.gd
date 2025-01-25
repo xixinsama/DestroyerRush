@@ -75,16 +75,16 @@ func _process(delta: float) -> void:
 	pass
 	
 func luoruixin_time_all() :
-	var flag:int = 0#randi_range(0,5) + prase_flag
+	var flag:int = randi_range(0,5) + prase_flag
 	#var flag:int = 8#randi_range(0,7)
 	#var flag_i: int = randf_range(8,18)
 	var luo: Bullet = null
 	if flag == 0:##生产弹幕，每一个flag都对应一个弹幕类型，一整排向下
-		var num: int = 50 ##子弹数量
+		var num: int = 9 ##子弹数量
 		var speed: int = 150 ##子弹速度
 		var frame_bullet = flag+5 ##子弹样式
 		for i in range(0,num):
-			luo = spawner_component.spawn(Vector2(30 + i * round(720 / num) +randi_range(20,50) , 200 + randi_range(-50,50) ),self,0)
+			luo = spawner_component.spawn(Vector2(i * round(720 / num)  , 260 + randi_range(-50,50) ),self,0)
 			luo.frame = frame_bullet
 			luo.velocity = Vector2(0,speed)
 			luo.initialize()
@@ -136,8 +136,10 @@ func luoruixin_time_all() :
 		var luo_roll_trail_left: Bullet = null
 		luo_roll_trail_right = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_right.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right.initialize()
 		luo_roll_trail_left = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_left.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left.initialize()
 		await get_tree().create_timer(5).timeout
 		
 		if luo_roll_trail_right!=null:
@@ -160,28 +162,38 @@ func luoruixin_time_all() :
 		await get_tree().create_timer(0.1).timeout
 		luo_roll_trail_right = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_right.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right.initialize()
 		luo_roll_trail_left = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_left.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left.initialize()
 		await get_tree().create_timer(0.1).timeout
 		luo_roll_trail_right_1 = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_right_1.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right_1.initialize()
 		luo_roll_trail_left_1 = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_left_1.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left_1.initialize()
 		await get_tree().create_timer(0.1).timeout
 		luo_roll_trail_right_2 = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_right_2.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right_2.initialize()
 		luo_roll_trail_left_2 = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_left_2.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left_2.initialize()
 		await get_tree().create_timer(0.1).timeout
 		luo_roll_trail_right_3 = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_right_3.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right_3.initialize()
 		luo_roll_trail_left_3 = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_left_3.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left_3.initialize()
 		await get_tree().create_timer(0.1).timeout
 		luo_roll_trail_right_4 = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_right_4.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right_4.initialize()
 		luo_roll_trail_left_4 = spawner_component.spawn(Status.enemy_position,self,0)
 		luo_roll_trail_left_4.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left_4.initialize()
 		
 		
 		##删除节点
@@ -250,12 +262,15 @@ func son_luoruixin():
 			var bullet_luo_son1 : Bullet = spawner_component.spawn(luo.global_position,self,0)
 			bullet_luo_son1.velocity = Vector2(-50,-50)
 			bullet_luo_son1.frame = 12
+			bullet_luo_son1.initialize()
 			var bullet_luo_son2 : Bullet = spawner_component.spawn(luo.global_position,self,0)
 			bullet_luo_son2.velocity = Vector2(0,-50)
 			bullet_luo_son2.frame = 12
+			bullet_luo_son2.initialize()
 			var bullet_luo_son3 : Bullet = spawner_component.spawn(luo.global_position,self,0)
 			bullet_luo_son3.velocity = Vector2(50,-50)
 			bullet_luo_son3.frame = 12
+			bullet_luo_son3.initialize()
 			luo.queue_free()
 			
 			
