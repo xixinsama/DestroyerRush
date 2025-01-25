@@ -1091,9 +1091,10 @@ script = ExtResource("1_q3cks")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_tscps")
+flip_v = true
 hframes = 6
 vframes = 5
-frame = 8
+frame = 7
 region_enabled = true
 region_rect = Rect2(0, 0, 48, 40)
 
@@ -1112,6 +1113,5 @@ libraries = {
 script = ExtResource("4_oa5dl")
 actor = NodePath("..")
 
-[node name="FollowPathComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="FollowPathComponent" type="Node2D" parent="."]
 script = ExtResource("5_78lcc")
-actor = NodePath("..")
