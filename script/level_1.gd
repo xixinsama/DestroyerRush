@@ -190,5 +190,6 @@ func attack_5() -> void:
 
 func attack_6() -> void:
 	var unfold: Bullet # 光翼展开
+	var num: int = 14 ##子弹数量
 	var speed: int = 400 ##子弹速度
 	var frame_bullet = 29 ##子弹样式
