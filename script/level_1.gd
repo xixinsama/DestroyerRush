@@ -78,7 +78,7 @@ func attack_1() -> void:
 func attack_2() -> void:
 	var direct_follow: Bullet # 瞬间跟踪并很快的往玩家身上射
 	var num: int = 40 ##子弹数量
-	var speed: int = 600 ##子弹速度
+	var speed: int = 400 ##子弹速度
 	var frame_bullet = 16 ##子弹样式
 	for i in range(0,num):
 		var offset: Vector2 = Vector2(randi_range(-4,4), randi_range(-4,4))
@@ -99,3 +99,4 @@ func attack_3() -> void:
 		scatter.frame = frame_bullet
 		scatter.velocity = speed * Vector2(sin(i) ,abs(cos(i)))
 		scatter.initialize()
+		
