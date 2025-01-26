@@ -30,4 +30,3 @@ shape = SubResource("RectangleShape2D_3iy8d")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_pl03n")
 autoplay = true
-bus = &"BGM"

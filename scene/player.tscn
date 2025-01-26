@@ -200,7 +200,6 @@ stream = ExtResource("15_eh4i0")
 volume_db = -18.0
 pitch_scale = 1.2
 max_polyphony = 2
-bus = &"Sound Effects"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

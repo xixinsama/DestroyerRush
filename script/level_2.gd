@@ -75,13 +75,13 @@ func _process(delta: float) -> void:
 	pass
 	
 func luoruixin_time_all() :
-	var flag:int = 8 # randi_range(0,5) + prase_flag
+	var flag:int =randi_range(0,5) + prase_flag
 	#var flag:int = 8#randi_range(0,7)
 	#var flag_i: int = randf_range(8,18)
 	var luo: Bullet = null
 	if flag == 0:##生产弹幕，每一个flag都对应一个弹幕类型，一整排向下
-		var num: int = 9 ##子弹数量
-		var speed: int = 150 ##子弹速度
+		var num: int = 10 ##子弹数量
+		var speed: int = 350 ##子弹速度
 		var frame_bullet = flag+5 ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Vector2(i * round(720 / num)  , 260 + randi_range(-50,50) ),self,0)
@@ -89,8 +89,8 @@ func luoruixin_time_all() :
 			luo.velocity = Vector2(0,speed)
 			luo.initialize()
 	if flag == 1: ##一整排向下，但是高度不一定等
-		var num: int = 8 ##子弹数量
-		var speed: int = 150 ##子弹速度
+		var num: int = 10 ##子弹数量
+		var speed: int = 350 ##子弹速度
 		var frame_bullet = flag+5 ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
@@ -99,8 +99,8 @@ func luoruixin_time_all() :
 			luo.frame = frame_bullet
 			luo.initialize()
 	if flag == 2:
-		var num: int = 8 ##子弹数量
-		var speed: int = 150 ##子弹速度
+		var num: int = 10 ##子弹数量
+		var speed: int = 450 ##子弹速度
 		var frame_bullet = flag+5 ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
@@ -109,8 +109,8 @@ func luoruixin_time_all() :
 			luo.frame = frame_bullet
 			luo.initialize()
 	if flag == 3:
-		var num: int = 8 ##子弹数量
-		var speed: int = 150 ##子弹速度
+		var num: int = 10 ##子弹数量
+		var speed: int = 250 ##子弹速度
 		var frame_bullet = flag+5 ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
@@ -120,8 +120,8 @@ func luoruixin_time_all() :
 			luo.frame = frame_bullet
 			luo.initialize()
 	if flag == 4:
-		var num: int = 10 ##子弹数量
-		var speed: int = 150 ##子弹速度
+		var num: int = 12 ##子弹数量
+		var speed: int = 450 ##子弹速度
 		var frame_bullet = flag+5 ##子弹样式
 		var random_h: int = randi_range(-50,50)
 		for i in range(0,num):
@@ -135,10 +135,12 @@ func luoruixin_time_all() :
 		var luo_roll_trail_right: Bullet = null
 		var luo_roll_trail_left: Bullet = null
 		luo_roll_trail_right = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_right.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right.roll_vec_rad_2 = PI
+		luo_roll_trail_right.frame = 10
 		luo_roll_trail_right.initialize()
 		luo_roll_trail_left = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_left.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left.roll_vec_rad_2 = -PI
+		luo_roll_trail_left.frame = 10
 		luo_roll_trail_left.initialize()
 		await get_tree().create_timer(5).timeout
 		
@@ -158,41 +160,55 @@ func luoruixin_time_all() :
 		var luo_roll_trail_left_3: Bullet = null
 		var luo_roll_trail_right_4: Bullet = null
 		var luo_roll_trail_left_4: Bullet = null
+		var jiange: float = 0.4
+		var frame: int = 10
+		var speed: float = PI/2
 		##生成节点
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(jiange).timeout
 		luo_roll_trail_right = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_right.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right.roll_vec_rad_2 = speed
+		luo_roll_trail_right.frame = frame
 		luo_roll_trail_right.initialize()
 		luo_roll_trail_left = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_left.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left.roll_vec_rad_2 = -speed
+		luo_roll_trail_left.frame = frame
+		
 		luo_roll_trail_left.initialize()
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(jiange).timeout
 		luo_roll_trail_right_1 = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_right_1.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right_1.roll_vec_rad_2 = speed
+		luo_roll_trail_right_1.frame = frame
 		luo_roll_trail_right_1.initialize()
 		luo_roll_trail_left_1 = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_left_1.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left_1.roll_vec_rad_2 = -speed
+		luo_roll_trail_left_1.frame = frame
 		luo_roll_trail_left_1.initialize()
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(jiange).timeout
 		luo_roll_trail_right_2 = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_right_2.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right_2.roll_vec_rad_2 = speed
+		luo_roll_trail_right_2.frame = frame
 		luo_roll_trail_right_2.initialize()
 		luo_roll_trail_left_2 = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_left_2.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left_2.roll_vec_rad_2 = -speed
+		luo_roll_trail_left_2.frame = frame
 		luo_roll_trail_left_2.initialize()
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(jiange).timeout
 		luo_roll_trail_right_3 = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_right_3.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right_3.roll_vec_rad_2 = speed
+		luo_roll_trail_right_3.frame = frame
 		luo_roll_trail_right_3.initialize()
 		luo_roll_trail_left_3 = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_left_3.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left_3.roll_vec_rad_2 = -speed
+		luo_roll_trail_left_3.frame = frame
 		luo_roll_trail_left_3.initialize()
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(jiange).timeout
 		luo_roll_trail_right_4 = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_right_4.roll_vec_rad_2 = PI/3
+		luo_roll_trail_right_4.roll_vec_rad_2 = speed
+		luo_roll_trail_right_4.frame = frame
 		luo_roll_trail_right_4.initialize()
 		luo_roll_trail_left_4 = spawner_component.spawn(Status.enemy_position,self,0)
-		luo_roll_trail_left_4.roll_vec_rad_2 = -PI/3
+		luo_roll_trail_left_4.roll_vec_rad_2 = -speed
+		luo_roll_trail_left_4.frame = frame
 		luo_roll_trail_left_4.initialize()
 		
 		
@@ -224,8 +240,8 @@ func luoruixin_time_all() :
 			luo_roll_trail_left_4.queue_free()
 	if flag == 7:
 		var rad: float = 0
-		var num: int = 10##子弹数量
-		var speed: int = 150 ##子弹速度
+		var num: int = 20##子弹数量
+		var speed: int = 400 ##子弹速度
 		var frame_bullet = flag+5 ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Status.enemy_position,self,0)
@@ -244,9 +260,13 @@ func luoruixin_time_all() :
 			shotgun_flag += 1
 			luo.velocity = speed * Vector2(1,0).from_angle(rad)
 			luo.frame = frame_bullet
+			luo.life_timer.one_shot = true
+			luo.life_timer.wait_time = 3
+			luo.life_timer.timeout.connect(son_luoruixin.bind(luo))
+			luo.life_timer.start()
 			rad = rad + PI/(num-1)
 			luo.initialize()
-		timer_2.start()
+		#timer_2.start()
 
 func luoruixin():
 	if move_component != null:
@@ -254,24 +274,24 @@ func luoruixin():
 	else:
 		return
 	
-func son_luoruixin():
-	var luo: Bullet
-	for i in range(0,10):
-		luo=get_node("luorui"+String.num_int64(shotgun_flag - i) );
-		if luo != null:
-			var bullet_luo_son1 : Bullet = spawner_component.spawn(luo.global_position,self,0)
-			bullet_luo_son1.velocity = Vector2(-50,-50)
-			bullet_luo_son1.frame = 12
-			bullet_luo_son1.initialize()
-			var bullet_luo_son2 : Bullet = spawner_component.spawn(luo.global_position,self,0)
-			bullet_luo_son2.velocity = Vector2(0,-50)
-			bullet_luo_son2.frame = 12
-			bullet_luo_son2.initialize()
-			var bullet_luo_son3 : Bullet = spawner_component.spawn(luo.global_position,self,0)
-			bullet_luo_son3.velocity = Vector2(50,-50)
-			bullet_luo_son3.frame = 12
-			bullet_luo_son3.initialize()
-			luo.queue_free()
+func son_luoruixin(luo):
+	#var luo: Bullet
+	#for i in range(0,10):
+	#luo=get_node("luorui"+String.num_int64(shotgun_flag - 10) );
+	if luo != null:
+		var bullet_luo_son1 : Bullet = spawner_component.spawn(luo.global_position,self,0)
+		bullet_luo_son1.velocity = Vector2(-150,-150)
+		bullet_luo_son1.frame = 12
+		bullet_luo_son1.initialize()
+		var bullet_luo_son2 : Bullet = spawner_component.spawn(luo.global_position,self,0)
+		bullet_luo_son2.velocity = Vector2(0,-150)
+		bullet_luo_son2.frame = 12
+		bullet_luo_son2.initialize()
+		var bullet_luo_son3 : Bullet = spawner_component.spawn(luo.global_position,self,0)
+		bullet_luo_son3.velocity = Vector2(150,-150)
+		bullet_luo_son3.frame = 12
+		bullet_luo_son3.initialize()
+		luo.queue_free()
 			
 			
 func prase_des():
