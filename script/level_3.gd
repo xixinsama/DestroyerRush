@@ -94,7 +94,7 @@ func spawn_bullet(dot , current_frame ) -> void:
 	# bullet_hint.velocity = Vector2(0, speed)
 	bullet_hint.trail_who = 3
 	bullet_hint.trail_pos = Vector2(360, 640)
-	bullet_hint.speed_trail_1 = speed
+	bullet_hint.speed_trail_2 = speed
 	bullet_hint.initialize()
 	return 
 func clear(dot):

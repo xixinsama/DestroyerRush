@@ -63,7 +63,7 @@ func fire_bullet1() -> void:
 	var node1 = bullet_spawner_component.spawn(l1.global_position)
 	node1.get_node("MoveComponent").roll_r_1 = 10
 	node1.get_node("MoveComponent").roll_vec_rad_1 = 2*PI
-	node1.get_node("MoveComponent").roll_origin_rad_1 =  PI
+	node1.get_node("MoveComponent").roll_origin_rad_1 =PI
 	var r1: Marker2D = spawn_points.get_node("right_1")
 	var node2 = bullet_spawner_component.spawn(r1.global_position)
 	node2.get_node("MoveComponent").roll_r_1 = 10
