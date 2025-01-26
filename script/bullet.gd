@@ -36,11 +36,14 @@ extends Node2D
 @export var frequency: float = 1.0 ##频率，位移为（2 * 振幅/频率）
 @export var phase: float = 0 ##相位
 
+
+signal Despawn
+
 func _ready() -> void:
 	hitbox_component.hit_hurtbox.connect(queue_free.unbind(1))
 	initialize()
 
-func initialize(flag: int = 0) -> void:
+func initialize(_flag: int = 0) -> void:
 	if move_component != null:
 		move_component.velocity = velocity
 		move_component.roll_velocity = roll_velocity
