@@ -2,6 +2,7 @@ extends Node2D
 
 
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
+@onready var timer: Timer = $Timer
 
 var dot_matrix_file = "res://asset/dot_matrix_info.txt"
 var dot_positions = []
@@ -33,7 +34,7 @@ var current_frame: int = 1
 		#bullet_hint.frame = 0
 		#bullet_hint.velocity = Vector2(0, 100)
 		#bullet_hint.initialize()
-
+var node_2: Bullet = null
 func _ready():
 	# 读取点阵信息文件
 	var file = FileAccess.open(dot_matrix_file, FileAccess.READ)
@@ -58,22 +59,45 @@ func _ready():
 	# 播放计时
 	var play_gif: Timer = Timer.new()
 	add_child(play_gif)
-	play_gif.wait_time = 2.0
+	play_gif.wait_time = 0.1
 	play_gif.timeout.connect(play_gif_frame)
+	#play_gif.one_shot = true
 	play_gif.start()
 	current_frame = 0
+#timer.wait_time = 0.11
+#timer.timeout.connect(clear)
+#timer.start()
 
 # 按帧生成
 func play_gif_frame() -> void:
 	if current_frame < len(dot_positions):
-		for dot in dot_positions[current_frame]:
-			spawn_bullet(dot)
+		#node_2 = spawner_component.spawn(Vector2(0,0), self, 0)
+		if current_frame == 0:
+			for dot in dot_positions[current_frame]:
+				spawn_bullet(dot,current_frame)
+		else :
+			for dot in dot_positions[current_frame]:
+				clear(dot)
 		current_frame += 1
+	else:
+		current_frame = 1
 
 # 生成弹幕
-func spawn_bullet(dot):
+func spawn_bullet(dot , current_frame ) -> void:
 	var bullet_position: Vector2 = Vector2(480-dot["x"] * 8, dot["y"] * 8)
-	var bullet_hint: Bullet = spawner_component.spawn(bullet_position, self, 0)
+	var speed: int = 0
+	#var time_wait: float = 0.1
+	var bullet_hint: Bullet = spawner_component.spawn(bullet_position , self, 0)
+	bullet_hint.name = "bullet_hint" + String.num_int64(dot["x"]).pad_zeros(3) + String.num_int64(dot["y"]).pad_zeros(3)
+	bullet_hint.frame = 0
 	bullet_hint.modulate = dot["color"]
-	bullet_hint.velocity = Vector2(0, 200)
+	bullet_hint.velocity = Vector2(0, speed)
 	bullet_hint.initialize()
+	return 
+func clear(dot):
+	node_2 = get_node("bullet_hint" + String.num_int64(dot["x"]).pad_zeros(3) + String.num_int64(dot["y"]).pad_zeros(3))
+	#print(node_2.move_component.velocity)
+	#print(node_2.global_position)
+	if node_2 != null:
+		node_2.modulate = dot["color"]
+	pass
