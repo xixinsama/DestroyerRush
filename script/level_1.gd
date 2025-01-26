@@ -1,6 +1,6 @@
 extends Node2D
 
-## 29 28 7 16 5 不准用了
+## 29 28 26 7 16 5 不准用了
 @onready var player: Node2D = $player
 @onready var enemy_1: Node2D = $enemy1
 @onready var enemy_2: Node2D = $enemy2
@@ -61,8 +61,8 @@ func _ready() -> void:
 	
 	attack_method7 = Timer.new()
 	add_child(attack_method7)
-	attack_method5.wait_time = 0.2
-	attack_method5.timeout.connect(attack_5)
+	attack_method7.wait_time = 4
+	attack_method7.timeout.connect(attack_7)
 
 func _process(delta: float) -> void:
 	# 根据玩家位置上传敌人位置信息至全局
@@ -102,6 +102,7 @@ func _on_enemy1_exited() -> void:
 
 func _on_enemy2_exited() -> void:
 	attack_method2.stop() # 停止攻击
+	attack_method7.stop()
 	enemy2_is_dead = true
 
 func update_phase() -> void:
@@ -112,9 +113,11 @@ func update_phase() -> void:
 	if enemy_2 != null:
 		stat2 = enemy_2.get_node("StatsComponent")
 	## 半血以下出现攻击模式4和5
+	## 另一个半血，自己出现二阶段弹幕
 	if stat1 != null:
 		if stat1.health < stat1.health_max / 2 and attack_method5.is_stopped():
 			attack_method5.start()
+			attack_method7.start()
 	if stat2 != null:
 		if stat2.health < stat2.health_max / 2 and attack_method4.is_stopped():
 			attack_method4.start()
@@ -135,8 +138,7 @@ func attack_1() -> void:
 
 # 敌人二的攻击
 func attack_2() -> void:
-	if enemy2_is_dead == true:
-		return
+	if enemy2_is_dead: return
 	var direct_follow: Bullet # 瞬间跟踪并很快的往玩家身上射
 	var num: int = 40 ##子弹数量
 	var speed: int = 600 ##子弹速度
@@ -151,8 +153,7 @@ func attack_2() -> void:
 
 # 敌人一的攻击
 func attack_3() -> void:
-	if enemy1_is_dead == true:
-		return
+	if enemy1_is_dead: return
 	var scatter: Bullet # 散射
 	var num: int = 15 ##子弹数量
 	var speed: int = 250 ##子弹速度
@@ -194,6 +195,7 @@ func attack_5() -> void:
 
 # 从敌人一周围射出，然后追踪player
 func attack_6() -> void:
+	if enemy1_is_dead: return
 	var unfold: Bullet # 光翼展开
 	var num: int = 12 ##子弹数量
 	var speed: int = 200 ##子弹速度
@@ -219,11 +221,26 @@ func attack_6() -> void:
 		unfold.life_timer.timeout.connect(asign_value.bind(unfold))
 		unfold.initialize()
 		unfold.life_timer.start()
-	
 
+## 为attack_6的第二阶段准备的
 func asign_value(unfold: Bullet) -> void:
 	if unfold != null:
 		# print("在追踪")
 		unfold.velocity = Vector2(0, 550)
 		unfold.speed_trail_1 = 250
 		unfold.initialize()
+
+# 缓慢的摇摆弹幕
+func attack_7() -> void:
+	if enemy2_is_dead: return
+	var trigogo: Bullet # 三角函数弹幕
+	var num: int = 12 ##子弹数量
+	var speed: int = 100 ##子弹速度
+	var frame_bullet = 26 ##子弹样式
+	for i in range(num):
+		trigogo = spawner_component.spawn(enemy_2.global_position + Vector2(0, 52), self, 0)
+		trigogo.velocity = speed * Vector2(0, 1)
+		trigogo.amplitude = 50 + 5*i
+		trigogo.angle_radians = randf_range(-15.0, 15.0)
+		trigogo.frame = frame_bullet
+		trigogo.initialize()
