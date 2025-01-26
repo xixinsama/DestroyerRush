@@ -4,7 +4,7 @@ extends Node2D
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 @onready var timer: Timer = $Timer
 
-var dot_matrix_file = "res://asset/dot_matrix_info4.txt"
+var dot_matrix_file = "res://asset/dot_matrix_info.txt"
 var dot_positions = []
 var speed: int = 100  # 下落速度
 var current_frame: int = 1
@@ -94,7 +94,7 @@ func spawn_bullet(dot , current_frame ) -> void:
 	# bullet_hint.velocity = Vector2(0, speed)
 	bullet_hint.trail_who = 3
 	bullet_hint.trail_pos = Vector2(360, 640)
-	bullet_hint.speed_trail_1 = speed
+	bullet_hint.speed_trail_2 = speed
 	bullet_hint.initialize()
 	return 
 func clear(dot):

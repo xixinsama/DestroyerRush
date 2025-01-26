@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://5f88w0v6cwfg"]
+[gd_scene load_steps=33 format=3 uid="uid://5f88w0v6cwfg"]
 
 [ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_2tkxg"]
 [ext_resource type="Script" path="res://script/level_2.gd" id="1_l3ns6"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://compenent/move_component.gd" id="6_6d6gy"]
 [ext_resource type="Texture2D" uid="uid://b51s3ftbi3t4v" path="res://asset/Free Smoke Fx  Pixel 07.png" id="7_8rr1s"]
 [ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="9_b2qnh"]
+[ext_resource type="AudioStream" uid="uid://bv30nam14j2bb" path="res://asset/Sounds/BGM/Astral Float.wav" id="10_i7r4e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k7or5"]
 shader = ExtResource("3_5q21k")
@@ -231,3 +232,8 @@ shape = SubResource("RectangleShape2D_qsuto")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="killzone"]
 position = Vector2(418, 1483)
 shape = SubResource("RectangleShape2D_qsuto")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_i7r4e")
+autoplay = true
+bus = &"BGM"

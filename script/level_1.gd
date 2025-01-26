@@ -92,8 +92,8 @@ func _process(delta: float) -> void:
 
 func _on_player_exited() -> void:
 	set_process(false)
-	await  get_tree().create_timer(3.0).timeout
-	get_tree().change_scene_to_file("res://scene/game_over.tscn")
+	#await  get_tree().create_timer(3.0).timeout
+	#get_tree().change_scene_to_file("res://scene/game_over.tscn")
 
 func _on_enemy1_exited() -> void:
 	attack_method3.stop() # 停止攻击
@@ -139,7 +139,7 @@ func attack_2() -> void:
 		return
 	var direct_follow: Bullet # 瞬间跟踪并很快的往玩家身上射
 	var num: int = 40 ##子弹数量
-	var speed: int = 400 ##子弹速度
+	var speed: int = 600 ##子弹速度
 	var frame_bullet = 16 ##子弹样式
 	for i in range(0,num):
 		var offset: Vector2 = Vector2(randi_range(-4,4), randi_range(-4,4))
@@ -203,7 +203,7 @@ func attack_6() -> void:
 		#unfold.name = "unfold" + String.num_int64(i)
 		unfold.velocity = speed * Vector2.from_angle(1.25 * PI - i * PI / 16)
 		unfold.frame = frame_bullet
-		unfold.wait_time = 0.8
+		unfold.wait_time = randf_range(0.6, 1.2)
 		unfold.one_shot = true
 		unfold.life_timer.timeout.connect(asign_value.bind(unfold))
 		unfold.initialize()
@@ -214,7 +214,7 @@ func attack_6() -> void:
 		#unfold.name = "unfold" + String.num_int64(i)
 		unfold.velocity = speed * Vector2(-1,0).from_angle(-0.25 * PI + (i-8) * PI / 16)
 		unfold.frame = frame_bullet
-		unfold.wait_time = 0.8
+		unfold.wait_time = randf_range(0.6, 1.2)
 		unfold.one_shot = true
 		unfold.life_timer.timeout.connect(asign_value.bind(unfold))
 		unfold.initialize()
