@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c4fvwhulmiwl3"]
+[gd_scene load_steps=15 format=3 uid="uid://c4fvwhulmiwl3"]
 
 [ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_d8d06"]
 [ext_resource type="Script" path="res://script/level_1.gd" id="1_hu5ii"]
@@ -12,6 +12,7 @@
 [ext_resource type="Material" uid="uid://dcv3oi2nv6eq" path="res://shader/bullet_boom.tres" id="8_ckf85"]
 [ext_resource type="Curve2D" uid="uid://dl4ls6uwej76y" path="res://asset/PathSrc/path_heart.tres" id="9_op08b"]
 [ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="10_qmnwl"]
+[ext_resource type="AudioStream" uid="uid://dwofgto14k0vt" path="res://asset/Sounds/BGM/Exploding Sun.mp3" id="13_bp5my"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5e2qq"]
 size = Vector2(2079.88, 93)
@@ -85,3 +86,11 @@ shape = SubResource("RectangleShape2D_5e2qq")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="killzone"]
 position = Vector2(418, 1483)
 shape = SubResource("RectangleShape2D_5e2qq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_bp5my")
+autoplay = true
+
+
+bus = &"BGM"
+parameters/looping = true

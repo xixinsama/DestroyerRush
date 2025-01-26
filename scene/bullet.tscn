@@ -1,10 +1,11 @@
-[gd_scene load_steps=67 format=3 uid="uid://o8jih1iks4x5"]
+[gd_scene load_steps=68 format=3 uid="uid://o8jih1iks4x5"]
 
 [ext_resource type="Script" path="res://script/bullet.gd" id="1_q3cks"]
 [ext_resource type="Texture2D" uid="uid://c55yufw8vmr3w" path="res://asset/SpaceShooterAssetPack_Projectiles.png" id="2_tscps"]
 [ext_resource type="Script" path="res://compenent/hitbox_component.gd" id="2_yc08d"]
 [ext_resource type="Script" path="res://compenent/move_component.gd" id="4_oa5dl"]
 [ext_resource type="Script" path="res://compenent/follow_path_component.gd" id="5_78lcc"]
+[ext_resource type="AudioStream" uid="uid://dbfogqu8pb2d8" path="res://asset/Sounds/SE/rapid-pistol-firing-sound-279718.mp3" id="6_b4eai"]
 
 [sub_resource type="Animation" id="Animation_cuyw4"]
 length = 0.001
@@ -1112,12 +1113,14 @@ _data = {
 [node name="bullet" type="Node2D"]
 scale = Vector2(6, 6)
 script = ExtResource("1_q3cks")
+amplitude = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_tscps")
 flip_v = true
 hframes = 6
 vframes = 5
+frame = 10
 region_enabled = true
 region_rect = Rect2(0, 0, 48, 40)
 
@@ -1135,9 +1138,13 @@ libraries = {
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("4_oa5dl")
 actor = NodePath("..")
-amplitude = 360.0
 
 [node name="FollowPathComponent" type="Node2D" parent="."]
 script = ExtResource("5_78lcc")
 
 [node name="LifeTimer" type="Timer" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_b4eai")
+volume_db = -14.0
+max_polyphony = 20

@@ -7,6 +7,7 @@ extends Node2D
 @onready var move_component: MoveComponent = $MoveComponent
 @onready var follow_path_component: FollowPathComponent = $FollowPathComponent
 @onready var life_timer: Timer = $LifeTimer
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 @export_group("Base")
 @export var frame : int = 0
@@ -20,6 +21,9 @@ extends Node2D
 @export_group("Trail")
 @export var speed_trail_1:float = 0.0 ##追踪子弹速度 追踪弹
 @export var speed_trail_2:float = 0.0 ##追踪子弹速度 直线追踪弹
+@export var trail_pos: Vector2 = Status.player_position ##追踪谁
+@export var trail_who: int = 0
+
 @export_group("Curve")
 @export var path_points: Curve2D = null ##绘制曲线，将节点按曲线轨迹移动
 @export var auto_start: bool = false ##是否自动开启（立即），建议使用方法start_follow()
@@ -36,11 +40,17 @@ extends Node2D
 @export var frequency: float = 1.0 ##频率，位移为（2 * 振幅/频率）
 @export var phase: float = 0 ##相位
 
+
+signal Despawn
+
 func _ready() -> void:
 	hitbox_component.hit_hurtbox.connect(queue_free.unbind(1))
 	initialize()
+	audio_stream_player.play(3.5)
+	await get_tree().create_timer(0.1).timeout
+	audio_stream_player.stop()
 
-func initialize(flag: int = 0) -> void:
+func initialize(_flag: int = 0) -> void:
 	if move_component != null:
 		move_component.velocity = velocity
 		move_component.roll_velocity = roll_velocity
@@ -50,8 +60,15 @@ func initialize(flag: int = 0) -> void:
 		move_component.speed_trail_1 = speed_trail_1
 		move_component.speed_trail_2 = speed_trail_2
 		move_component.roll_origin_rad_1=roll_origin_rad_1
+		move_component.angle_radians = angle_radians 
+		move_component.amplitude = amplitude
+		move_component.frequency = frequency
+		move_component.phase = phase
+		move_component.trail_pos = trail_pos
+		move_component.trail_who = trail_who
+
 	
-	sprite_2d.frame = frame
+	sprite_2d.frame = frame 
 	
 	follow_path_component.path_points = path_points
 	follow_path_component.is_around = is_around
@@ -64,7 +81,4 @@ func initialize(flag: int = 0) -> void:
 	life_timer.one_shot = one_shot
 	life_timer.autostart = autostart
 	
-	move_component.angle_radians = angle_radians 
-	move_component.amplitude = amplitude
-	move_component.frequency = frequency
-	move_component.phase = phase
+	

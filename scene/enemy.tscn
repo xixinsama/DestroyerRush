@@ -41,7 +41,6 @@ scale = Vector2(12, 12)
 texture = SubResource("AtlasTexture_1mpt6")
 hframes = 6
 vframes = 4
-frame = 15
 
 [node name="StatsComponent" type="Node" parent="."]
 script = ExtResource("7_ofyng")

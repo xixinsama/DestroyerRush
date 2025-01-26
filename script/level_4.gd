@@ -9,6 +9,7 @@ extends Node2D
 @onready var player_2d: Node2D = $Player2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var trash_talk: Label = $TrashTalk
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 const ROUND_DURATION = 0.5  # 每轮持续时间
 const GOAL = 100  # 胜利的推进总距离
@@ -41,6 +42,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			player_count += 1
 		else:
 			animation_player.play("start")
+			audio_stream_player.play()
 			Input.start_joy_vibration(0, 0.6, 0.6, 0.8)
 			# 重置
 			player.visible = true

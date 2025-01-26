@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dl8m0oqkdqcqc"]
+[gd_scene load_steps=5 format=3 uid="uid://dl8m0oqkdqcqc"]
 
 [ext_resource type="Script" path="res://script/game_over.gd" id="1_mprga"]
 [ext_resource type="LabelSettings" uid="uid://lyux8pgux32t" path="res://fonts/title_label_settings.tres" id="2_c85o5"]
 [ext_resource type="LabelSettings" uid="uid://b4kbn4k1bdngv" path="res://fonts/default_label_settings.tres" id="3_ggdhb"]
+[ext_resource type="AudioStream" uid="uid://b63lxbp5w0kph" path="res://asset/Sounds/SE/game-over-38511.mp3" id="4_0tbsa"]
 
 [node name="game_over" type="Control"]
 layout_mode = 3
@@ -35,3 +36,8 @@ layout_mode = 2
 text = "press 'space' to restart"
 label_settings = ExtResource("3_ggdhb")
 horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_0tbsa")
+autoplay = true
+bus = &"BGM"

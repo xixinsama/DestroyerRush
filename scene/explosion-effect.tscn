@@ -1,7 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://81wuve4douh5"]
+[gd_scene load_steps=22 format=3 uid="uid://81wuve4douh5"]
 
 [ext_resource type="Texture2D" uid="uid://cafe7oti8500i" path="res://asset/SpaceShooterAssetPack_Miscellaneous.png" id="1_kd7h3"]
 [ext_resource type="Script" path="res://compenent/onetime_animated_effect.gd" id="2_ljy2s"]
+[ext_resource type="AudioStream" uid="uid://xwim1sgja4a2" path="res://asset/Sounds/SE/explosion-47821.mp3" id="3_7v3wi"]
+[ext_resource type="AudioStream" uid="uid://sfchcayhtxbx" path="res://asset/Sounds/SE/explosion-80108.mp3" id="4_wpx4e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_luhhd"]
 atlas = ExtResource("1_kd7h3")
@@ -141,5 +143,12 @@ animations = [{
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_ksa11")
-animation = &"explosion_purple"
+animation = &"explosion_white"
 script = ExtResource("2_ljy2s")
+
+[node name="EnemyAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_7v3wi")
+bus = &"Sound Effects"
+
+[node name="PlayerAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_wpx4e")

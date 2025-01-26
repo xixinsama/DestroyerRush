@@ -15,6 +15,7 @@ extends Node2D
 @onready var destroy_effect_spawner_component_2: SpawnerComponent = $DestroyEffectSpawnerComponent2
 @onready var frame_animated_sprite_2d: AnimatedSprite2D = $FrameAnimatedSprite2D
 @onready var shake_component: ShakeComponent = $ShakeComponent
+@onready var audio_stream_player_2d: AudioStreamPlayer = $AudioStreamPlayer2D
 
 # 翻滚计时器
 var roll_timer: Timer = null
@@ -59,16 +60,18 @@ func _ready():
 	## shake_timer.timeout.connect()
 
 func fire_bullet1() -> void:
+	audio_stream_player_2d.play(0.1)
 	var l1: Marker2D = spawn_points.get_node("left_1")
 	var node1 = bullet_spawner_component.spawn(l1.global_position)
 	node1.get_node("MoveComponent").roll_r_1 = 10
 	node1.get_node("MoveComponent").roll_vec_rad_1 = 2*PI
-	node1.get_node("MoveComponent").roll_origin_rad_1 =  PI
+	node1.get_node("MoveComponent").roll_origin_rad_1 =PI
 	var r1: Marker2D = spawn_points.get_node("right_1")
 	var node2 = bullet_spawner_component.spawn(r1.global_position)
 	node2.get_node("MoveComponent").roll_r_1 = 10
 	node2.get_node("MoveComponent").roll_vec_rad_1 = -2*PI
 	node2.get_node("MoveComponent").roll_origin_rad_1 = 0
+
 func _process(_delta):
 	# 改变移动动画
 	animate_the_ship()
@@ -77,6 +80,8 @@ func _process(_delta):
 	Status.player_position = position
 	Status.player_velocity = move_component.velocity + move_component.roll_velocity
 	Status.player_health = stats_component.health
+	
+	#audio_stream_player_2d.position = position
 	
 func animate_the_ship() -> void:
 	if move_component.velocity.x < 0:

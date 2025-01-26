@@ -1,6 +1,8 @@
 class_name OnetimeAnimatedEffect
 extends AnimatedSprite2D
 
+@onready var enemy_audio_stream_player_2d: AudioStreamPlayer2D = $EnemyAudioStreamPlayer2D
+@onready var player_audio_stream_player_2d: AudioStreamPlayer2D = $PlayerAudioStreamPlayer2D
 
 func _ready() -> void:
 	# 当动画播放结束，Free节点
@@ -12,11 +14,15 @@ func _ready() -> void:
 func initialize(flag: int = 0) -> void:
 	if flag == 0:
 		play("explosion_white")
+		player_audio_stream_player_2d.play()
 	elif flag == 1:
 		play("explosion_purple")
+		enemy_audio_stream_player_2d.play()
 	elif flag == 2:
 		play("explosion_red")
+		enemy_audio_stream_player_2d.play()
 	elif flag == 3:
 		play("explosion_blue")
+		enemy_audio_stream_player_2d.play()
 	else:
 		return

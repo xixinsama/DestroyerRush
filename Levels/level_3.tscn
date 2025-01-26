@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://comi4hgpyqnc8"]
+[gd_scene load_steps=7 format=3 uid="uid://comi4hgpyqnc8"]
 
 [ext_resource type="Script" path="res://script/level_3.gd" id="1_tbd25"]
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="2_kgh36"]
 [ext_resource type="PackedScene" uid="uid://o8jih1iks4x5" path="res://scene/bullet.tscn" id="3_kuupd"]
+[ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="4_6f011"]
+[ext_resource type="AudioStream" uid="uid://bv30nam14j2bb" path="res://asset/Sounds/BGM/Astral Float.wav" id="5_pl03n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3iy8d"]
+size = Vector2(720, 20)
 
 [node name="Level3" type="Node2D"]
 script = ExtResource("1_tbd25")
@@ -10,3 +15,18 @@ script = ExtResource("1_tbd25")
 [node name="SpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("2_kgh36")
 scene = ExtResource("3_kuupd")
+
+[node name="killzone" type="Area2D" parent="."]
+collision_layer = 5
+collision_mask = 48
+script = ExtResource("4_6f011")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="killzone"]
+position = Vector2(360, 1290)
+shape = SubResource("RectangleShape2D_3iy8d")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_pl03n")
+autoplay = true

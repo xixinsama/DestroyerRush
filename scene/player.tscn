@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://n51yxye8n0j6"]
+[gd_scene load_steps=30 format=3 uid="uid://n51yxye8n0j6"]
 
 [ext_resource type="Script" path="res://compenent/stats_component.gd" id="1_c2tg5"]
 [ext_resource type="Script" path="res://script/player.gd" id="1_kcnqc"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://b821dikdcn1ee" path="res://UI/player_energy_panel.tscn" id="12_vsasp"]
 [ext_resource type="Texture2D" uid="uid://cafe7oti8500i" path="res://asset/SpaceShooterAssetPack_Miscellaneous.png" id="13_6to12"]
 [ext_resource type="PackedScene" uid="uid://c88ksi4miyfvg" path="res://UI/player_health.tscn" id="14_vmki5"]
+[ext_resource type="AudioStream" uid="uid://buxwme88rmihy" path="res://asset/Sounds/SE/laser-zap-90575.mp3" id="15_eh4i0"]
 [ext_resource type="Script" path="res://compenent/shake_component.gd" id="16_jds5w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a4fqk"]
@@ -193,6 +194,12 @@ scene = ExtResource("11_jj21o")
 script = ExtResource("16_jds5w")
 node = NodePath("../Sprite2D")
 shake_amount = 4.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_eh4i0")
+volume_db = -18.0
+pitch_scale = 1.2
+max_polyphony = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

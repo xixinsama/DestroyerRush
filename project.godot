@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 Status="*res://script/status.gd"
 SpaceBackground="*res://scene/space_background.tscn"
+Transitions="*res://addons/transitions/Transitions.gd"
+FancyFade="*res://addons/transitions/FancyFade.gd"
 
 [display]
 
