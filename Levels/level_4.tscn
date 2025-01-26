@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://b80qppmdoa0k7"]
+[gd_scene load_steps=95 format=3 uid="uid://b80qppmdoa0k7"]
 
 [ext_resource type="Script" path="res://script/level_4.gd" id="1_yvr8i"]
 [ext_resource type="Texture2D" uid="uid://btwx8y4nkejef" path="res://asset/SpaceShooterAssetPack_Ships.png" id="2_ock7y"]
@@ -12,6 +12,8 @@
 [ext_resource type="Shader" path="res://shader/change_color.gdshader" id="8_j0nkb"]
 [ext_resource type="Texture2D" uid="uid://b51s3ftbi3t4v" path="res://asset/Free Smoke Fx  Pixel 07.png" id="9_y8px6"]
 [ext_resource type="FontFile" uid="uid://bf7nsie4eob13" path="res://fonts/VonwaonBitmap-12pxLite.ttf" id="12_6p2o2"]
+[ext_resource type="AudioStream" uid="uid://0prm8vdqrfj1" path="res://asset/Sounds/SE/laser-gun-81720.mp3" id="13_bs7ov"]
+[ext_resource type="AudioStream" uid="uid://dwofgto14k0vt" path="res://asset/Sounds/BGM/Exploding Sun.mp3" id="14_ibbl1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vaxij"]
 atlas = ExtResource("2_ock7y")
@@ -748,3 +750,12 @@ offset_right = 488.0
 offset_bottom = 111.0
 text = "垃圾话"
 label_settings = SubResource("LabelSettings_y5rno")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_bs7ov")
+bus = &"Sound Effects"
+
+[node name="BGMLevel4" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_ibbl1")
+autoplay = true
+bus = &"BGM"

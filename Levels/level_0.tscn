@@ -1,4 +1,7 @@
-[gd_scene load_steps=60 format=3 uid="uid://dcgj6joi43i08"]
+
+
+
+[gd_scene load_steps=52 format=3 uid="uid://dcgj6joi43i08"]
 
 [ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_3u3py"]
 [ext_resource type="Script" path="res://script/main.gd" id="1_jhbmh"]
@@ -9,8 +12,12 @@
 [ext_resource type="PackedScene" uid="uid://o8jih1iks4x5" path="res://scene/bullet.tscn" id="7_4oek7"]
 [ext_resource type="Texture2D" uid="uid://c1cexcn6cr3bk" path="res://asset/Holy VFX 02.png" id="8_0schh"]
 [ext_resource type="Texture2D" uid="uid://poagf1yp875h" path="res://asset/Free Smoke Fx  Pixel 06.png" id="9_8mbnx"]
-[ext_resource type="Texture2D" uid="uid://csrtfxksqtrqg" path="res://asset/heart.png" id="10_xprrx"]
-[ext_resource type="Texture2D" uid="uid://btxgkg66jlqkc" path="res://asset/SpaceShooterAssetPack_BackGrounds.png" id="11_cy06e"]
+
+
+
+
+[ext_resource type="AudioStream" uid="uid://bv30nam14j2bb" path="res://asset/Sounds/BGM/Astral Float.wav" id="10_7r7id"]
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6ln3"]
 size = Vector2(2079.88, 93)
@@ -500,6 +507,7 @@ sprite_frames = SubResource("SpriteFrames_ht6dw")
 animation = &"magic_to_produce_ray"
 autoplay = "magic_to_produce_ray"
 
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(386, 756)
 scale = Vector2(8, 8)
@@ -516,3 +524,9 @@ animation = &"change"
 libraries = {
 "": SubResource("AnimationLibrary_fwobk")
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_7r7id")
+autoplay = true
+bus = &"BGM"
+

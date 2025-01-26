@@ -7,6 +7,7 @@ extends Node2D
 @onready var move_component: MoveComponent = $MoveComponent
 @onready var follow_path_component: FollowPathComponent = $FollowPathComponent
 @onready var life_timer: Timer = $LifeTimer
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 @export_group("Base")
 @export var frame : int = 0
@@ -45,6 +46,9 @@ signal Despawn
 func _ready() -> void:
 	hitbox_component.hit_hurtbox.connect(queue_free.unbind(1))
 	initialize()
+	audio_stream_player.play(3.5)
+	await get_tree().create_timer(0.1).timeout
+	audio_stream_player.stop()
 
 func initialize(_flag: int = 0) -> void:
 	if move_component != null:
@@ -64,7 +68,7 @@ func initialize(_flag: int = 0) -> void:
 		move_component.trail_who = trail_who
 
 	
-	sprite_2d.frame = frame
+	sprite_2d.frame = frame 
 	
 	follow_path_component.path_points = path_points
 	follow_path_component.is_around = is_around

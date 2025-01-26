@@ -4,7 +4,7 @@ extends Node2D
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 @onready var timer: Timer = $Timer
 
-var dot_matrix_file = "res://asset/dot_matrix_info4.txt"
+var dot_matrix_file = "res://asset/dot_matrix_info.txt"
 var dot_positions = []
 var speed: int = 100  # 下落速度
 var current_frame: int = 1
