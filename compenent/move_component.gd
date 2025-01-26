@@ -25,6 +25,7 @@ var roll_trail_v:Vector2 #旋转追踪弹
 @export var trail_pos: Vector2 = Status.player_position ##追踪谁
 @export var trail_who: int = 0
 
+
 @export_group("trigonometric")
 @export_range(-180, 180, 0.001, "radians_as_degrees") var angle_radians = 0.0 ## 朝向，相互垂直
 @export var amplitude: float = 0 ##振幅
@@ -57,8 +58,10 @@ func _process(delta):
 ##代码 旋转弹
 	if trail_who == 0:
 		trail_pos = Status.player_position
-	else:
+	elif trail_who == 1:
 		trail_pos = Status.enemy_position
+	else:
+		pass
 	roll_origin_rad_1=roll_vec_rad_1*delta+roll_origin_rad_1#当前旋转的角度
 	roll_v=Vector2(roll_r_1*cos(roll_origin_rad_1)-roll_r_1*cos(roll_origin_rad_1-roll_vec_rad_1*delta),roll_r_1*sin(roll_origin_rad_1)-roll_r_1*sin(roll_origin_rad_1-roll_vec_rad_1*delta))#在当前旋转角度和和半径干扰下的位移向量
 ##代码 #追踪弹

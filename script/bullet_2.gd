@@ -15,6 +15,8 @@ extends Node2D
 @export_group("Trail")
 @export var speed_trail_1:float = 0.0 ##追踪子弹速度 追踪弹
 @export var speed_trail_2:float = 0.0 ##追踪子弹速度 直线追踪弹
+@export var trail_pos: Vector2 = Status.player_position ##追踪谁
+@export var trail_who: int = 0
 
 func _ready() -> void:
 	hitbox_component.hit_hurtbox.connect(queue_free.unbind(1))
@@ -30,3 +32,5 @@ func initialize(flag: int = 0) -> void:
 		move_component.speed_trail_1 = speed_trail_1
 		move_component.speed_trail_2 = speed_trail_2
 		move_component.roll_origin_rad_1=roll_origin_rad_1
+		move_component.trail_pos = trail_pos
+		move_component.trail_who = trail_who
