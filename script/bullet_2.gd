@@ -1,13 +1,8 @@
 class_name bullet_2
 extends Node2D
 
-@onready var sprite_2d: Sprite2D = $Sprite2D
-@onready var hitbox_component: HitboxComponent = $HitboxComponent
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var move_component: MoveComponent = $MoveComponent
-@onready var follow_path_component: FollowPathComponent = $FollowPathComponent
-@onready var life_timer: Timer = $LifeTimer
-
+@onready var hitbox_component: HitboxComponent = $HitboxComponent
 @export_group("Base")
 @export var frame : int = 0
 @export var velocity: Vector2
@@ -21,11 +16,8 @@ extends Node2D
 @export var speed_trail_1:float = 0.0 ##追踪子弹速度 追踪弹
 @export var speed_trail_2:float = 0.0 ##追踪子弹速度 直线追踪弹
 
-
-
-
 func _ready() -> void:
-	#hitbox_component.hit_hurtbox.connect(queue_free.unbind(1))
+	hitbox_component.hit_hurtbox.connect(queue_free.unbind(1))
 	initialize()
 
 func initialize(flag: int = 0) -> void:

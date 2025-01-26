@@ -4,7 +4,7 @@ extends Node2D
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 @onready var timer: Timer = $Timer
 
-var dot_matrix_file = "res://asset/dot_matrix_info.txt"
+var dot_matrix_file = "res://asset/dot_matrix_info4.txt"
 var dot_positions = []
 var speed: int = 100  # 下落速度
 var current_frame: int = 1
@@ -84,18 +84,21 @@ func play_gif_frame() -> void:
 
 # 生成弹幕
 func spawn_bullet(dot , current_frame ) -> void:
-	var bullet_position: Vector2 = Vector2(480-dot["x"] * 8, dot["y"] * 8)
-	var speed: int = 0
+	var bullet_position: Vector2 = Vector2(720-dot["x"] * 16, dot["y"] * 16)
+	var speed: int = 190
 	#var time_wait: float = 0.1
 	var bullet_hint: Bullet = spawner_component.spawn(bullet_position , self, 0)
 	bullet_hint.name = "bullet_hint" + String.num_int64(dot["x"]).pad_zeros(3) + String.num_int64(dot["y"]).pad_zeros(3)
 	bullet_hint.frame = 0
 	bullet_hint.modulate = dot["color"]
-	bullet_hint.velocity = Vector2(0, speed)
+	# bullet_hint.velocity = Vector2(0, speed)
+	bullet_hint.trail_who = 3
+	bullet_hint.trail_pos = Vector2(360, 640)
+	bullet_hint.speed_trail_1 = speed
 	bullet_hint.initialize()
 	return 
 func clear(dot):
-	node_2 = get_node("bullet_hint" + String.num_int64(dot["x"]).pad_zeros(3) + String.num_int64(dot["y"]).pad_zeros(3))
+	node_2 = get_node_or_null("bullet_hint" + String.num_int64(dot["x"]).pad_zeros(3) + String.num_int64(dot["y"]).pad_zeros(3))
 	#print(node_2.move_component.velocity)
 	#print(node_2.global_position)
 	if node_2 != null:

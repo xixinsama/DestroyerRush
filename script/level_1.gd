@@ -97,6 +97,7 @@ func _on_player_exited() -> void:
 
 func _on_enemy1_exited() -> void:
 	attack_method3.stop() # 停止攻击
+	attack_method6.stop() # 停止攻击
 	enemy1_is_dead = true
 
 func _on_enemy2_exited() -> void:

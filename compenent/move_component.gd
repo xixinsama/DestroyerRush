@@ -22,8 +22,8 @@ var roll_v:Vector2 #旋转弹
 var trail_v:Vector2#追踪弹
 var trail_stright_v:Vector2 #直线追踪弹
 var roll_trail_v:Vector2 #旋转追踪弹
-var trail_pos = Status.player_position ##追踪谁
-@export var trail_who:int = 0
+@export var trail_pos: Vector2 = Status.player_position ##追踪谁
+@export var trail_who: int = 0
 
 @export_group("trigonometric")
 @export_range(-180, 180, 0.001, "radians_as_degrees") var angle_radians = 0.0 ## 朝向，相互垂直
@@ -39,8 +39,10 @@ func _ready() -> void:
 	
 	if trail_who == 0:
 		trail_pos = Status.player_position
-	else:
+	elif trail_who == 1:
 		trail_pos = Status.enemy_position
+	else:
+		pass
 	await get_tree().create_timer(0.1).timeout
 	##代码 #直线追踪弹
 	trail_stright_v =speed_trail_2*(trail_pos - actor.position).normalized();

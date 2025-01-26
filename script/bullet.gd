@@ -20,6 +20,8 @@ extends Node2D
 @export_group("Trail")
 @export var speed_trail_1:float = 0.0 ##追踪子弹速度 追踪弹
 @export var speed_trail_2:float = 0.0 ##追踪子弹速度 直线追踪弹
+@export var trail_pos: Vector2 = Status.player_position ##追踪谁
+@export var trail_who: int = 0
 @export_group("Curve")
 @export var path_points: Curve2D = null ##绘制曲线，将节点按曲线轨迹移动
 @export var auto_start: bool = false ##是否自动开启（立即），建议使用方法start_follow()
@@ -53,6 +55,12 @@ func initialize(_flag: int = 0) -> void:
 		move_component.speed_trail_1 = speed_trail_1
 		move_component.speed_trail_2 = speed_trail_2
 		move_component.roll_origin_rad_1=roll_origin_rad_1
+		move_component.angle_radians = angle_radians 
+		move_component.amplitude = amplitude
+		move_component.frequency = frequency
+		move_component.phase = phase
+		move_component.trail_pos = trail_pos
+		move_component.trail_who = trail_who
 	
 	sprite_2d.frame = frame
 	
@@ -67,7 +75,4 @@ func initialize(_flag: int = 0) -> void:
 	life_timer.one_shot = one_shot
 	life_timer.autostart = autostart
 	
-	move_component.angle_radians = angle_radians 
-	move_component.amplitude = amplitude
-	move_component.frequency = frequency
-	move_component.phase = phase
+	

@@ -1112,12 +1112,14 @@ _data = {
 [node name="bullet" type="Node2D"]
 scale = Vector2(6, 6)
 script = ExtResource("1_q3cks")
+amplitude = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_tscps")
 flip_v = true
 hframes = 6
 vframes = 5
+frame = 14
 region_enabled = true
 region_rect = Rect2(0, 0, 48, 40)
 
@@ -1135,7 +1137,6 @@ libraries = {
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("4_oa5dl")
 actor = NodePath("..")
-amplitude = 360.0
 
 [node name="FollowPathComponent" type="Node2D" parent="."]
 script = ExtResource("5_78lcc")
