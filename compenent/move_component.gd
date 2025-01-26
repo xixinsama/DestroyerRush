@@ -27,7 +27,7 @@ var trail_pos = Status.player_position ##追踪谁
 
 @export_group("trigonometric")
 @export_range(-180, 180, 0.001, "radians_as_degrees") var angle_radians = 0.0 ## 朝向，相互垂直
-@export var amplitude: float = 1.0 ##振幅
+@export var amplitude: float = 0 ##振幅
 @export var frequency: float = 1.0 ##频率，位移为（2 * 振幅/频率）
 @export var phase: float = 0 ##相位
 var trigo_v: Vector2

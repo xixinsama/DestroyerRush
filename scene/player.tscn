@@ -108,8 +108,8 @@ script = ExtResource("1_kcnqc")
 
 [node name="StatsComponent" type="Node" parent="."]
 script = ExtResource("1_c2tg5")
-health_max = 6
-health = 6
+health_max = 3000
+health = 3000
 roll_speed = 8
 
 [node name="PlayerManageComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "statscomponent", "hurtboxcomponent", "shake_component", "destroy_effect_spawner_component")]

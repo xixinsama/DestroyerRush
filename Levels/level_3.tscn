@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://comi4hgpyqnc8"]
+[gd_scene load_steps=7 format=3 uid="uid://comi4hgpyqnc8"]
 
 [ext_resource type="Script" path="res://script/level_3.gd" id="1_tbd25"]
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="2_kgh36"]
 [ext_resource type="PackedScene" uid="uid://o8jih1iks4x5" path="res://scene/bullet.tscn" id="3_kuupd"]
 [ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="4_6f011"]
+[ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="5_a7bry"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3iy8d"]
 size = Vector2(720, 20)
@@ -23,3 +24,8 @@ script = ExtResource("4_6f011")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="killzone"]
 position = Vector2(360, 1290)
 shape = SubResource("RectangleShape2D_3iy8d")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="player" parent="." instance=ExtResource("5_a7bry")]
+position = Vector2(349, 650)
