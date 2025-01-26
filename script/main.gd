@@ -75,9 +75,13 @@ func _ready() -> void:
 			return
 		else:
 			await get_tree().create_timer(1.0).timeout
-			get_tree().change_scene_to_file("res://Levels/level_1.tscn")
+			
+			var InventoryScene: PackedScene = preload("res://Levels/level_1.tscn")
+			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
+			Transitions.FadeType.CrossFade)
+			
+			#FancyFade.swirl(InventoryScene.instantiate())
 		)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
