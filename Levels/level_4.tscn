@@ -759,3 +759,4 @@ bus = &"Sound Effects"
 stream = ExtResource("14_ibbl1")
 autoplay = true
 bus = &"BGM"
+parameters/looping = true
