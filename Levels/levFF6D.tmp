@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://dcgj6joi43i08"]
+[gd_scene load_steps=52 format=3 uid="uid://dcgj6joi43i08"]
 
 [ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_3u3py"]
 [ext_resource type="Script" path="res://script/main.gd" id="1_jhbmh"]
@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://o8jih1iks4x5" path="res://scene/bullet.tscn" id="7_4oek7"]
 [ext_resource type="Texture2D" uid="uid://c1cexcn6cr3bk" path="res://asset/Holy VFX 02.png" id="8_0schh"]
 [ext_resource type="Texture2D" uid="uid://poagf1yp875h" path="res://asset/Free Smoke Fx  Pixel 06.png" id="9_8mbnx"]
-[ext_resource type="Texture2D" uid="uid://btxgkg66jlqkc" path="res://asset/SpaceShooterAssetPack_BackGrounds.png" id="10_pwyvp"]
+[ext_resource type="AudioStream" uid="uid://bv30nam14j2bb" path="res://asset/Sounds/BGM/Astral Float.wav" id="10_7r7id"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6ln3"]
 size = Vector2(2079.88, 93)
@@ -303,36 +303,6 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gvgv4"]
-atlas = ExtResource("10_pwyvp")
-region = Rect2(0, 256, 128, 256)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_woubr"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gvgv4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gvgv4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gvgv4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gvgv4")
-}],
-"loop": true,
-"name": &"change",
-"speed": 4.0
-}]
-
 [node name="level0" type="Node2D"]
 script = ExtResource("1_jhbmh")
 
@@ -456,9 +426,7 @@ sprite_frames = SubResource("SpriteFrames_ht6dw")
 animation = &"magic_to_produce_ray"
 autoplay = "magic_to_produce_ray"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-z_index = 4000
-position = Vector2(362, 622)
-scale = Vector2(6, 6)
-sprite_frames = SubResource("SpriteFrames_woubr")
-animation = &"change"
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_7r7id")
+autoplay = true
+bus = &"BGM"

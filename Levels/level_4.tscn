@@ -757,3 +757,7 @@ stream = ExtResource("13_bs7ov")
 [node name="BGMLevel4" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_ibbl1")
 autoplay = true
+
+
+bus = &"BGM"
+parameters/looping = true

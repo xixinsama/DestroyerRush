@@ -88,13 +88,22 @@ func _ready() -> void:
 		if player == null:
 			return
 		else:
-			#animation_player.play("over_change")
-			animated_sprite_2d.play("change")
-			#print(11)
-			await get_tree().create_timer(1.5).timeout
-			get_tree().change_scene_to_file("res://Levels/level_1.tscn")
-		)
 
+
+
+
+
+
+
+			await get_tree().create_timer(1.0).timeout
+			
+			var InventoryScene: PackedScene = preload("res://Levels/level_1.tscn")
+			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
+			Transitions.FadeType.CrossFade)
+			
+			#FancyFade.swirl(InventoryScene.instantiate())
+
+		)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

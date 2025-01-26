@@ -46,12 +46,12 @@ func _ready() -> void:
 	
 	attack_method4 = Timer.new()
 	add_child(attack_method4)
-	attack_method4.wait_time = 0.2
+	attack_method4.wait_time = 0.4
 	attack_method4.timeout.connect(attack_4)
 	
 	attack_method5 = Timer.new()
 	add_child(attack_method5)
-	attack_method5.wait_time = 0.2
+	attack_method5.wait_time = 0.4
 	attack_method5.timeout.connect(attack_5)
 
 	attack_method6 = Timer.new()
@@ -92,8 +92,8 @@ func _process(delta: float) -> void:
 
 func _on_player_exited() -> void:
 	set_process(false)
-	#await  get_tree().create_timer(3.0).timeout
-	#get_tree().change_scene_to_file("res://scene/game_over.tscn")
+	await  get_tree().create_timer(3.0).timeout
+	get_tree().change_scene_to_file("res://scene/game_over.tscn")
 
 func _on_enemy1_exited() -> void:
 	attack_method3.stop() # 停止攻击
@@ -167,7 +167,7 @@ func attack_3() -> void:
 # 全局生成两条相交的直线
 func attack_4() -> void:
 	var line: Bullet # 只是直线
-	var speed: int = 300 ##子弹速度
+	var speed: int = 200 ##子弹速度
 	var frame_bullet = 28 ##子弹样式
 	line = spawner_component.spawn(Vector2(360, 0), self, 0)
 	line.frame = frame_bullet
@@ -181,7 +181,7 @@ func attack_4() -> void:
 
 func attack_5() -> void:
 	var line: Bullet # 只是直线
-	var speed: int = 300 ##子弹速度
+	var speed: int = 200 ##子弹速度
 	var frame_bullet = 28 ##子弹样式
 	line = spawner_component.spawn(Vector2(0, 280), self, 0)
 	line.frame = frame_bullet
