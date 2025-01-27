@@ -16,5 +16,5 @@ func _ready():
 func initialize(_flag: int) -> void:
 	add_velocity()
 	
-func add_velocity(inertia: Vector2 = Vector2()) -> void:
+func add_velocity() -> void:
 	move_component.velocity.y -= abs(Status.player_velocity.y / 5)

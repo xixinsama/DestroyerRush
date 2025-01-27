@@ -36,7 +36,7 @@ var enemy_scale: Vector2
 var player_position: Vector2
 var enemy_position: Vector2
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("skill") or Input.is_action_just_pressed("roll"):
 		if game_running:
 			player_count += 1
@@ -66,8 +66,6 @@ func _ready():
 	enemy_2d.visible = false
 	progress_bar.value = 0.0
 	enemy_label.text = "按空格开始吧！"
-	
-
 
 func _process(delta):
 	if game_running:
@@ -78,8 +76,8 @@ func _process(delta):
 		update_ui()
 		update_laser(delta)
 	# 玩家跳关
-	if Input.is_action_just_pressed("jump_next_level") and Status.times_win_level > 1:
-		get_tree().change_scene_to_file("res://Levels/level_1.tscn")
+	if Input.is_action_just_pressed("jump_next_level") and Status.times_win_level3 > 1:
+		get_tree().change_scene_to_file("res://Levels/level_0.tscn")
 	# 开发者跳关
 	if Input.is_action_just_pressed("creator_jump"):
 		get_tree().change_scene_to_file("res://Levels/level_0.tscn")

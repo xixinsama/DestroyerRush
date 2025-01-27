@@ -13,7 +13,7 @@ extends Node2D
 @export var frame : int = 0
 @export var velocity: Vector2
 @export var roll_velocity: Vector2 = Vector2()
-@export var is_play_sound_effect: bool = false ## 只能在一开始设置，因为只播放一次捏
+@export var is_play_sound_effect: bool = false ## 需要时设置true，在initialize中生效
 @export_group("Roll")
 @export var roll_origin_rad_1:float = 0.0 ##加入旋转的初始角度 旋转弹
 @export var roll_vec_rad_1:float = -PI ##加入旋转的角度速度,正是顺时针，负是逆时针 旋转弹
@@ -42,7 +42,7 @@ extends Node2D
 @export var phase: float = 0 ##相位
 
 
-signal Despawn
+# signal Despawn
 
 func _ready() -> void:
 	hitbox_component.hit_hurtbox.connect(queue_free.unbind(1))
