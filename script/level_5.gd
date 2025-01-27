@@ -13,6 +13,7 @@ extends Node2D
 var flag_prase: int = 0
 var timer_prase: Timer = null
 var timer_attack_1: Timer = null
+var timer_attack_2: Timer = null
 func _ready() -> void:
 	player.tree_exited.connect(func():
 		if enemy == null: # 不要动
@@ -55,7 +56,15 @@ func _ready() -> void:
 	timer_attack_1.autostart = true
 	timer_attack_1.one_shot = false
 	timer_attack_1.timeout.connect(attack_1)
-	
+	##攻击2
+	timer_attack_2 = Timer.new()
+	add_child(timer_attack_2)
+	timer_attack_2.start()	
+	##关于计时器的初始话
+	timer_attack_2.wait_time = 4
+	timer_attack_2.autostart = true
+	timer_attack_2.one_shot = false
+	timer_attack_2.timeout.connect(attack_2)
 	
 
 func prase_des():##阶段判断
@@ -135,6 +144,43 @@ func attack_1():
 				bullet_left.initialize()
 	pass
 
+func attack_2():
+	var luo: Bullet = null
+	var rad: float = PI/6 + PI/2
+	var num: int = 14##子弹数量
+	var speed: int =500 ##子弹速度
+	var frame_bullet = 13 ##子弹样式
+	for i in range(0,num):
+		if enemy != null:
+			luo = spawner_component.spawn(enemy.global_position,self,0)
+			luo.velocity = speed * (player.global_position - enemy.global_position).from_angle(rad)
+			rad = rad - PI/((num) * 3)
+			#speed = speed + 10
+			luo.frame = frame_bullet
+			#luo.wait_time = 2.0
+			#luo.life_timer.timeout.connect(asign_value_1.bind(luo))
+			#luo.life_timer.one_shot = false
+			luo.initialize()
+			await get_tree().create_timer(0.01).timeout
+			#luo.life_timer.start()
+	for i in range(0,num):
+		if enemy != null:
+			luo = spawner_component.spawn(enemy.global_position,self,0)
+			luo.velocity = speed *  (player.global_position - enemy.global_position).from_angle(rad)
+			rad = rad + PI/((num) * 3)
+			luo.frame = frame_bullet
+			luo.initialize()
+			await get_tree().create_timer(0.01).timeout
+	for i in range(0,num):
+		if enemy != null:
+			luo = spawner_component.spawn(enemy.global_position,self,0)
+			luo.velocity = speed *  (player.global_position - enemy.global_position).from_angle(rad)
+			rad = rad - PI/(num * 3)
+			luo.frame = frame_bullet
+			luo.initialize()
+			await get_tree().create_timer(0.01).timeout
+	pass
+
 func roll_it(bullet:Bullet):
 	var roll_v: float = PI/2
 	bullet.roll_origin_rad_1 =  bullet.velocity.angle()
@@ -155,6 +201,23 @@ func roll_it_1(bullet:Bullet):
 	bullet.life_timer.timeout.connect(clear.bind(bullet))
 	bullet.initialize()
 	pass
+func asign_value_1(unfold: Bullet) -> void:
+	var left_bullet: Bullet = null
+	var right_bullet: Bullet = null
+	if unfold != null:
+		left_bullet = spawner_component.spawn(unfold.global_position,self,0)
+		left_bullet.velocity = Vector2(250,0)
+		left_bullet.frame = 4
+		left_bullet.initialize()
+		right_bullet = spawner_component.spawn(unfold.global_position,self,0)
+		right_bullet.velocity = Vector2(-250,0)
+		right_bullet.frame = 4
+		right_bullet.initialize()
+
+
+
+
+
 
 func clear(bullet:Bullet):
 	bullet.queue_free()
