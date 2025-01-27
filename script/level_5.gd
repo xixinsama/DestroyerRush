@@ -1,8 +1,4 @@
 extends Node2D
-@onready var player: Node2D = $player
-@onready var enemy: Node2D = $enemy
-@onready var spawner_component: SpawnerComponent = $SpawnerComponent
-
 
 # 三个阶段（25，50，75），每一阶段会放出另一个之前打过的BOSS，但是削弱过的版本
 # 在放出之前的BOSS之后，不可索敌，停止移动，等杀死另一个BOSS之后恢复
@@ -10,32 +6,42 @@ extends Node2D
 # 此BOSS每个阶段多增加一种弹幕，第三阶段就四种攻击模式，其中一种为全局攻击
 # 这种全局攻击模式在随阶段增强（四种） timer_attack_1 大风车半径，750（尝试）
 # 七种本身具有，三种召唤出的BOSS具有
+
+@onready var player: Node2D = $player
+@onready var enemy: Node2D = $enemy
+@onready var spawner_component: SpawnerComponent = $SpawnerComponent
+var jumping: bool = false
+
 var flag_prase: int = 0
 var timer_prase: Timer = null
 var timer_attack_1: Timer = null
 var timer_attack_2: Timer = null
+
+
 func _ready() -> void:
+	create_tween().tween_property(player, "global_position", Status.player_position, 0.3)
 	player.tree_exited.connect(func():
-		if enemy == null: # 不要动
-			return
-		else:
-			await get_tree().create_timer(1.0).timeout
-			var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
-			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-			Transitions.FadeType.CrossFade)
+		set_process(false)
+		if jumping: return
+		jumping = true
+		await get_tree().create_timer(1.0).timeout
+		var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
+		Status.scene_into(InventoryScene)
 		)
 	enemy.tree_exited.connect(func():
-		if player == null:
-			return
-		else:
-			await get_tree().create_timer(1.0).timeout
-			var InventoryScene: PackedScene = preload("res://Levels/level_3.tscn")
-			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-			Transitions.FadeType.CrossFade)
-			#FancyFade.swirl(InventoryScene.instantiate())
+		set_process(false)
+		if jumping: return
+		jumping = true
+		await get_tree().create_timer(1.0).timeout
+		var InventoryScene: PackedScene = preload("res://Levels/level_3.tscn")
+		Status.scene_into(InventoryScene)
 		)
-		
-		
+
+func _process(_delta: float) -> void:
+	# 开发者跳关
+	if Input.is_action_just_pressed("creator_jump"):
+		jumping = true
+		get_tree().change_scene_to_file("res://Levels/level_3.tscn")
 
 	##关于计时器
 	#每秒判断一次阶段改变
@@ -66,6 +72,9 @@ func _ready() -> void:
 	timer_attack_2.one_shot = false
 	timer_attack_2.timeout.connect(attack_2)
 	
+
+
+
 
 func prase_des():##阶段判断
 	if enemy !=null:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=55 format=3 uid="uid://dcgj6joi43i08"]
 
 [ext_resource type="PackedScene" uid="uid://n51yxye8n0j6" path="res://scene/player.tscn" id="1_3u3py"]
-[ext_resource type="Script" path="res://script/main.gd" id="1_jhbmh"]
+[ext_resource type="Script" path="res://script/level_0.gd" id="1_jhbmh"]
 [ext_resource type="PackedScene" uid="uid://3r2gmpgp3sam" path="res://scene/enemy.tscn" id="3_xper4"]
 [ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="4_bycl7"]
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="6_3pkov"]
@@ -468,3 +468,4 @@ animation = &"change"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_f3ocr")
 autoplay = true
+bus = &"BGM"

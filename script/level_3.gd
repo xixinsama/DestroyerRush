@@ -6,35 +6,9 @@ extends Node2D
 
 var dot_matrix_file = "res://asset/dot_matrix_info.txt"
 var dot_positions = []
-var speed: int = 100  # 下落速度
 var current_frame: int = 1
-#func _ready():
-	## 读取点阵信息文件
-	#var file = FileAccess.open(dot_matrix_file, FileAccess.READ)
-	#if file:
-		#var frame_index = 0
-		#while not file.eof_reached():
-			#var line = file.get_line()
-			#if line.begins_with("Frame"):
-				#frame_index = int(line.replace("Frame ", ""))
-			#elif line != "":
-				#var data = line.split(": ")
-				#var position = data[0].replace("(", "").replace(")", "").split(", ")
-				#var x = int(position[0])
-				#var y = int(position[1])
-				#var alpha = int(data[1])
-				#dot_positions.append({"x": x, "y": y, "alpha": alpha, "frame": frame_index})
-		#file.close()
-#
-	## 生成弹幕
-	#for dot in dot_positions:
-		#var bullet_position: Vector2 = Vector2(dot["x"]*8, -dot["y"]*8)
-		#var bullet_hint: Bullet = spawner_component.spawn(bullet_position, self, 0)
-		#bullet_hint.modulate.a = dot["alpha"] / 255.0
-		#bullet_hint.frame = 0
-		#bullet_hint.velocity = Vector2(0, 100)
-		#bullet_hint.initialize()
 var node_2: Bullet = null
+
 func _ready():
 	# 读取点阵信息文件
 	var file = FileAccess.open(dot_matrix_file, FileAccess.READ)
@@ -46,9 +20,9 @@ func _ready():
 				dot_positions.append([])
 			elif line != "":
 				var data = line.split(": ")
-				var position = data[0].replace("(", "").replace(")", "").split(", ")
-				var x = int(position[0])
-				var y = int(position[1])
+				var dot_position = data[0].replace("(", "").replace(")", "").split(", ")
+				var x = int(dot_position[0])
+				var y = int(dot_position[1])
 				var rgba = data[1].split(" ")
 				var r = int(rgba[0])
 				var g = int(rgba[1])
@@ -79,7 +53,7 @@ func play_gif_frame() -> void:
 		#node_2 = spawner_component.spawn(Vector2(0,0), self, 0)
 		if current_frame == 0:
 			for dot in dot_positions[current_frame]:
-				spawn_bullet(dot,current_frame)
+				spawn_bullet(dot)
 		else :
 			for dot in dot_positions[current_frame]:
 				clear(dot)
@@ -88,7 +62,7 @@ func play_gif_frame() -> void:
 		current_frame = 1
 
 # 生成弹幕
-func spawn_bullet(dot , current_frame ) -> void:
+func spawn_bullet(dot) -> void:
 	var bullet_position: Vector2 = Vector2(720-dot["x"] * 16, dot["y"] * 16)
 	var speed: int = 190
 	#var time_wait: float = 0.1

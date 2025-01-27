@@ -12,10 +12,8 @@ extends Node2D
 
 @onready var bomm_sprite_2d: AnimatedSprite2D = $enemy/bommSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-#@onready var animated_sprite_2d: AnimatedSprite2D = $AnimationPlayer/AnimatedSprite2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-
-
+var jumping: bool = false
 
 var time_all: Timer = null
 var timer_2: Timer = null
@@ -29,8 +27,8 @@ var prase_flag = 0
 
 
 func _ready() -> void:
-	
-		##关于计时器
+	create_tween().tween_property(player, "global_position", Status.player_position, 0.3)
+	##关于计时器
 	timer = Timer.new()
 	timer_2 = Timer.new()
 	time_all = Timer.new()
@@ -75,33 +73,29 @@ func _ready() -> void:
 	
 	
 	player.tree_exited.connect(func():
-		if enemy == null: # 不要动
-			return
-		else:
-			#animation_player.play("over_change")
-			#animated_sprite_2d.play("change")
-			#print(22)
-			await get_tree().create_timer(1.0).timeout
-			var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
-			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-			Transitions.FadeType.CrossFade)
+		if jumping: return
+		jumping = true
+		await get_tree().create_timer(1.0).timeout
+		var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
+		Status.scene_into(InventoryScene)
 		)
 	enemy.tree_exited.connect(func():
-		if player == null:
-			return
-		else:
-			await get_tree().create_timer(1.0).timeout
-			var InventoryScene: PackedScene = preload("res://Levels/level_1.tscn")
-			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-			Transitions.FadeType.CrossFade)
-			
-			#FancyFade.swirl(InventoryScene.instantiate())
-
+		if jumping: return
+		jumping = true
+		await get_tree().create_timer(1.0).timeout
+		var InventoryScene: PackedScene = preload("res://Levels/level_5.tscn")
+		Status.scene_into(InventoryScene)
 		)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _process(_delta: float) -> void:
+	# 玩家跳关
+	if Input.is_action_just_pressed("jump_next_level") and Status.times_win_level4 > 1:
+		jumping = true
+		get_tree().change_scene_to_file("res://Levels/level_5.tscn")
+	# 开发者跳关
+	if Input.is_action_just_pressed("creator_jump"):
+		jumping = true
+		get_tree().change_scene_to_file("res://Levels/level_5.tscn")
 	
 func luoruixin_time_all() :
 	var flag:int = randi_range(0,2)#randi_range(0,5) + prase_flag
@@ -141,7 +135,7 @@ func luoruixin_time_all() :
 			luo = spawner_component.spawn(Status.enemy_position,self,0)
 			luo.name = "luorui" + String.num_int64(shotgun_flag)
 			shotgun_flag += 1
-			luo.velocity = speed * Vector2(1,0).from_angle(rad)
+			luo.velocity = speed * Vector2.from_angle(rad)
 			luo.frame = frame_bullet
 			luo.life_timer.one_shot = true
 			luo.life_timer.wait_time = 1.7
@@ -216,7 +210,7 @@ func attack_6() -> void:
 	for i in range(6, num):
 		unfold = spawner_component.spawn(Vector2(560,200) + Vector2(56, i*2-8), self, 0)
 		#unfold.name = "unfold" + String.num_int64(i)
-		unfold.velocity = speed * Vector2(-1,0).from_angle(-0.25 * PI + (i-8) * PI / 16)
+		unfold.velocity = speed * Vector2.from_angle(-0.25 * PI + (i-8) * PI / 16)
 		unfold.frame = frame_bullet
 		unfold.wait_time = 0.8
 		unfold.one_shot = true
@@ -253,7 +247,7 @@ func attack_7():
 	var frame_bullet = 13 ##子弹样式
 	for i in range(0,num):
 		luo = spawner_component.spawn(Vector2(360,200),self,0)
-		luo.velocity = speed * Vector2(1,0).from_angle(rad)
+		luo.velocity = speed * Vector2.from_angle(rad)
 		rad = rad + PI/((num-1) * 2)
 		# speed = speed + 10
 		luo.frame = frame_bullet
