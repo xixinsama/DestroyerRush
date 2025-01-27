@@ -2,16 +2,11 @@ extends Node2D
 # 游戏主循环
 # 将游戏的一切在此管理
 
-@onready var status: Node = $status # 游戏全局变量
 @onready var killzone: HurtboxComponent = $killzone
 @onready var player: Node2D = $player
 @onready var enemy: Node2D = $enemy
-
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 @onready var move_component: MoveComponent = $MoveComponent
-
-@onready var bomm_sprite_2d: AnimatedSprite2D = $enemy/bommSprite2D
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 var jumping: bool = false
 
@@ -24,7 +19,6 @@ var timer_attack_7: Timer = null
 var shotgun_flag: int = 0 #散弹数量标记
 ## signal signal_prase_flag
 var prase_flag = 0
-
 
 func _ready() -> void:
 	create_tween().tween_property(player, "global_position", Status.player_position, 0.3)

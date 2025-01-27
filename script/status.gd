@@ -1,7 +1,7 @@
 extends Node
 
 # 局内信息
-var player_position: Vector2
+var player_position: Vector2 = Vector2(360, 1100)
 var player_health: int
 var player_velocity: Vector2
 var enemy_position: Vector2

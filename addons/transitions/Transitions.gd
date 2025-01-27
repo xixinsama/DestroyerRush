@@ -157,9 +157,11 @@ func _set_scene(new_scene:Node):
 	previous_scene.queue_free()
 	
 	if new_scene.get_parent() != scene_container:
+		#print("jump1") #如果此有问题，当改为load()加载资源试试
 		scene_container.call_deferred("add_child", new_scene)
 		
 	if scene_container == _root:
+		#print("jump2")
 		get_tree().call_deferred("set_current_scene", new_scene)
 	
 	_current_scene = new_scene

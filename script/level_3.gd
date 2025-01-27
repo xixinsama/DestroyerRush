@@ -3,16 +3,18 @@ extends Node2D
 
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 @onready var timer: Timer = $Timer
+@onready var label: Label = $Label
+@onready var progress_bar: ProgressBar = $ProgressBar
 
-var dot_matrix_file = "res://asset/dot_matrix_info.txt"
+var jumping: bool = false
+var dot_matrix_file: String = "res://asset/dot_matrix_info.txt"
 var dot_positions = []
 var current_frame: int = 1
 var node_2: Bullet = null
 
 func _ready():
-	# 读取点阵信息文件
 	var file = FileAccess.open(dot_matrix_file, FileAccess.READ)
-	if file:
+	if file.is_open():
 		while not file.eof_reached():
 			var line = file.get_line()
 			if line.begins_with("Frame"):
@@ -38,14 +40,15 @@ func _ready():
 	#play_gif.one_shot = true
 	play_gif.start()
 	current_frame = 0
-	
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("skill") or Input.is_action_just_pressed("roll"):
-		var InventoryScene: PackedScene = preload("res://scene/menu.tscn")
-		Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-		Transitions.FadeType.CrossFade)
-
+		if jumping: return
+		jumping = true
+		var InventoryScene: PackedScene = load("res://scene/menu.tscn")
+		print(InventoryScene)
+		await get_tree().create_timer(3.0).timeout
+		Status.scene_into(InventoryScene)
 
 # 按帧生成
 func play_gif_frame() -> void:
