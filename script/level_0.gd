@@ -1,7 +1,7 @@
 extends Node2D
 # 游戏主循环
 # 将游戏的一切在此管理
-
+## attack7中的代码后半部分是散射的部分
 @onready var killzone: HurtboxComponent = $killzone
 @onready var player: Node2D = $player
 @onready var enemy: Node2D = $enemy

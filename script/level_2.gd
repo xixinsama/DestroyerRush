@@ -1,5 +1,5 @@
 extends Node2D
-
+## luoruixin_time_all 中的 if flag == 8
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 @onready var move_component: MoveComponent = $MoveComponent
 @onready var player: Node2D = $player
@@ -7,12 +7,10 @@ extends Node2D
 @onready var bomm_sprite_2d: AnimatedSprite2D = $enemy/bommSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 var jumping: bool = false
-
 var time_all: Timer = null
 var timer_2: Timer = null
 var timer: Timer = null
 var timer_prase: Timer = null
-
 var shotgun_flag: int = 0 #散弹数量标记
 ## signal signal_prase_flag
 var prase_flag = 0
