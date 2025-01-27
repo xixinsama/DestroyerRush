@@ -34,6 +34,7 @@ var roll_trail_v:Vector2 #旋转追踪弹
 var trigo_v: Vector2
 var phase_now: float = 0
 var trail_stright_v_1: Vector2 = Vector2()
+var is_bun: bool = false
 func _ready() -> void:
 	# 判定节点状态，连接关闭信号
 	actor.tree_exiting.connect(stop_process)
@@ -82,6 +83,15 @@ func _process(delta):
 ##代码 向量求和
 	sum_velocity = (velocity + roll_velocity) * delta + roll_v + trail_v * delta + trail_stright_v * delta + roll_trail_v + trigo_v * delta #总位移向量
 	# print("en", sum_velocity)
+##代码 反弹？
+	if is_bun:
+		if (sum_velocity + actor.global_position).x < 0 or (sum_velocity + actor.global_position).x > 720 :
+			velocity.x = -velocity.x
+			sum_velocity.x = -sum_velocity.x
+			pass
+		pass
+	else:
+		pass
 	actor.translate(sum_velocity)
 
 # 停止每帧运动

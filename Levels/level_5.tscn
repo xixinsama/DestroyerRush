@@ -80,3 +80,7 @@ shape = SubResource("RectangleShape2D_fq8gq")
 [node name="SpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("8_hhj5u")
 scene = ExtResource("9_88o57")
+
+[node name="EnemySpawnerComponent" type="Node2D" parent="."]
+script = ExtResource("8_hhj5u")
+scene = ExtResource("1_ksg77")

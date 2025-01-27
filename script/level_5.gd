@@ -10,14 +10,15 @@ extends Node2D
 @onready var player: Node2D = $player
 @onready var enemy: Node2D = $enemy
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
-var jumping: bool = false
+@onready var enemy_spawner_component: SpawnerComponent = $EnemySpawnerComponent
 
+var jumping: bool = false
 var flag_prase: int = 0
 var timer_prase: Timer = null
 var timer_attack_1: Timer = null
 var timer_attack_2: Timer = null
-
-
+var timer_attack_3: Timer = null
+var timer_attack_4: Timer = null
 func _ready() -> void:
 	create_tween().tween_property(player, "global_position", Status.player_position, 0.3)
 	player.tree_exited.connect(func():
@@ -62,10 +63,28 @@ func _ready() -> void:
 	add_child(timer_attack_2)
 	timer_attack_2.start()	
 	##关于计时器的初始话
-	timer_attack_2.wait_time = 100
+	timer_attack_2.wait_time = 4
 	timer_attack_2.autostart = true
 	timer_attack_2.one_shot = false
 	timer_attack_2.timeout.connect(attack_2)
+	##攻击3
+	timer_attack_3 = Timer.new()
+	add_child(timer_attack_3)
+	timer_attack_3.start()	
+	##关于计时器的初始话
+	timer_attack_3.wait_time = 20
+	timer_attack_3.autostart = true
+	timer_attack_3.one_shot = false
+	timer_attack_3.timeout.connect(attack_3)
+	##攻击4
+	timer_attack_4 = Timer.new()
+	add_child(timer_attack_4)
+	timer_attack_4.start()	
+	##关于计时器的初始话
+	timer_attack_4.wait_time = 10
+	timer_attack_4.autostart = true
+	timer_attack_4.one_shot = false
+	timer_attack_4.timeout.connect(attack_4)
 
 func _process(_delta: float) -> void:
 	# 开发者跳关
@@ -80,13 +99,9 @@ func _process(_delta: float) -> void:
 
 func prase_des():##阶段判断
 	if enemy !=null:
-		if enemy.get_node("StatsComponent").health < 3 * enemy.enemy_health_max / 4 and enemy.get_node("StatsComponent").health > enemy.enemy_health_max / 2 :
+		if enemy.get_node("StatsComponent").health < 3 * enemy.enemy_health_max / 4 and enemy.get_node("StatsComponent").health > enemy.enemy_health_max / 2 and flag_prase == 0:
 			flag_prase = 1
 			pass
-			#prase_flag = 4
-			#time_all.wait_time = 2
-			#bomm_sprite_2d.play("boom")
-			#animation_player.play("big_small")
 		elif enemy.get_node("StatsComponent").health < enemy.enemy_health_max / 2 and  enemy.get_node("StatsComponent").health >  enemy.enemy_health_max / 4:
 			flag_prase = 2
 			pass
@@ -221,22 +236,63 @@ func roll_it_1(bullet:Bullet):
 	bullet.life_timer.timeout.connect(clear.bind(bullet))
 	
 	pass
+
+func attack_3():
+	var luo: Bullet = null
+	var rad: float = PI/6 
+	var num: int = 20##子弹数量
+	#var speed: int =500 ##子弹速度
+	var frame_bullet = 7 ##子弹样式
+	for i in range(0,num):
+		if enemy != null:
+			luo = spawner_component.spawn(enemy.global_position,self,0)
+			luo.frame = frame_bullet
+			luo.initialize()
+			luo.life_timer.wait_time = randi_range(0,1)+1
+			luo.life_timer.timeout.connect(asign_value_1.bind(luo))
+			luo.life_timer.one_shot = true
+			luo.life_timer.start()
+			await get_tree().create_timer(0.5).timeout
+	pass
 func asign_value_1(unfold: Bullet) -> void:
 	var left_bullet: Bullet = null
 	var right_bullet: Bullet = null
 	if unfold != null:
-		left_bullet = spawner_component.spawn(unfold.global_position,self,0)
-		left_bullet.velocity = Vector2(250,0)
-		left_bullet.frame = 4
-		left_bullet.initialize()
-		right_bullet = spawner_component.spawn(unfold.global_position,self,0)
-		right_bullet.velocity = Vector2(-250,0)
-		right_bullet.frame = 4
-		right_bullet.initialize()
+		unfold.velocity = Vector2(0,300+randi_range(0,100))
+		unfold.initialize()
 
-
-
-
+func attack_4():
+	var luo: Bullet = null
+	var luo_1: Bullet = null
+	var luo_2: Bullet = null
+	var num: int = 10##子弹数量
+	var speed: int =500 ##子弹速度
+	var frame_bullet = 19 ##子弹样式
+	var e_2_p: Vector2 = Vector2() 
+	for i in range(0,num):
+		if enemy != null:
+			e_2_p = (player.global_position-enemy.global_position).normalized()
+			luo = spawner_component.spawn(enemy.global_position,self,0)
+			luo.velocity = speed * e_2_p
+			luo.frame = frame_bullet
+			luo.initialize()
+			luo.move_component.is_bun = true
+			
+			e_2_p = (-enemy.global_position + Vector2(-player.global_position.x,player.global_position.y)).normalized()
+			luo_1 = spawner_component.spawn(enemy.global_position,self,0)
+			luo_1.velocity = speed * e_2_p
+			luo_1.frame = frame_bullet
+			luo_1.initialize()
+			luo_1.move_component.is_bun = true
+			
+			e_2_p = (-enemy.global_position + Vector2(720*2-player.global_position.x,player.global_position.y)).normalized()
+			luo_2 = spawner_component.spawn(enemy.global_position,self,0)
+			luo_2.velocity = speed * e_2_p
+			luo_2.frame = frame_bullet
+			luo_2.initialize()
+			luo_2.move_component.is_bun = true
+			await get_tree().create_timer(0.1).timeout
+	pass
 
 
 func clear(bullet:Bullet):
