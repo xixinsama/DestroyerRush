@@ -753,6 +753,7 @@ label_settings = SubResource("LabelSettings_y5rno")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_bs7ov")
+bus = &"Sound Effects"
 
 [node name="BGMLevel4" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_ibbl1")

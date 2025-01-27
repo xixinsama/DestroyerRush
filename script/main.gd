@@ -29,8 +29,8 @@ var prase_flag = 0
 
 
 func _ready() -> void:
-	
-		##关于计时器
+	create_tween().tween_property(player, "global_position", Status.player_position, 0.3)
+	##关于计时器
 	timer = Timer.new()
 	timer_2 = Timer.new()
 	time_all = Timer.new()
@@ -78,25 +78,17 @@ func _ready() -> void:
 		if enemy == null: # 不要动
 			return
 		else:
-			#animation_player.play("over_change")
-			#animated_sprite_2d.play("change")
-			#print(22)
 			await get_tree().create_timer(1.0).timeout
 			var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
-			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-			Transitions.FadeType.CrossFade)
+			Status.scene_into(InventoryScene)
 		)
 	enemy.tree_exited.connect(func():
 		if player == null:
 			return
 		else:
 			await get_tree().create_timer(1.0).timeout
-			var InventoryScene: PackedScene = preload("res://Levels/level_1.tscn")
-			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-			Transitions.FadeType.CrossFade)
-			
-			#FancyFade.swirl(InventoryScene.instantiate())
-
+			var InventoryScene: PackedScene = preload("res://Levels/level_5.tscn")
+			Status.scene_into(InventoryScene)
 		)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

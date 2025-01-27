@@ -467,3 +467,4 @@ animation = &"change"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_f3ocr")
 autoplay = true
+bus = &"BGM"

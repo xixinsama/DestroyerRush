@@ -11,17 +11,14 @@ extends Node2D
 # 七种本身具有，三种召唤出的BOSS具有
 
 func _ready() -> void:
+	create_tween().tween_property(player, "global_position", Status.player_position, 0.3)
 	player.tree_exited.connect(func():
 		if enemy == null: # 不要动
 			return
 		else:
-			#animation_player.play("over_change")
-			#animated_sprite_2d.play("change")
-			#print(22)
 			await get_tree().create_timer(1.0).timeout
 			var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
-			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-			Transitions.FadeType.CrossFade)
+			Status.scene_into(InventoryScene)
 		)
 	enemy.tree_exited.connect(func():
 		if player == null:
@@ -29,7 +26,5 @@ func _ready() -> void:
 		else:
 			await get_tree().create_timer(1.0).timeout
 			var InventoryScene: PackedScene = preload("res://Levels/level_3.tscn")
-			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-			Transitions.FadeType.CrossFade)
-			#FancyFade.swirl(InventoryScene.instantiate())
+			Status.scene_into(InventoryScene)
 		)

@@ -20,6 +20,9 @@ var attack_method6: Timer
 var attack_method7: Timer
 
 func _ready() -> void:
+	# 更新玩家位置
+	create_tween().tween_property(player, "global_position", Status.player_position, 0.3)
+	# 初始化关卡
 	player.tree_exited.connect(_on_player_exited)
 	enemy_1.tree_exited.connect(_on_enemy1_exited)
 	enemy_2.tree_exited.connect(_on_enemy2_exited)
@@ -89,16 +92,17 @@ func _process(delta: float) -> void:
 		set_process(false)
 		await get_tree().create_timer(1.0).timeout
 		var InventoryScene: PackedScene = preload("res://Levels/level_4.tscn")
-		Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-		Transitions.FadeType.CrossFade)
-
+		Status.scene_into(InventoryScene)
+	
+	# 开发者跳关
+	if Input.is_action_just_pressed("creator_jump"):
+		get_tree().change_scene_to_file("res://Levels/level_4.tscn")
 
 func _on_player_exited() -> void:
 	set_process(false)
 	await  get_tree().create_timer(1.0).timeout
 	var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
-	Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-	Transitions.FadeType.CrossFade)
+	Status.scene_into(InventoryScene)
 
 func _on_enemy1_exited() -> void:
 	attack_method3.stop() # 停止攻击

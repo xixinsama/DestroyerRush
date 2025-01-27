@@ -77,6 +77,12 @@ func _process(delta):
 			round_timer = ROUND_DURATION
 		update_ui()
 		update_laser(delta)
+	# 玩家跳关
+	if Input.is_action_just_pressed("jump_next_level") and Status.times_win_level > 1:
+		get_tree().change_scene_to_file("res://Levels/level_1.tscn")
+	# 开发者跳关
+	if Input.is_action_just_pressed("creator_jump"):
+		get_tree().change_scene_to_file("res://Levels/level_0.tscn")
 
 # 每轮结算
 func evaluate_round():
@@ -134,8 +140,7 @@ func level_win() -> void:
 	enemy_2d.visible = false
 	await get_tree().create_timer(1.0).timeout
 	var InventoryScene: PackedScene = preload("res://Levels/level_0.tscn")
-	Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-	Transitions.FadeType.CrossFade)
+	Status.scene_into(InventoryScene)
 	# 等待一定时间进入下一场景
 	
 func game_over() -> void:
@@ -148,8 +153,7 @@ func game_over() -> void:
 	progress = END
 	await get_tree().create_timer(1.0).timeout
 	var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
-	Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-	Transitions.FadeType.CrossFade)
+	Status.scene_into(InventoryScene)
 
 func tween_shake(node_name: Node2D):
 	# 创造一个缓动效果，并最终降到0

@@ -1148,3 +1148,4 @@ script = ExtResource("5_78lcc")
 stream = ExtResource("6_b4eai")
 volume_db = -14.0
 max_polyphony = 20
+bus = &"Sound Effects"

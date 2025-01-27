@@ -32,10 +32,10 @@ func _ready() -> void:
 	timer_prase.start()
 	
 	##关于计时器的初始话
-	time_all.wait_time = 3.0##弹幕生产
+	time_all.wait_time = 2.0##弹幕生产
 	timer.wait_time = 10.0
 	timer_2.wait_time = 3.0
-	timer_prase.wait_time = 1
+	timer_prase.wait_time = 1.0
 	
 	timer.autostart = true
 	timer_2.autostart = true
@@ -57,30 +57,23 @@ func _ready() -> void:
 		if enemy == null: # 不要动
 			return
 		else:
-			#animation_player.play("over_change")
-			#animated_sprite_2d.play("change")
-			#print(22)
-			#await get_tree().create_timer(1.0).timeout
+			await get_tree().create_timer(2).timeout
 			var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
-			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-			Transitions.FadeType.CrossFade)
+			Status.scene_into(InventoryScene)
 		)
 	enemy.tree_exited.connect(func():
 		if player == null:
 			return
 		else:
-			#await get_tree().create_timer(1.0).timeout
+			await get_tree().create_timer(1.0).timeout
 			var InventoryScene: PackedScene = preload("res://Levels/level_1.tscn")
-			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
-			Transitions.FadeType.CrossFade)
-			
-			#FancyFade.swirl(InventoryScene.instantiate())
-
+			Status.scene_into(InventoryScene)
 		)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	# 开发者跳关
+	if Input.is_action_just_pressed("creator_jump"):
+		get_tree().change_scene_to_file("res://Levels/level_1.tscn")
 	
 func luoruixin_time_all() :
 	var flag:int =randi_range(0,5) + prase_flag
