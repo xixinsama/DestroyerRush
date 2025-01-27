@@ -88,13 +88,6 @@ func _ready() -> void:
 		if player == null:
 			return
 		else:
-
-
-
-
-
-
-
 			await get_tree().create_timer(1.0).timeout
 			
 			var InventoryScene: PackedScene = preload("res://Levels/level_1.tscn")
