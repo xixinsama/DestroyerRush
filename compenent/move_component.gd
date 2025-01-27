@@ -33,7 +33,7 @@ var roll_trail_v:Vector2 #旋转追踪弹
 @export var phase: float = 0 ##相位
 var trigo_v: Vector2
 var phase_now: float = 0
-var trail_stright_v_1
+var trail_stright_v_1: Vector2 = Vector2()
 func _ready() -> void:
 	# 判定节点状态，连接关闭信号
 	actor.tree_exiting.connect(stop_process)

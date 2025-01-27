@@ -338,6 +338,7 @@ script = ExtResource("1_jhbmh")
 
 [node name="enemy" parent="." instance=ExtResource("3_xper4")]
 position = Vector2(360, 200)
+enemy_looklike = 14
 enemy_health_max = 900
 enemy_health = 900
 

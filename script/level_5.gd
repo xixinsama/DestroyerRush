@@ -7,7 +7,7 @@ extends Node2D
 # 在放出之前的BOSS之后，不可索敌，停止移动，等杀死另一个BOSS之后恢复
 # 召唤出的BOSS血量降低，只会一种弹幕攻击模式，移动方式随机
 # 此BOSS每个阶段多增加一种弹幕，第三阶段就四种攻击模式，其中一种为全局攻击
-# 这种全局攻击模式在随阶段增强（四种）
+# 这种全局攻击模式在随阶段增强（四种） 第一种数量很少，第二种数量变多，第三种旋转
 # 七种本身具有，三种召唤出的BOSS具有
 
 func _ready() -> void:
@@ -15,9 +15,6 @@ func _ready() -> void:
 		if enemy == null: # 不要动
 			return
 		else:
-			#animation_player.play("over_change")
-			#animated_sprite_2d.play("change")
-			#print(22)
 			await get_tree().create_timer(1.0).timeout
 			var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
 			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
