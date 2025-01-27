@@ -33,7 +33,7 @@ var roll_trail_v:Vector2 #旋转追踪弹
 @export var phase: float = 0 ##相位
 var trigo_v: Vector2
 var phase_now: float = 0
-
+var trail_stright_v_1
 func _ready() -> void:
 	# 判定节点状态，连接关闭信号
 	actor.tree_exiting.connect(stop_process)
@@ -46,7 +46,7 @@ func _ready() -> void:
 		pass
 	await get_tree().create_timer(0.1).timeout
 	##代码 #直线追踪弹
-	trail_stright_v =speed_trail_2*(trail_pos - actor.position).normalized();
+	trail_stright_v_1 =(trail_pos - actor.position).normalized();
 	#roll_velocity =(Status.player_position - actor.position);
 	##代码 #旋转追踪弹
 	roll_r_2=(trail_pos - actor.position).length()/2;
@@ -62,6 +62,7 @@ func _process(delta):
 		trail_pos = Status.enemy_position
 	else:
 		pass
+	trail_stright_v =speed_trail_2*trail_stright_v_1.normalized();
 	roll_origin_rad_1=roll_vec_rad_1*delta+roll_origin_rad_1#当前旋转的角度
 	roll_v=Vector2(roll_r_1*cos(roll_origin_rad_1)-roll_r_1*cos(roll_origin_rad_1-roll_vec_rad_1*delta),roll_r_1*sin(roll_origin_rad_1)-roll_r_1*sin(roll_origin_rad_1-roll_vec_rad_1*delta))#在当前旋转角度和和半径干扰下的位移向量
 ##代码 #追踪弹

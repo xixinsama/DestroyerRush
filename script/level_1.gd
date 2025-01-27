@@ -63,6 +63,7 @@ func _ready() -> void:
 	add_child(attack_method7)
 	attack_method7.wait_time = 4
 	attack_method7.timeout.connect(attack_7)
+	
 
 func _process(delta: float) -> void:
 	# 根据玩家位置上传敌人位置信息至全局
@@ -86,14 +87,18 @@ func _process(delta: float) -> void:
 	# 此场景结束
 	if enemy1_is_dead and enemy2_is_dead:
 		set_process(false)
-		await get_tree().create_timer(3.0).timeout
-		get_tree().change_scene_to_file("res://Levels/level_2.tscn")
+		await get_tree().create_timer(1.0).timeout
+		var InventoryScene: PackedScene = preload("res://Levels/level_4.tscn")
+		Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
+		Transitions.FadeType.CrossFade)
 
 
 func _on_player_exited() -> void:
 	set_process(false)
-	await  get_tree().create_timer(3.0).timeout
-	get_tree().change_scene_to_file("res://scene/game_over.tscn")
+	await  get_tree().create_timer(1.0).timeout
+	var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
+	Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
+	Transitions.FadeType.CrossFade)
 
 func _on_enemy1_exited() -> void:
 	attack_method3.stop() # 停止攻击

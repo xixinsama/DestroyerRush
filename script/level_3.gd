@@ -64,9 +64,14 @@ func _ready():
 	#play_gif.one_shot = true
 	play_gif.start()
 	current_frame = 0
-#timer.wait_time = 0.11
-#timer.timeout.connect(clear)
-#timer.start()
+	
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("skill") or Input.is_action_just_pressed("roll"):
+		var InventoryScene: PackedScene = preload("res://scene/menu.tscn")
+		Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
+		Transitions.FadeType.CrossFade)
+
 
 # 按帧生成
 func play_gif_frame() -> void:
@@ -94,13 +99,18 @@ func spawn_bullet(dot , current_frame ) -> void:
 	# bullet_hint.velocity = Vector2(0, speed)
 	bullet_hint.trail_who = 3
 	bullet_hint.trail_pos = Vector2(360, 640)
-	bullet_hint.speed_trail_2 = speed
+	bullet_hint.life_timer.wait_time = 2.0
+	bullet_hint.life_timer.timeout.connect(trail_it.bind(bullet_hint))
+	bullet_hint.life_timer.one_shot = true
+	bullet_hint.life_timer.start()
 	bullet_hint.initialize()
 	return 
 func clear(dot):
 	node_2 = get_node_or_null("bullet_hint" + String.num_int64(dot["x"]).pad_zeros(3) + String.num_int64(dot["y"]).pad_zeros(3))
-	#print(node_2.move_component.velocity)
-	#print(node_2.global_position)
 	if node_2 != null:
 		node_2.modulate = dot["color"]
 	pass
+
+func  trail_it(bullet_hint: Bullet):
+	bullet_hint.speed_trail_2 = 300
+	bullet_hint.initialize()

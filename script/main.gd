@@ -79,24 +79,18 @@ func _ready() -> void:
 			return
 		else:
 			#animation_player.play("over_change")
-			animated_sprite_2d.play("change")
+			#animated_sprite_2d.play("change")
 			#print(22)
-			await get_tree().create_timer(1.5).timeout
-			get_tree().change_scene_to_file("res://scene/game_over.tscn")
+			await get_tree().create_timer(1.0).timeout
+			var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
+			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
+			Transitions.FadeType.CrossFade)
 		)
 	enemy.tree_exited.connect(func():
 		if player == null:
 			return
 		else:
-
-
-
-
-
-
-
 			await get_tree().create_timer(1.0).timeout
-			
 			var InventoryScene: PackedScene = preload("res://Levels/level_1.tscn")
 			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
 			Transitions.FadeType.CrossFade)

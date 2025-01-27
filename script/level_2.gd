@@ -57,17 +57,25 @@ func _ready() -> void:
 		if enemy == null: # 不要动
 			return
 		else:
-			await get_tree().create_timer(1.0).timeout
-			get_tree().change_scene_to_file("res://scene/game_over.tscn")
+			#animation_player.play("over_change")
+			#animated_sprite_2d.play("change")
+			#print(22)
+			#await get_tree().create_timer(1.0).timeout
+			var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
+			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
+			Transitions.FadeType.CrossFade)
 		)
 	enemy.tree_exited.connect(func():
-		# 停止
-		move_component.queue_free()
 		if player == null:
 			return
 		else:
-			await get_tree().create_timer(1.0).timeout
-			get_tree().change_scene_to_file("res://Levels/level_4.tscn")
+			#await get_tree().create_timer(1.0).timeout
+			var InventoryScene: PackedScene = preload("res://Levels/level_1.tscn")
+			Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
+			Transitions.FadeType.CrossFade)
+			
+			#FancyFade.swirl(InventoryScene.instantiate())
+
 		)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

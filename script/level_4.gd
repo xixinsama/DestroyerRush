@@ -66,6 +66,8 @@ func _ready():
 	enemy_2d.visible = false
 	progress_bar.value = 0.0
 	enemy_label.text = "按空格开始吧！"
+	
+
 
 func _process(delta):
 	if game_running:
@@ -130,6 +132,10 @@ func level_win() -> void:
 	print("胜利")
 	enemy.visible = false
 	enemy_2d.visible = false
+	await get_tree().create_timer(1.0).timeout
+	var InventoryScene: PackedScene = preload("res://Levels/level_0.tscn")
+	Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
+	Transitions.FadeType.CrossFade)
 	# 等待一定时间进入下一场景
 	
 func game_over() -> void:
@@ -140,6 +146,10 @@ func game_over() -> void:
 	player_2d.visible = false
 	enemy_2d.visible = false
 	progress = END
+	await get_tree().create_timer(1.0).timeout
+	var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
+	Transitions.change_scene_to_instance(InventoryScene.instantiate(), 
+	Transitions.FadeType.CrossFade)
 
 func tween_shake(node_name: Node2D):
 	# 创造一个缓动效果，并最终降到0
