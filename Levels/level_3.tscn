@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://bv30nam14j2bb" path="res://asset/Sounds/BGM/Astral Float.wav" id="5_pl03n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3iy8d"]
-size = Vector2(720, 20)
+size = Vector2(1440, 20)
 
 [node name="Level3" type="Node2D"]
 script = ExtResource("1_tbd25")

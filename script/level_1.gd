@@ -150,7 +150,8 @@ func attack_2() -> void:
 	var frame_bullet = 16 ##子弹样式
 	for i in range(0,num):
 		var offset: Vector2 = Vector2(randi_range(-4,4), randi_range(-4,4))
-		direct_follow = spawner_component.spawn(enemy_2.global_position + Vector2(0 ,48) + offset, self, 0)
+		if enemy_2 == null: return
+		direct_follow = spawner_component .spawn(enemy_2.global_position + Vector2(0 ,48) + offset, self, 0)
 		direct_follow.frame = frame_bullet
 		direct_follow.speed_trail_2 = speed
 		direct_follow.initialize()
@@ -164,6 +165,7 @@ func attack_3() -> void:
 	var speed: int = 250 ##子弹速度
 	var frame_bullet = 7 ##子弹样式
 	for i in range(0,num):
+		if enemy_1 == null: return
 		scatter = spawner_component.spawn(enemy_1.global_position + Vector2(0, 48), self, 0)
 		scatter.frame = frame_bullet
 		scatter.velocity = speed * Vector2(sin(i), abs(cos(i)))
@@ -206,6 +208,7 @@ func attack_6() -> void:
 	var speed: int = 200 ##子弹速度
 	var frame_bullet = 29 ##子弹样式
 	for i in range(6):
+		if enemy_1 == null: return
 		unfold = spawner_component.spawn(enemy_1.global_position + Vector2(-56, i*2-8), self, 0)
 		#unfold.name = "unfold" + String.num_int64(i)
 		unfold.velocity = speed * Vector2.from_angle(1.25 * PI - i * PI / 16)
@@ -217,6 +220,7 @@ func attack_6() -> void:
 		unfold.life_timer.start()
 		
 	for i in range(6, num):
+		if enemy_1 == null: return
 		unfold = spawner_component.spawn(enemy_1.global_position + Vector2(56, i*2-8), self, 0)
 		#unfold.name = "unfold" + String.num_int64(i)
 		unfold.velocity = speed * Vector2(-1,0).from_angle(-0.25 * PI + (i-8) * PI / 16)
@@ -243,6 +247,7 @@ func attack_7() -> void:
 	var speed: int = 100 ##子弹速度
 	var frame_bullet = 26 ##子弹样式
 	for i in range(num):
+		if enemy_2 == null: return
 		trigogo = spawner_component.spawn(enemy_2.global_position + Vector2(0, 52), self, 0)
 		trigogo.velocity = speed * Vector2(0, 1)
 		trigogo.amplitude = 50 + 5*i

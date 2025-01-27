@@ -104,7 +104,8 @@ func spawn_bullet(dot , current_frame ) -> void:
 	bullet_hint.life_timer.one_shot = true
 	bullet_hint.life_timer.start()
 	bullet_hint.initialize()
-	return 
+	
+
 func clear(dot):
 	node_2 = get_node_or_null("bullet_hint" + String.num_int64(dot["x"]).pad_zeros(3) + String.num_int64(dot["y"]).pad_zeros(3))
 	if node_2 != null:
