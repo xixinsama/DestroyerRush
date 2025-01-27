@@ -260,12 +260,13 @@ func luoruixin_time_all() :
 			shotgun_flag += 1
 			luo.velocity = speed * Vector2.from_angle(rad)
 			luo.frame = frame_bullet
+			
+			rad = rad + PI/(num-1)
+			luo.initialize()
 			luo.life_timer.one_shot = true
 			luo.life_timer.wait_time = 3
 			luo.life_timer.timeout.connect(son_luoruixin.bind(luo))
 			luo.life_timer.start()
-			rad = rad + PI/(num-1)
-			luo.initialize()
 		#timer_2.start()
 
 func luoruixin():

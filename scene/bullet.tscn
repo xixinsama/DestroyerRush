@@ -1127,6 +1127,7 @@ region_rect = Rect2(0, 0, 48, 40)
 [node name="HitboxComponent" type="Area2D" parent="."]
 collision_layer = 32
 script = ExtResource("2_yc08d")
+damage = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 
