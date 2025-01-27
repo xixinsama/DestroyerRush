@@ -137,12 +137,12 @@ func luoruixin_time_all() :
 			shotgun_flag += 1
 			luo.velocity = speed * Vector2.from_angle(rad)
 			luo.frame = frame_bullet
+			rad = rad + PI/(num-1)
+			luo.initialize()
 			luo.life_timer.one_shot = true
 			luo.life_timer.wait_time = 1.7
 			luo.life_timer.timeout.connect(son_luoruixin_1.bind(luo))
 			luo.life_timer.start()
-			rad = rad + PI/(num-1)
-			luo.initialize()
 
 func luoruixin():
 	var num: int = 20 ##子弹数量
@@ -253,8 +253,8 @@ func attack_7():
 		luo.frame = frame_bullet
 		luo.wait_time = 2.0
 		luo.life_timer.timeout.connect(asign_value_1.bind(luo))
-		luo.life_timer.one_shot = false
 		luo.initialize()
+		luo.life_timer.one_shot = false
 		luo.life_timer.start()
 
 func son_luoruixin_1(luo):
