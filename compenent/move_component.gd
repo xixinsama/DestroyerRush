@@ -33,11 +33,17 @@ var roll_trail_v:Vector2 #旋转追踪弹
 @export var phase: float = 0 ##相位
 var trigo_v: Vector2
 var phase_now: float = 0
+var trail_stright_v_1: Vector2 = Vector2()
+var is_bun: bool = false
 
 func _ready() -> void:
 	# 判定节点状态，连接关闭信号
-	actor.tree_exiting.connect(stop_process)
+	# actor.tree_exiting.connect(stop_process)
+	if actor == null: return
+	initialize()
 	
+
+func initialize(_flag: int = 0) -> void:
 	if trail_who == 0:
 		trail_pos = Status.player_position
 	elif trail_who == 1:
@@ -46,22 +52,22 @@ func _ready() -> void:
 		pass
 	await get_tree().create_timer(0.1).timeout
 	##代码 #直线追踪弹
-	trail_stright_v =speed_trail_2*(trail_pos - actor.position).normalized();
-	#roll_velocity =(Status.player_position - actor.position);
+	trail_stright_v_1 =(trail_pos - actor.position).normalized()
 	##代码 #旋转追踪弹
-	roll_r_2=(trail_pos - actor.position).length()/2;
-	#print(roll_r)
-	roll_origin_rad_2=(trail_pos - actor.position).angle()-PI;
+	roll_r_2=(trail_pos - actor.position).length()/2
+	roll_origin_rad_2=(trail_pos - actor.position).angle()-PI
 
 
 func _process(delta):
 ##代码 旋转弹
+	if actor == null: return
 	if trail_who == 0:
 		trail_pos = Status.player_position
 	elif trail_who == 1:
 		trail_pos = Status.enemy_position
 	else:
 		pass
+	trail_stright_v =speed_trail_2*trail_stright_v_1.normalized();
 	roll_origin_rad_1=roll_vec_rad_1*delta+roll_origin_rad_1#当前旋转的角度
 	roll_v=Vector2(roll_r_1*cos(roll_origin_rad_1)-roll_r_1*cos(roll_origin_rad_1-roll_vec_rad_1*delta),roll_r_1*sin(roll_origin_rad_1)-roll_r_1*sin(roll_origin_rad_1-roll_vec_rad_1*delta))#在当前旋转角度和和半径干扰下的位移向量
 ##代码 #追踪弹
@@ -81,6 +87,15 @@ func _process(delta):
 ##代码 向量求和
 	sum_velocity = (velocity + roll_velocity) * delta + roll_v + trail_v * delta + trail_stright_v * delta + roll_trail_v + trigo_v * delta #总位移向量
 	# print("en", sum_velocity)
+##代码 反弹？
+	if is_bun:
+		if (sum_velocity + actor.global_position).x < 0 or (sum_velocity + actor.global_position).x > 720 :
+			velocity.x = -velocity.x
+			sum_velocity.x = -sum_velocity.x
+			pass
+		pass
+	else:
+		pass
 	actor.translate(sum_velocity)
 
 # 停止每帧运动

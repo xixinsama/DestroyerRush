@@ -36,7 +36,7 @@ var enemy_scale: Vector2
 var player_position: Vector2
 var enemy_position: Vector2
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("skill") or Input.is_action_just_pressed("roll"):
 		if game_running:
 			player_count += 1
@@ -58,14 +58,14 @@ func start_game() -> void:
 	enemy_scale = enemy_2d.scale
 	player_position = player_2d.position
 	enemy_position = enemy_2d.position
-	enemy_label.text = "我要开始发力了。"
+	enemy_label.text = "To beat me, you'll need lightning-fast reflexes"
 	game_running = true
 
 func _ready():
 	player_2d.visible = false
 	enemy_2d.visible = false
 	progress_bar.value = 0.0
-	enemy_label.text = "按空格开始吧！"
+	enemy_label.text = "Press A to start. I won't show you any mercy"
 
 func _process(delta):
 	if game_running:
@@ -75,18 +75,49 @@ func _process(delta):
 			round_timer = ROUND_DURATION
 		update_ui()
 		update_laser(delta)
+	# 玩家跳关
+	if Input.is_action_just_pressed("jump_next_level") and Status.times_win_level3 > 1:
+		get_tree().change_scene_to_file("res://Levels/level_0.tscn")
+	# 开发者跳关
+	if Input.is_action_just_pressed("creator_jump"):
+		get_tree().change_scene_to_file("res://Levels/level_0.tscn")
 
 # 每轮结算
 func evaluate_round():
 	# 随机生成敌方按键次数
 	# 动态难度
+	var random_dia = randi_range(0, 2)
 	if 70 > progress and progress > 50:
+		if random_dia == 0:
+			enemy_label.text = "You really make me want to laugh"
+		if random_dia == 1:
+			enemy_label.text = "NOT bad"
+		if random_dia == 2:
+			enemy_label.text = "Give me some fun"
 		enemy_count = randi_range(1, 4)
 	elif  90 > progress and progress >= 70:
+		if random_dia == 0:
+			enemy_label.text = "I will not let you win"
+		if random_dia == 1:
+			enemy_label.text = "get serious too"
+		if random_dia == 2:
+			enemy_label.text = "You've got a loooooooooooooooooooooong way to go before you beat me"
 		enemy_count = randi_range(2, 4)
 	elif  100 > progress and progress >= 90:
+		if random_dia == 0:
+			enemy_label.text = "(꒪⌓꒪)"
+		if random_dia == 1:
+			enemy_label.text = "Excellent"
+		if random_dia == 2:
+			enemy_label.text = "Your mother will be happy for you"
 		enemy_count = randi_range(2, 5)
 	elif  50 >= progress and progress >= 0:
+		if random_dia == 0:
+			enemy_label.text = "Have you eaten? Why do you seem so... week?"
+		if random_dia == 1:
+			enemy_label.text = "LOSER"
+		if random_dia == 2:
+			enemy_label.text = "Failurer"
 		enemy_count = randi_range(-1, 6)
 	else:
 		return
@@ -116,8 +147,8 @@ func evaluate_round():
 
 func update_ui():
 	progress_bar.value = progress
-	player_label.text = "剩余时间: %.2f" % round_timer + "按键次数: %d" % player_count
-	enemy_label.text = "敌方按键: %d" % enemy_count
+	# player_label.text = "剩余时间: %.2f" % round_timer + "按键次数: %d" % player_count
+	# enemy_label.text = "敌方按键: %d" % enemy_count
 
 func update_laser(delta: float) -> void: 
 	var progress_change = 2.7 * delta * (progress - 50)# (0-100, now)
@@ -127,9 +158,12 @@ func update_laser(delta: float) -> void:
 	create_tween().tween_property(enemy_2d, "scale", final_es, 0.2)
 	
 func level_win() -> void:
-	print("胜利")
+	enemy_label.text = "You won, and I am completely convinced and impressed"
 	enemy.visible = false
 	enemy_2d.visible = false
+	await get_tree().create_timer(1.0).timeout
+	var InventoryScene: PackedScene = preload("res://Levels/level_0.tscn")
+	Status.scene_into(InventoryScene)
 	# 等待一定时间进入下一场景
 	
 func game_over() -> void:
@@ -140,6 +174,9 @@ func game_over() -> void:
 	player_2d.visible = false
 	enemy_2d.visible = false
 	progress = END
+	await get_tree().create_timer(1.0).timeout
+	var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
+	Status.scene_into(InventoryScene)
 
 func tween_shake(node_name: Node2D):
 	# 创造一个缓动效果，并最终降到0

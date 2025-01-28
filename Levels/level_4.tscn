@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=3 uid="uid://b80qppmdoa0k7"]
+[gd_scene load_steps=102 format=3 uid="uid://b80qppmdoa0k7"]
 
 [ext_resource type="Script" path="res://script/level_4.gd" id="1_yvr8i"]
 [ext_resource type="Texture2D" uid="uid://btwx8y4nkejef" path="res://asset/SpaceShooterAssetPack_Ships.png" id="2_ock7y"]
@@ -11,9 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://cmsuucr7htsex" path="res://asset/Free Smoke Fx  Pixel 05.png" id="7_08406"]
 [ext_resource type="Shader" path="res://shader/change_color.gdshader" id="8_j0nkb"]
 [ext_resource type="Texture2D" uid="uid://b51s3ftbi3t4v" path="res://asset/Free Smoke Fx  Pixel 07.png" id="9_y8px6"]
-[ext_resource type="FontFile" uid="uid://bf7nsie4eob13" path="res://fonts/VonwaonBitmap-12pxLite.ttf" id="12_6p2o2"]
+[ext_resource type="FontFile" uid="uid://bla6t7bkr7o7g" path="res://fonts/kenney_mini_square.ttf" id="12_u7cs5"]
 [ext_resource type="AudioStream" uid="uid://0prm8vdqrfj1" path="res://asset/Sounds/SE/laser-gun-81720.mp3" id="13_bs7ov"]
 [ext_resource type="AudioStream" uid="uid://dwofgto14k0vt" path="res://asset/Sounds/BGM/Exploding Sun.mp3" id="14_ibbl1"]
+[ext_resource type="Texture2D" uid="uid://dbuneftjxdpw2" path="res://asset/gdb-xbox-2.png" id="15_6u4cs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vaxij"]
 atlas = ExtResource("2_ock7y")
@@ -548,6 +549,12 @@ animations = [{
 "speed": 20.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_xjgd3"]
+font = ExtResource("12_u7cs5")
+font_size = 32
+outline_size = 3
+outline_color = Color(0.469494, 0, 0.153562, 1)
+
 [sub_resource type="Animation" id="Animation_knyms"]
 length = 0.001
 tracks/0/type = "value"
@@ -608,14 +615,51 @@ _data = {
 "start": SubResource("Animation_u014v")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_y5rno"]
-font = ExtResource("12_6p2o2")
-font_size = 24
+[sub_resource type="LabelSettings" id="LabelSettings_0n5ho"]
+font = ExtResource("12_u7cs5")
+font_size = 32
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_no76n"]
+atlas = ExtResource("15_6u4cs")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqpt5"]
+atlas = ExtResource("15_6u4cs")
+region = Rect2(64, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xytx7"]
+atlas = ExtResource("15_6u4cs")
+region = Rect2(80, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yipnv"]
+atlas = ExtResource("15_6u4cs")
+region = Rect2(96, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hvhha"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_no76n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqpt5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xytx7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yipnv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 24.0
+}]
 
 [node name="level4" type="Node2D"]
 script = ExtResource("1_yvr8i")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
 offset_right = 720.0
 offset_bottom = 27.0
 
@@ -725,6 +769,7 @@ autoplay = "default"
 frame_progress = 0.161073
 
 [node name="PlayerLabel" type="Label" parent="."]
+visible = false
 offset_left = 144.0
 offset_top = 1142.0
 offset_right = 240.0
@@ -732,11 +777,14 @@ offset_bottom = 1165.0
 text = "玩家的对话框"
 
 [node name="EnemyLabel" type="Label" parent="."]
-offset_left = 144.0
-offset_top = 32.0
-offset_right = 240.0
-offset_bottom = 55.0
-text = "敌人的对话框"
+custom_minimum_size = Vector2(290, 600)
+offset_left = 432.0
+offset_top = 48.0
+offset_right = 624.0
+offset_bottom = 91.0
+text = "enemy dialogue"
+label_settings = SubResource("LabelSettings_xjgd3")
+autowrap_mode = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -744,20 +792,28 @@ libraries = {
 }
 
 [node name="TrashTalk" type="Label" parent="."]
-offset_left = 448.0
-offset_top = 88.0
-offset_right = 488.0
-offset_bottom = 111.0
-text = "垃圾话"
-label_settings = SubResource("LabelSettings_y5rno")
+visible = false
+offset_left = 432.0
+offset_top = 887.0
+offset_right = 704.0
+offset_bottom = 927.0
+text = "Press A to start"
+label_settings = SubResource("LabelSettings_0n5ho")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_bs7ov")
+bus = &"Sound Effects"
 
 [node name="BGMLevel4" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_ibbl1")
 autoplay = true
-
-
 bus = &"BGM"
 parameters/looping = true
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+z_index = -100
+position = Vector2(526, 1142)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_hvhha")
+autoplay = "default"
+frame_progress = 0.634416

@@ -7,7 +7,7 @@ extends Node2D
 @onready var follow_path_component: FollowPathComponent = $FollowPathComponent
 @onready var follow_path_component_2: FollowPathComponent = $FollowPathComponent2
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
-
+var jumping: bool = false
 var enemy1_is_dead: bool = false
 var enemy2_is_dead: bool = false
 
@@ -20,6 +20,9 @@ var attack_method6: Timer
 var attack_method7: Timer
 
 func _ready() -> void:
+	# 更新玩家位置
+	create_tween().tween_property(player, "global_position", Status.player_position, 0.3)
+	# 初始化关卡
 	player.tree_exited.connect(_on_player_exited)
 	enemy_1.tree_exited.connect(_on_enemy1_exited)
 	enemy_2.tree_exited.connect(_on_enemy2_exited)
@@ -63,8 +66,9 @@ func _ready() -> void:
 	add_child(attack_method7)
 	attack_method7.wait_time = 4
 	attack_method7.timeout.connect(attack_7)
+	
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# 根据玩家位置上传敌人位置信息至全局
 	if player != null:
 		if enemy_1 != null or enemy_2 != null:
@@ -86,14 +90,25 @@ func _process(delta: float) -> void:
 	# 此场景结束
 	if enemy1_is_dead and enemy2_is_dead:
 		set_process(false)
-		await get_tree().create_timer(3.0).timeout
-		get_tree().change_scene_to_file("res://Levels/level_2.tscn")
-
+		if jumping: return
+		jumping = true
+		await get_tree().create_timer(1.0).timeout
+		var InventoryScene: PackedScene = preload("res://Levels/level_4.tscn")
+		Status.scene_into(InventoryScene)
+	
+	# 开发者跳关
+	if Input.is_action_just_pressed("creator_jump"):
+		#var jumping: bool = false
+		jumping = true
+		get_tree().change_scene_to_file("res://Levels/level_4.tscn")
 
 func _on_player_exited() -> void:
 	set_process(false)
-	await  get_tree().create_timer(3.0).timeout
-	get_tree().change_scene_to_file("res://scene/game_over.tscn")
+	if jumping: return
+	jumping = true
+	await get_tree().create_timer(1.0).timeout
+	var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
+	Status.scene_into(InventoryScene)
 
 func _on_enemy1_exited() -> void:
 	attack_method3.stop() # 停止攻击
@@ -145,7 +160,8 @@ func attack_2() -> void:
 	var frame_bullet = 16 ##子弹样式
 	for i in range(0,num):
 		var offset: Vector2 = Vector2(randi_range(-4,4), randi_range(-4,4))
-		direct_follow = spawner_component.spawn(enemy_2.global_position + Vector2(0 ,48) + offset, self, 0)
+		if enemy_2 == null: return
+		direct_follow = spawner_component .spawn(enemy_2.global_position + Vector2(0 ,48) + offset, self, 0)
 		direct_follow.frame = frame_bullet
 		direct_follow.speed_trail_2 = speed
 		direct_follow.initialize()
@@ -159,6 +175,7 @@ func attack_3() -> void:
 	var speed: int = 250 ##子弹速度
 	var frame_bullet = 7 ##子弹样式
 	for i in range(0,num):
+		if enemy_1 == null: return
 		scatter = spawner_component.spawn(enemy_1.global_position + Vector2(0, 48), self, 0)
 		scatter.frame = frame_bullet
 		scatter.velocity = speed * Vector2(sin(i), abs(cos(i)))
@@ -201,6 +218,7 @@ func attack_6() -> void:
 	var speed: int = 200 ##子弹速度
 	var frame_bullet = 29 ##子弹样式
 	for i in range(6):
+		if enemy_1 == null: return
 		unfold = spawner_component.spawn(enemy_1.global_position + Vector2(-56, i*2-8), self, 0)
 		#unfold.name = "unfold" + String.num_int64(i)
 		unfold.velocity = speed * Vector2.from_angle(1.25 * PI - i * PI / 16)
@@ -212,9 +230,10 @@ func attack_6() -> void:
 		unfold.life_timer.start()
 		
 	for i in range(6, num):
+		if enemy_1 == null: return
 		unfold = spawner_component.spawn(enemy_1.global_position + Vector2(56, i*2-8), self, 0)
 		#unfold.name = "unfold" + String.num_int64(i)
-		unfold.velocity = speed * Vector2(-1,0).from_angle(-0.25 * PI + (i-8) * PI / 16)
+		unfold.velocity = speed * Vector2.from_angle(-0.25 * PI + (i-8) * PI / 16)
 		unfold.frame = frame_bullet
 		unfold.wait_time = randf_range(0.6, 1.2)
 		unfold.one_shot = true
@@ -238,6 +257,7 @@ func attack_7() -> void:
 	var speed: int = 100 ##子弹速度
 	var frame_bullet = 26 ##子弹样式
 	for i in range(num):
+		if enemy_2 == null: return
 		trigogo = spawner_component.spawn(enemy_2.global_position + Vector2(0, 52), self, 0)
 		trigogo.velocity = speed * Vector2(0, 1)
 		trigogo.amplitude = 50 + 5*i

@@ -180,8 +180,8 @@ script = ExtResource("1_l3ns6")
 
 [node name="enemy" parent="." instance=ExtResource("2_sc6v1")]
 position = Vector2(370, 228)
-enemy_health_max = 1000
-enemy_health = 1000
+enemy_health_max = 1200
+enemy_health = 1200
 
 [node name="bommSprite2D" type="AnimatedSprite2D" parent="enemy"]
 material = SubResource("ShaderMaterial_k7or5")
@@ -191,7 +191,7 @@ sprite_frames = SubResource("SpriteFrames_g0tvm")
 animation = &"boom"
 
 [node name="player" parent="." instance=ExtResource("1_2tkxg")]
-position = Vector2(368, 680)
+position = Vector2(360, 1100)
 
 [node name="SpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("3_3otc7")
@@ -236,3 +236,4 @@ shape = SubResource("RectangleShape2D_qsuto")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_i7r4e")
 autoplay = true
+bus = &"BGM"

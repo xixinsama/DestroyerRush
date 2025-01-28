@@ -143,7 +143,7 @@ animations = [{
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_ksa11")
-animation = &"explosion_white"
+animation = &"explosion_blue"
 script = ExtResource("2_ljy2s")
 
 [node name="EnemyAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

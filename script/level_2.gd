@@ -1,18 +1,16 @@
 extends Node2D
-
+## luoruixin_time_all 中的 if flag == 8
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 @onready var move_component: MoveComponent = $MoveComponent
 @onready var player: Node2D = $player
 @onready var enemy: Node2D = $enemy
 @onready var bomm_sprite_2d: AnimatedSprite2D = $enemy/bommSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-
-
+var jumping: bool = false
 var time_all: Timer = null
 var timer_2: Timer = null
 var timer: Timer = null
 var timer_prase: Timer = null
-
 var shotgun_flag: int = 0 #散弹数量标记
 ## signal signal_prase_flag
 var prase_flag = 0
@@ -32,10 +30,10 @@ func _ready() -> void:
 	timer_prase.start()
 	
 	##关于计时器的初始话
-	time_all.wait_time = 3.0##弹幕生产
+	time_all.wait_time = 2.0##弹幕生产
 	timer.wait_time = 10.0
 	timer_2.wait_time = 3.0
-	timer_prase.wait_time = 1
+	timer_prase.wait_time = 1.0
 	
 	timer.autostart = true
 	timer_2.autostart = true
@@ -54,25 +52,25 @@ func _ready() -> void:
 	timer_prase.timeout.connect(prase_des)
 	
 	player.tree_exited.connect(func():
-		if enemy == null: # 不要动
-			return
-		else:
-			await get_tree().create_timer(1.0).timeout
-			get_tree().change_scene_to_file("res://scene/game_over.tscn")
+		if jumping: return
+		jumping = true
+		await get_tree().create_timer(1.0).timeout
+		var InventoryScene: PackedScene = preload("res://scene/game_over.tscn")
+		Status.scene_into(InventoryScene)
 		)
 	enemy.tree_exited.connect(func():
-		# 停止
-		move_component.queue_free()
-		if player == null:
-			return
-		else:
-			await get_tree().create_timer(1.0).timeout
-			get_tree().change_scene_to_file("res://Levels/level_4.tscn")
+		if jumping: return
+		jumping = true
+		await get_tree().create_timer(1.0).timeout
+		var InventoryScene: PackedScene = preload("res://Levels/level_1.tscn")
+		Status.scene_into(InventoryScene)
 		)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _process(_delta: float) -> void:
+	# 开发者跳关
+	if Input.is_action_just_pressed("creator_jump"):
+		jumping = true
+		get_tree().change_scene_to_file("res://Levels/level_1.tscn")
 	
 func luoruixin_time_all() :
 	var flag:int =randi_range(0,5) + prase_flag
@@ -245,7 +243,7 @@ func luoruixin_time_all() :
 		var frame_bullet = flag+5 ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Status.enemy_position,self,0)
-			luo.velocity = speed * Vector2(1,0).from_angle(rad)
+			luo.velocity = speed * Vector2.from_angle(rad)
 			rad = rad + PI/(num-1)
 			luo.frame = frame_bullet
 			luo.initialize()
@@ -253,19 +251,20 @@ func luoruixin_time_all() :
 		var num: int = 15##子弹数量
 		var speed: int = 300 ##子弹速度
 		var rad: float = 0
-		var frame_bullet = flag+5 ##子弹样式
+		var frame_bullet = 11 ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Status.enemy_position,self,0)
 			luo.name = "luorui" + String.num_int64(shotgun_flag)
 			shotgun_flag += 1
-			luo.velocity = speed * Vector2(1,0).from_angle(rad)
+			luo.velocity = speed * Vector2.from_angle(rad)
 			luo.frame = frame_bullet
+			
+			rad = rad + PI/(num-1)
+			luo.initialize()
 			luo.life_timer.one_shot = true
 			luo.life_timer.wait_time = 3
 			luo.life_timer.timeout.connect(son_luoruixin.bind(luo))
 			luo.life_timer.start()
-			rad = rad + PI/(num-1)
-			luo.initialize()
 		#timer_2.start()
 
 func luoruixin():
