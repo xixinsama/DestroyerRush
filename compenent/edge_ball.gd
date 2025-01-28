@@ -22,7 +22,7 @@ func _on_outer_shape_body_entered(body: HitboxComponent):
 	if body is HitboxComponent:
 		if not body.has_grazed:
 			grazed_hitboxes[body] = true
-			print("进入擦弹:", body.name)
+			# print("进入擦弹:", body.name)
 
 # 离开外层区域
 func _on_outer_shape_body_exited(body: HitboxComponent):
@@ -30,7 +30,7 @@ func _on_outer_shape_body_exited(body: HitboxComponent):
 		if not body.has_grazed:
 			if grazed_hitboxes.has(body) and grazed_hitboxes[body]:
 				body.has_grazed = true
-				print("擦弹成功")
+				# print("擦弹成功")
 				# 成功则加能量
 				energy_up.emit(body.energy_point)
 			grazed_hitboxes.erase(body)
@@ -43,7 +43,7 @@ func _on_inner_shape_body_entered(body: HitboxComponent):
 			if grazed_hitboxes.has(body):
 				grazed_hitboxes[body] = false
 			# 但不是从这里结算伤害
-			print("受伤")
+			# print("受伤")
 			# 发送清除弹幕信号
 		# body.hit_hurtbox.emit(self)
 

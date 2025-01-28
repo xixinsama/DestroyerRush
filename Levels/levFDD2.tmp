@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://blk7ckguqgq0h"]
+[gd_scene load_steps=13 format=3 uid="uid://blk7ckguqgq0h"]
 
 [ext_resource type="Script" path="res://script/level_5.gd" id="1_g71bw"]
 [ext_resource type="PackedScene" uid="uid://3r2gmpgp3sam" path="res://scene/enemy.tscn" id="1_ksg77"]
@@ -10,10 +10,6 @@
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="8_hhj5u"]
 [ext_resource type="PackedScene" uid="uid://o8jih1iks4x5" path="res://scene/bullet.tscn" id="9_88o57"]
 [ext_resource type="Script" path="res://script/enemy_copy_for_twoboss.gd" id="10_0x6pw"]
-[ext_resource type="Script" path="res://compenent/move_component.gd" id="11_0ijnr"]
-[ext_resource type="Script" path="res://script/States/state_machine.gd" id="12_iha65"]
-[ext_resource type="Script" path="res://script/States/EnemyIdle.gd" id="13_5xs3x"]
-[ext_resource type="Script" path="res://script/States/Attack0.gd" id="14_n6i87"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fq8gq"]
 size = Vector2(2079.88, 93)
@@ -56,7 +52,7 @@ shape = SubResource("RectangleShape2D_fq8gq")
 enemy_looklike = 23
 enemy_destroy_effect = 1
 enemy_health_max = 1800
-enemy_health = 1500
+enemy_health = 1800
 enemy_speed = 300
 enemy_damage = 2
 energy_point = 10
@@ -105,19 +101,3 @@ enemy_looklike = 14
 enemy_destroy_effect = 2
 enemy_health_max = 400
 enemy_health = 400
-
-[node name="MoveComponent" type="Node" parent="."]
-script = ExtResource("11_0ijnr")
-
-[node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("12_iha65")
-initial_state = NodePath("EnemyIdle")
-
-[node name="EnemyIdle" type="Node2D" parent="State Machine" node_paths=PackedStringArray("actor")]
-script = ExtResource("13_5xs3x")
-actor = NodePath("../..")
-
-[node name="Attack0" type="Node2D" parent="State Machine" node_paths=PackedStringArray("enemy", "spawner_component")]
-script = ExtResource("14_n6i87")
-enemy = NodePath("../../enemy")
-spawner_component = NodePath("../../SpawnerComponent")

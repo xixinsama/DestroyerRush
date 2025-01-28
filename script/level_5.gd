@@ -1,4 +1,5 @@
 extends Node2D
+class_name LeveL
 
 # 三个阶段（25，50，75），每一阶段会放出另一个之前打过的BOSS，但是削弱过的版本
 # 在放出之前的BOSS之后，不可索敌，停止移动，等杀死另一个BOSS之后恢复
@@ -9,16 +10,26 @@ extends Node2D
 
 @onready var player: Node2D = $player
 @onready var enemy: Node2D = $enemy
+@onready var collision_shape_2d: CollisionShape2D = $enemy/invincible/CollisionShape2D
+@onready var follow_path_component: FollowPathComponent = $FollowPathComponent
 @onready var spawner_component: SpawnerComponent = $SpawnerComponent
 @onready var enemy_spawner_component: SpawnerComponent = $EnemySpawnerComponent
+@onready var sub_enemy_1: Node2D = $SubEnemy1 # level_2
+@onready var sub_enemy_2: Node2D = $SubEnemy2 # level_1
+@onready var sub_enemy_3: Node2D = $SubEnemy3 # level_0
+@onready var move_component: MoveComponent = $MoveComponent
+
 
 var jumping: bool = false
 var flag_prase: int = 0
+var tigger_health: bool = false
+var path_now: float = 0.0
 var timer_prase: Timer = null
 var timer_attack_1: Timer = null
 var timer_attack_2: Timer = null
 var timer_attack_3: Timer = null
 var timer_attack_4: Timer = null
+
 func _ready() -> void:
 	create_tween().tween_property(player, "global_position", Status.player_position, 0.3)
 	player.tree_exited.connect(func():
@@ -37,22 +48,14 @@ func _ready() -> void:
 		var InventoryScene: PackedScene = preload("res://Levels/level_3.tscn")
 		Status.scene_into(InventoryScene)
 		)
-		
+	sub_enemy_1.tree_exited.connect(defeated)
+	sub_enemy_2.tree_exited.connect(defeated)
+	sub_enemy_3.tree_exited.connect(defeated)
 	
-	##关于计时器
-	#每秒判断一次阶段改变
-	timer_prase = Timer.new()
-	add_child(timer_prase)
-	timer_prase.start()	
-	##关于计时器的初始话
-	timer_prase.wait_time = 1
-	timer_prase.autostart = true
-	timer_prase.one_shot = false
-	timer_prase.timeout.connect(prase_des)
 	##攻击1
 	timer_attack_1 = Timer.new()
 	add_child(timer_attack_1)
-	timer_attack_1.start()	
+	# timer_attack_1.start()	
 	##关于计时器的初始话
 	timer_attack_1.wait_time = 12
 	timer_attack_1.autostart = true
@@ -61,7 +64,7 @@ func _ready() -> void:
 	##攻击2
 	timer_attack_2 = Timer.new()
 	add_child(timer_attack_2)
-	timer_attack_2.start()	
+	# timer_attack_2.start()	
 	##关于计时器的初始话
 	timer_attack_2.wait_time = 4
 	timer_attack_2.autostart = true
@@ -70,7 +73,7 @@ func _ready() -> void:
 	##攻击3
 	timer_attack_3 = Timer.new()
 	add_child(timer_attack_3)
-	timer_attack_3.start()	
+	# timer_attack_3.start()	
 	##关于计时器的初始话
 	timer_attack_3.wait_time = 20
 	timer_attack_3.autostart = true
@@ -79,7 +82,7 @@ func _ready() -> void:
 	##攻击4
 	timer_attack_4 = Timer.new()
 	add_child(timer_attack_4)
-	timer_attack_4.start()	
+	# timer_attack_4.start()	
 	##关于计时器的初始话
 	timer_attack_4.wait_time = 10
 	timer_attack_4.autostart = true
@@ -87,27 +90,56 @@ func _ready() -> void:
 	timer_attack_4.timeout.connect(attack_4)
 
 func _process(_delta: float) -> void:
+	if enemy != null:
+		prase_des()
 	# 开发者跳关
 	if Input.is_action_just_pressed("creator_jump"):
+		if jumping: return
 		jumping = true
 		get_tree().change_scene_to_file("res://Levels/level_3.tscn")
 
-	
-
-
-
-
 func prase_des():##阶段判断
-	if enemy !=null:
-		if enemy.get_node("StatsComponent").health < 3 * enemy.enemy_health_max / 4 and enemy.get_node("StatsComponent").health > enemy.enemy_health_max / 2 and flag_prase == 0:
+	var stats: StatsComponent = enemy.get_node("StatsComponent")
+	var HP: int = stats.health
+	var HP_max: int = stats.health_max
+	if HP > 0.75 * HP_max: flag_prase = 0
+	if HP <= 0.75 * HP_max and HP > 0.5 * HP_max:
+		if HP == 0.75 * HP_max and flag_prase == 0:
+			enemy_invincible()
 			flag_prase = 1
-			pass
-		elif enemy.get_node("StatsComponent").health < enemy.enemy_health_max / 2 and  enemy.get_node("StatsComponent").health >  enemy.enemy_health_max / 4:
+			# 敌人行为
+			create_tween().tween_property(sub_enemy_1, "global_position", Vector2(360, 450), 0.5)
+		flag_prase = 1
+	if HP <= 0.5 * HP_max and HP > 0.25 * HP_max:
+		if HP == 0.5 * HP_max and flag_prase == 1:
+			enemy_invincible()
 			flag_prase = 2
-			pass
-		elif enemy.get_node("StatsComponent").health <  enemy.enemy_health_max / 4 :
+			create_tween().tween_property(sub_enemy_2, "global_position", Vector2(280, 500), 0.5)
+			move_component.actor = sub_enemy_2
+			await get_tree().create_timer(0.5).timeout
+			move_component.amplitude = 100
+		flag_prase = 2
+	if HP <= 0.25 * HP_max:
+		if HP == 0.25 * HP_max and flag_prase == 2:
+			enemy_invincible()
 			flag_prase = 3
-			pass
+			create_tween().tween_property(sub_enemy_3, "global_position", Vector2(360, 450), 0.5)
+			move_component.actor = sub_enemy_3
+			await get_tree().create_timer(0.5).timeout
+			move_component.roll_r_1 = 100
+		flag_prase = 3
+		
+		
+
+func enemy_invincible():
+	collision_shape_2d.set_deferred("disabled", false)
+	path_now = follow_path_component.stop_process()
+	
+func defeated() -> void:
+	tigger_health = false
+	if collision_shape_2d == null: return #测试环境下，直接打二阶段会导致敌人和sub敌人同时消失，然后发送多次信号
+	collision_shape_2d.set_deferred("disabled", true)
+	follow_path_component.start_follow(path_now)
 
 func attack_1():
 	var bullet_left: Bullet = null
@@ -141,7 +173,6 @@ func attack_1():
 				bullet_left.life_timer.wait_time = time_
 				bullet_left.life_timer.one_shot = true
 				bullet_left.life_timer.start()
-		pass
 	elif  flag_prase == 2:
 		num = 15
 		duan = 6
@@ -170,7 +201,7 @@ func attack_1():
 				bullet_left.life_timer.wait_time = time_
 				bullet_left.life_timer.one_shot = true
 				bullet_left.life_timer.start()
-	pass
+
 
 func attack_2():
 	var luo: Bullet = null
@@ -207,7 +238,7 @@ func attack_2():
 			luo.frame = frame_bullet
 			luo.initialize()
 			await get_tree().create_timer(0.01).timeout
-	pass
+
 
 func roll_it(bullet:Bullet):
 	var roll_v: float = PI/8
@@ -221,8 +252,7 @@ func roll_it(bullet:Bullet):
 	bullet.life_timer.start()
 	bullet.life_timer.timeout.connect(clear.bind(bullet))
 	
-	
-	pass
+
 func roll_it_1(bullet:Bullet):
 	var roll_v: float = PI/5
 	bullet.roll_origin_rad_1 =  bullet.velocity.angle()
@@ -234,8 +264,6 @@ func roll_it_1(bullet:Bullet):
 	bullet.life_timer.wait_time = 10
 	bullet.life_timer.start()
 	bullet.life_timer.timeout.connect(clear.bind(bullet))
-	
-	pass
 
 func attack_3():
 	var luo: Bullet = null
@@ -292,8 +320,6 @@ func attack_4():
 			luo_2.initialize()
 			luo_2.move_component.is_bun = true
 			await get_tree().create_timer(0.1).timeout
-	pass
-
 
 func clear(bullet:Bullet):
 	bullet.queue_free()

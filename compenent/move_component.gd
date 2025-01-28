@@ -35,28 +35,31 @@ var trigo_v: Vector2
 var phase_now: float = 0
 var trail_stright_v_1: Vector2 = Vector2()
 var is_bun: bool = false
+
 func _ready() -> void:
 	# 判定节点状态，连接关闭信号
-	actor.tree_exiting.connect(stop_process)
+	# actor.tree_exiting.connect(stop_process)
+	if actor == null: return
+	initialize()
 	
+
+func initialize(_flag: int = 0) -> void:
 	if trail_who == 0:
 		trail_pos = Status.player_position
 	elif trail_who == 1:
 		trail_pos = Status.enemy_position
 	else:
 		pass
-	await get_tree().create_timer(0.1).timeout
 	##代码 #直线追踪弹
-	trail_stright_v_1 =(trail_pos - actor.position).normalized();
-	#roll_velocity =(Status.player_position - actor.position);
+	trail_stright_v_1 =(trail_pos - actor.position).normalized()
 	##代码 #旋转追踪弹
-	roll_r_2=(trail_pos - actor.position).length()/2;
-	#print(roll_r)
-	roll_origin_rad_2=(trail_pos - actor.position).angle()-PI;
+	roll_r_2=(trail_pos - actor.position).length()/2
+	roll_origin_rad_2=(trail_pos - actor.position).angle()-PI
 
 
 func _process(delta):
 ##代码 旋转弹
+	if actor == null: return
 	if trail_who == 0:
 		trail_pos = Status.player_position
 	elif trail_who == 1:

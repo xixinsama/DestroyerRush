@@ -1123,6 +1123,7 @@ vframes = 5
 frame = 10
 region_enabled = true
 region_rect = Rect2(0, 0, 48, 40)
+region_filter_clip_enabled = true
 
 [node name="HitboxComponent" type="Area2D" parent="."]
 collision_layer = 32

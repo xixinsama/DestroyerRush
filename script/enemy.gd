@@ -1,5 +1,5 @@
 extends Node2D
-
+class_name  Enemy
 
 # 只获取了一些需要的节点，让节点自己控制节点吧
 @onready var sprite_2d: Sprite2D = $Sprite2D
