@@ -50,6 +50,7 @@ func initialize(_flag: int = 0) -> void:
 		trail_pos = Status.enemy_position
 	else:
 		pass
+	await get_tree().create_timer(0.1).timeout
 	##代码 #直线追踪弹
 	trail_stright_v_1 =(trail_pos - actor.position).normalized()
 	##代码 #旋转追踪弹

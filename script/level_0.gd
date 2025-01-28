@@ -156,12 +156,14 @@ func luoruixin():
 		luo.initialize()
 		luo_1 = spawner_component.spawn(Vector2(round(720 - 280 +(num- i) * 280 / num) , 200 ),self,0)
 		luo_1.velocity = Vector2(-speed,0)
+		#print(luo_1.velocity)
 		luo_1.speed_trail_2 = 500
 		luo_1.speed_trail_1 = 500
 		luo_1.roll_r_1 = 3
 		luo_1.roll_origin_rad_1 = PI/2
 		luo_1.frame = frame_bullet
 		luo_1.initialize()
+		#print(luo_1.move_component.trail_stright_v_1)
 		await get_tree().create_timer(0.05).timeout
 		#await get_tree().create_timer(0.05).timeout
 	
