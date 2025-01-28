@@ -155,7 +155,7 @@ func luoruixin():
 		luo.frame = frame_bullet
 		luo.initialize()
 		luo_1 = spawner_component.spawn(Vector2(round(720 - 280 +(num- i) * 280 / num) , 200 ),self,0)
-		luo_1.velocity = Vector2(-520,0)
+		luo_1.velocity = Vector2(-speed,0)
 		luo_1.speed_trail_2 = 500
 		luo_1.speed_trail_1 = 500
 		luo_1.roll_r_1 = 3
