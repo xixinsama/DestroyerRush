@@ -10,6 +10,10 @@ extends Control
 @onready var BG_check_button: CheckButton = $CenterContainer/VSplitContainer/SettingContainer/Background/CheckButton
 @onready var check_button: CheckButton = $CenterContainer/VSplitContainer/SettingContainer/Background/CheckButton
 
+@onready var animated_sprite_2d_3: AnimatedSprite2D = $Node2D/AnimatedSprite2D3
+@onready var animated_sprite_2d_4: AnimatedSprite2D = $Node2D/AnimatedSprite2D4
+@onready var animated_sprite_2d_5: AnimatedSprite2D = $Node2D/AnimatedSprite2D5
+
 #var text = "ABCDEFGHIJKLMNOPQRST"
 #var max_jump_height = 20  # 跳动的最大高度
 #var tween: Tween = create_tween().set_loops() ##无限循环
@@ -73,10 +77,23 @@ func _on_SFX_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(2, value)
 func _on_ALL_check_box_toggled(toggled_on: bool) -> void:
 	AudioServer.set_bus_mute(0, not toggled_on)
+	if animated_sprite_2d_3.frame == 1:
+		animated_sprite_2d_3.frame = 0
+	else:
+		animated_sprite_2d_3.frame = 1
 func _on_BGM_check_box_toggled(toggled_on: bool) -> void:
 	AudioServer.set_bus_mute(1, not toggled_on)
+	if animated_sprite_2d_4.frame == 1:
+		animated_sprite_2d_4.frame = 0
+	else:
+		animated_sprite_2d_4.frame = 1
 func _on_SFX_check_box_toggled(toggled_on: bool) -> void:
 	AudioServer.set_bus_mute(2, not toggled_on)
+	if animated_sprite_2d_5.frame == 1:
+		animated_sprite_2d_5.frame = 0
+	else:
+		animated_sprite_2d_5.frame = 1
+	
 
 func _on_Background_check_button_toggled(toggled_on: bool) -> void:
 	SpaceBackground.visible = toggled_on
