@@ -21,7 +21,7 @@ var shotgun_flag: int = 0 #散弹数量标记
 var prase_flag = 0
 
 func _ready() -> void:
-	create_tween().tween_property(player, "global_position", Status.player_position, 0.3)
+	# create_tween().tween_property(player, "global_position", Status.player_position, 0.3)
 	##关于计时器
 	timer = Timer.new()
 	timer_2 = Timer.new()
@@ -155,7 +155,7 @@ func luoruixin():
 		luo.frame = frame_bullet
 		luo.initialize()
 		luo_1 = spawner_component.spawn(Vector2(round(720 - 280 +(num- i) * 280 / num) , 200 ),self,0)
-		luo_1.velocity = Vector2(-speed,0)
+		luo_1.velocity = Vector2(-520,0)
 		luo_1.speed_trail_2 = 500
 		luo_1.speed_trail_1 = 500
 		luo_1.roll_r_1 = 3
@@ -191,7 +191,7 @@ func attack_6() -> void:
 	var speed: int = 200 ##子弹速度
 	var frame_bullet = 29 ##子弹样式
 	for i in range(6):
-		unfold = spawner_component.spawn(Vector2(240,200)  + Vector2(-56, i*2-8), self, 0)
+		unfold = spawner_component.spawn(Vector2(240,200) + Vector2(0, i*2-8), self, 0)
 		#unfold.name = "unfold" + String.num_int64(i)
 		unfold.velocity = speed * Vector2.from_angle(1.25 * PI - i * PI / 16)
 		unfold.frame = frame_bullet
@@ -202,9 +202,9 @@ func attack_6() -> void:
 		unfold.life_timer.start()
 		
 	for i in range(6, num):
-		unfold = spawner_component.spawn(Vector2(560,200) + Vector2(56, i*2-8), self, 0)
+		unfold = spawner_component.spawn(Vector2(480,200) + Vector2(0, i*2-8), self, 0)
 		#unfold.name = "unfold" + String.num_int64(i)
-		unfold.velocity = speed * Vector2.from_angle(-0.25 * PI + (i-8) * PI / 16)
+		unfold.velocity = speed * Vector2.from_angle(-0.25 * PI + (i-6) * PI / 16)
 		unfold.frame = frame_bullet
 		unfold.wait_time = 0.8
 		unfold.one_shot = true

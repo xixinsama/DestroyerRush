@@ -1,4 +1,5 @@
 extends Node2D
+class_name Player
 
 # 首先把所有子节点搬过来
 @onready var stats_component: StatsComponent = $StatsComponent
@@ -24,6 +25,8 @@ var shake_timer: Timer = null
 # var is_double_click: bool = false
 @export_range(0, 4) var play_looklike: int = 0 ## 选择玩家皮肤
 @export var roll_wait_time: float = 2
+
+var is_level5: bool = false
 
 func _ready():
 	# 发射第一类子弹
@@ -71,7 +74,10 @@ func fire_bullet1() -> void:
 	node2.get_node("MoveComponent").roll_r_1 = 10
 	node2.get_node("MoveComponent").roll_vec_rad_1 = -2*PI
 	node2.get_node("MoveComponent").roll_origin_rad_1 = 0
-
+	if is_level5:
+		var center: Marker2D = spawn_points.get_node("center")
+		var node3 = bullet_spawner_component.spawn(center.global_position)
+	
 func _process(_delta):
 	# 改变移动动画
 	animate_the_ship()

@@ -1120,7 +1120,7 @@ texture = ExtResource("2_tscps")
 flip_v = true
 hframes = 6
 vframes = 5
-frame = 10
+frame = 11
 region_enabled = true
 region_rect = Rect2(0, 0, 48, 40)
 region_filter_clip_enabled = true
@@ -1128,7 +1128,6 @@ region_filter_clip_enabled = true
 [node name="HitboxComponent" type="Area2D" parent="."]
 collision_layer = 32
 script = ExtResource("2_yc08d")
-damage = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 

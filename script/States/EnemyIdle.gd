@@ -5,7 +5,7 @@ extends State
 
 func Enter():
 	var rest_timer: Timer = Timer.new()
-	rest_timer.wait_time = 3.45
+	rest_timer.wait_time = 4.5 - actor.flag_prase
 	rest_timer.name = "rest_timer"
 	rest_timer.one_shot = true
 	self.add_child(rest_timer)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bxh4vpfjfw480"]
+[gd_scene load_steps=26 format=3 uid="uid://bxh4vpfjfw480"]
 
 [ext_resource type="Script" path="res://script/menu.gd" id="1_r74nm"]
 [ext_resource type="LabelSettings" uid="uid://c8l4vo3gn7yl7" path="res://fonts/jump_label.tres" id="2_eq4nl"]
@@ -16,6 +16,10 @@ font_size = 36
 
 [sub_resource type="LabelSettings" id="LabelSettings_lcmjd"]
 font = ExtResource("4_eb6t7")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvcc0"]
+atlas = ExtResource("7_1vxwr")
+region = Rect2(96, 432, 112, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hb6sm"]
 atlas = ExtResource("7_1vxwr")
@@ -37,6 +41,9 @@ region = Rect2(368, 608, 112, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_vvcc0")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_hb6sm")
 }, {
 "duration": 1.0,
@@ -50,7 +57,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 4.0
+"speed": 6.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_no76n"]
@@ -86,7 +93,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 4.0
+"speed": 6.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3bvio"]
@@ -167,7 +174,7 @@ horizontal_alignment = 1
 [node name="Label2" type="Label" parent="CenterContainer/VSplitContainer/TitleContainer"]
 layout_mode = 2
 text = "If you are using an Xbox controller
-press A"
+press "
 label_settings = SubResource("LabelSettings_2gk8g")
 horizontal_alignment = 1
 vertical_alignment = 3
@@ -287,19 +294,19 @@ bus = &"BGM"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
 z_index = -100
-position = Vector2(330, 374)
-scale = Vector2(1.5, 3)
+position = Vector2(333, 372)
+scale = Vector2(1.8125, 3)
 sprite_frames = SubResource("SpriteFrames_m85g6")
 autoplay = "default"
-frame_progress = 0.368958
+frame_progress = 0.930573
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Node2D"]
 z_index = -100
-position = Vector2(454, 472)
+position = Vector2(442, 469)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_8ix0x")
 autoplay = "default"
-frame_progress = 0.246659
+frame_progress = 0.764277
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Node2D"]
 position = Vector2(597, 777)

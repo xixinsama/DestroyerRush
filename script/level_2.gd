@@ -251,7 +251,7 @@ func luoruixin_time_all() :
 		var num: int = 15##子弹数量
 		var speed: int = 300 ##子弹速度
 		var rad: float = 0
-		var frame_bullet = flag+5 ##子弹样式
+		var frame_bullet = 11 ##子弹样式
 		for i in range(0,num):
 			luo = spawner_component.spawn(Status.enemy_position,self,0)
 			luo.name = "luorui" + String.num_int64(shotgun_flag)

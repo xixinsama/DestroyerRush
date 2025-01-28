@@ -1,5 +1,5 @@
 extends Node2D
-
+class_name SubEnemy
 
 @export_range(0, 24) var enemy_looklike: int = 0 ## 选择敌人皮肤
 @export_range(0,4) var enemy_destroy_effect: int = 0 ## 选择敌人爆炸效果

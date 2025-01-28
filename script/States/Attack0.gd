@@ -4,9 +4,10 @@ class_name Attack0
 @export var enemy: Enemy
 @export var spawner_component: SpawnerComponent
 
+# 散射波浪
 func Enter():
 	var luo: Bullet = null
-	var rad: float = PI/6 
+	var rad: float = PI/6
 	var num: int = 6 ##子弹数量
 	var speed: int = 500 ##子弹速度
 	var frame_bullet = 13 ##子弹样式
@@ -39,3 +40,5 @@ func Enter():
 			luo.frame = frame_bullet
 			luo.initialize()
 			await get_tree().create_timer(0.01).timeout
+			
+	Transitioned.emit(self, "EnemyIdle")
