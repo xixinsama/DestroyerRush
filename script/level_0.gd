@@ -162,6 +162,7 @@ func luoruixin():
 		luo_1.roll_origin_rad_1 = PI/2
 		luo_1.frame = frame_bullet
 		luo_1.initialize()
+		#print(luo_1.move_component.trail_stright_v_1)
 		await get_tree().create_timer(0.05).timeout
 		#await get_tree().create_timer(0.05).timeout
 	
