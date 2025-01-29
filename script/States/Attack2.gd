@@ -35,5 +35,6 @@ func Enter():
 			luo_2.frame = frame_bullet
 			luo_2.initialize()
 			luo_2.move_component.is_bun = true
+			await get_tree().create_timer(0.1).timeout
 
 	Transitioned.emit(self, "EnemyIdle")

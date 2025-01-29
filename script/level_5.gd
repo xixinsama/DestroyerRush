@@ -22,7 +22,6 @@ class_name LeveL
 
 var jumping: bool = false
 var flag_prase: int = 0
-var tigger_health: bool = false
 var path_now: float = 0.0
 var timer_prase: Timer = null
 var timer_attack_1: Timer = null
@@ -107,6 +106,7 @@ func prase_des():
 			await get_tree().create_timer(0.5).timeout
 			move_component.amplitude = 100
 			timer_attack_3.start()
+			follow_path_component.speed += 20
 		flag_prase = 2
 	if HP <= 0.25 * HP_max:
 		if HP >= 0.24 * HP_max and HP <= 0.26 * HP_max and flag_prase == 2:
@@ -117,6 +117,7 @@ func prase_des():
 			await get_tree().create_timer(0.5).timeout
 			move_component.roll_r_1 = 100
 			timer_attack_4.start()
+			follow_path_component.speed += 20
 		flag_prase = 3
 
 func enemy_invincible():
@@ -128,8 +129,9 @@ func defeated() -> void:
 	timer_attack_4.stop()
 	timer_attack_3.stop()
 	timer_attack_2.stop()
+	timer_attack_1.wait_time = 1.0
+	timer_attack_1.one_shot = true
 	timer_attack_1.start()
-	tigger_health = false
 	if collision_shape_2d == null: return #测试环境下，直接打二阶段会导致敌人和sub敌人同时消失，然后发送多次信号
 	collision_shape_2d.set_deferred("disabled", true)
 	follow_path_component.start_follow(path_now)

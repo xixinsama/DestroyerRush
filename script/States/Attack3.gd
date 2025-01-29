@@ -11,6 +11,6 @@ func Enter():
 		dia.text = "wish farewell"
 	if random_dia == 2:
 		dia.text = "Worthy opponent"
-	await get_tree().create_timer(0.3).timeout
-	dia.text = " "
+	#await get_tree().create_timer(0.3).timeout
+	#dia.text = " "
 	Transitioned.emit(self, "EnemyIdle")
