@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://n51yxye8n0j6"]
+[gd_scene load_steps=37 format=3 uid="uid://n51yxye8n0j6"]
 
 [ext_resource type="Script" path="res://compenent/stats_component.gd" id="1_c2tg5"]
 [ext_resource type="Script" path="res://script/player.gd" id="1_kcnqc"]
@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://c88ksi4miyfvg" path="res://UI/player_health.tscn" id="14_vmki5"]
 [ext_resource type="AudioStream" uid="uid://buxwme88rmihy" path="res://asset/Sounds/SE/laser-zap-90575.mp3" id="15_eh4i0"]
 [ext_resource type="Script" path="res://compenent/shake_component.gd" id="16_jds5w"]
+[ext_resource type="Shader" path="res://shader/change_color.gdshader" id="18_wbthy"]
+[ext_resource type="Texture2D" uid="uid://b51s3ftbi3t4v" path="res://asset/Free Smoke Fx  Pixel 07.png" id="19_7cw2i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a4fqk"]
 atlas = ExtResource("2_vs1xv")
@@ -97,10 +99,46 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uqhv3"]
-radius = 2.63688
+radius = 2.12867
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8yr2a"]
-radius = 4.29571
+radius = 5.00156
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a0cqr"]
+shader = ExtResource("18_wbthy")
+shader_parameter/tint_color = Color(1, 0.931338, 0.950334, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3n8qg"]
+atlas = ExtResource("19_7cw2i")
+region = Rect2(576, 512, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwrwe"]
+atlas = ExtResource("19_7cw2i")
+region = Rect2(640, 512, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7tv7"]
+atlas = ExtResource("19_7cw2i")
+region = Rect2(704, 512, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a5bnw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3n8qg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwrwe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7tv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwrwe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
 
 [node name="player" type="Node2D"]
 z_index = 100
@@ -218,6 +256,14 @@ offset_right = 204.0
 offset_bottom = -8.0
 grow_vertical = 0
 player_stats = NodePath("../../StatsComponent")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_a0cqr")
+position = Vector2(0, 1.19209e-07)
+scale = Vector2(0.17, 0.17)
+sprite_frames = SubResource("SpriteFrames_a5bnw")
+autoplay = "default"
+frame_progress = 0.208368
 
 [connection signal="roll_finish" from="MoveInputComponent" to="." method="_on_move_input_component_roll_finish"]
 [connection signal="roll_start" from="MoveInputComponent" to="." method="_on_move_input_component_roll_start"]

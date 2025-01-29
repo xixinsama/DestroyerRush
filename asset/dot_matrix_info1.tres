@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="DotMatrix" load_steps=2 format=3 uid="uid://cqcj4kk56p8v2"]
+
+[ext_resource type="Script" path="res://asset/dot_matrix_info1.gd" id="1_0kekk"]
+
+[resource]
+script = ExtResource("1_0kekk")

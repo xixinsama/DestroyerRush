@@ -6,6 +6,8 @@ extends Node2D
 @onready var label: Label = $Label
 @onready var progress_bar: ProgressBar = $ProgressBar
 
+@export var dot_matrix_script: DotMatrix
+
 var jumping: bool = false
 var dot_matrix_file: String = "res://asset/dot_matrix_info.txt"
 var dot_positions = []
@@ -13,33 +15,44 @@ var current_frame: int = 1
 var node_2: Bullet = null
 
 func _ready():
-	var file = FileAccess.open(dot_matrix_file, FileAccess.READ)
-	if file.is_open():
-		while not file.eof_reached():
-			var line = file.get_line()
-			if line.begins_with("Frame"):
-				current_frame = int(line.replace("Frame ", ""))
-				dot_positions.append([])
-			elif line != "":
-				var data = line.split(": ")
-				var dot_position = data[0].replace("(", "").replace(")", "").split(", ")
-				var x = int(dot_position[0])
-				var y = int(dot_position[1])
-				var rgba = data[1].split(" ")
-				var r = int(rgba[0])
-				var g = int(rgba[1])
-				var b = int(rgba[2])
-				var a = int(rgba[3])
-				dot_positions[-1].append({"x": x, "y": y, "color": Color(r / 255.0, g / 255.0, b / 255.0, a / 255.0)})
-		file.close()
+	#var file = FileAccess.open(dot_matrix_file, FileAccess.READ)
+	#label.text = str(FileAccess.get_open_error())
+	#if file.is_open():
+		#label.text = "文件已经打开完成"
+		#while not file.eof_reached():
+			#var line = file.get_line()
+			#if line.begins_with("Frame"):
+				#current_frame = int(line.replace("Frame ", ""))
+				#dot_positions.append([])
+			#elif line != "":
+				#var data = line.split(": ")
+				#var dot_position = data[0].replace("(", "").replace(")", "").split(", ")
+				#var x = int(dot_position[0])
+				#var y = int(dot_position[1])
+				#var rgba = data[1].split(" ")
+				#var r = int(rgba[0])
+				#var g = int(rgba[1])
+				#var b = int(rgba[2])
+				#var a = int(rgba[3])
+				#dot_positions[-1].append({"x": x, "y": y, "color": Color(r / 255.0, g / 255.0, b / 255.0, a / 255.0)})
+		#label.text = "加载完成"
+		#file.close()
+	var rand: int = randi_range(0, 1)
+	if rand == 0:
+		parse_dot_matrix_data(dot_matrix_script.dot_matrix_data_kururin)
+	if rand == 1:
+		parse_dot_matrix_data(dot_matrix_script.dot_matrix_data_51211)
+	
 	# 播放计时
 	var play_gif: Timer = Timer.new()
 	add_child(play_gif)
-	play_gif.wait_time = 0.1
+	play_gif.wait_time = 0.05
 	play_gif.timeout.connect(play_gif_frame)
 	#play_gif.one_shot = true
 	play_gif.start()
 	current_frame = 0
+	
+
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("skill") or Input.is_action_just_pressed("roll"):
@@ -66,7 +79,7 @@ func play_gif_frame() -> void:
 
 # 生成弹幕
 func spawn_bullet(dot) -> void:
-	var bullet_position: Vector2 = Vector2(720-dot["x"] * 16, dot["y"] * 16)
+	var bullet_position: Vector2 = Vector2(720-dot["x"] * 8, dot["y"] * 8)
 	var speed: int = 190
 	#var time_wait: float = 0.1
 	var bullet_hint: Bullet = spawner_component.spawn(bullet_position , self, 0)
@@ -76,7 +89,7 @@ func spawn_bullet(dot) -> void:
 	# bullet_hint.velocity = Vector2(0, speed)
 	bullet_hint.trail_who = 3
 	bullet_hint.trail_pos = Vector2(360, 640)
-	bullet_hint.life_timer.wait_time = 2.0
+	bullet_hint.life_timer.wait_time = 5
 	bullet_hint.life_timer.timeout.connect(trail_it.bind(bullet_hint))
 	bullet_hint.life_timer.one_shot = true
 	bullet_hint.life_timer.start()
@@ -92,3 +105,22 @@ func clear(dot):
 func  trail_it(bullet_hint: Bullet):
 	bullet_hint.speed_trail_2 = 300
 	bullet_hint.initialize()
+
+
+func parse_dot_matrix_data(all_data: String):
+	var lines = all_data.split("\n")
+	for line in lines:
+		if line.begins_with("Frame"):
+			current_frame = int(line.replace("Frame ", ""))
+			dot_positions.append([])
+		elif line != "":
+			var data = line.split(": ")
+			var dot_position = data[0].replace("(", "").replace(")", "").split(", ")
+			var x = int(dot_position[0])
+			var y = int(dot_position[1])
+			var rgba = data[1].split(" ")
+			var r = int(rgba[0])
+			var g = int(rgba[1])
+			var b = int(rgba[2])
+			var a = int(rgba[3])
+			dot_positions[-1].append({"x": x, "y": y, "color": Color(r / 255.0, g / 255.0, b / 255.0, a / 255.0)})

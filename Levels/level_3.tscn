@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://comi4hgpyqnc8"]
+[gd_scene load_steps=10 format=3 uid="uid://comi4hgpyqnc8"]
 
 [ext_resource type="Script" path="res://script/level_3.gd" id="1_tbd25"]
 [ext_resource type="Script" path="res://compenent/spawner_component.gd" id="2_kgh36"]
+[ext_resource type="Resource" uid="uid://c7dae1ba2rm64" path="res://asset/dot_matrix_info2.tres" id="2_yx12h"]
 [ext_resource type="PackedScene" uid="uid://o8jih1iks4x5" path="res://scene/bullet.tscn" id="3_kuupd"]
 [ext_resource type="Script" path="res://compenent/hurtbox_component.gd" id="4_6f011"]
 [ext_resource type="AudioStream" uid="uid://bv30nam14j2bb" path="res://asset/Sounds/BGM/Astral Float.wav" id="5_pl03n"]
@@ -16,6 +17,7 @@ font_size = 40
 
 [node name="Level3" type="Node2D"]
 script = ExtResource("1_tbd25")
+dot_matrix_script = ExtResource("2_yx12h")
 
 [node name="SpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("2_kgh36")
